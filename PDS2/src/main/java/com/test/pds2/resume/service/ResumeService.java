@@ -9,9 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ResumeService {
-	public void addArticle(ResumeRequest resumeRequest, String path) {
+	public void insertResume(ResumeRequest resumeRequest, String path) {
 		MultipartFile multipartFile = resumeRequest.getMultipartFile();
-		
 		
 		Resume resume = new Resume();
 		resume.setResumeTitle(resumeRequest.getResumeTitle());

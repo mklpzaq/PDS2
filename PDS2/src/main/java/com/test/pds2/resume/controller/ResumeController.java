@@ -1,11 +1,6 @@
 package com.test.pds2.resume.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.test.pds2.resume.service.ResumeRequest;
+import com.test.pds2.resume.service.ResumeService;
 
 
 
@@ -22,26 +17,26 @@ import com.test.pds2.resume.service.ResumeRequest;
 public class ResumeController {
 
 	@Autowired
-	//private ArticleService articleService;
+	private ResumeService resumeService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(ResumeController.class);
 	
 	
-	@RequestMapping(value = "/addArticle", method = RequestMethod.GET)
-	public String addArticle(){
+	@RequestMapping(value = "/insertResume", method = RequestMethod.GET)
+	public String insertResume(){
 		
-		return "addArticle";
+		return "/resume/insertResume";
 	}
 	
-	@RequestMapping(value = "/addArticle", method = RequestMethod.POST)
-	public String addArticle(ResumeRequest resumeRequest, HttpSession session){
+	@RequestMapping(value = "/insertResume", method = RequestMethod.POST)
+	public String insertResume(ResumeRequest resumeRequest, HttpSession session){
 		
 		logger.info(resumeRequest.toString());
 		String path = session.getServletContext().getRealPath("/resources/upload");  //세션이 만들어진 톰캣 자체를 가져온다  resources/upload
-		System.out.println("addArticle+path : "+path);
+		System.out.println("insertResume+path : "+path);
 		// service : articleRequest를 -> article로 맞춰준다 + 파일 폴더 저장  + 트랜잭션 + 알파
 		// dao : insert 
-		//articleService.addArticle(articleRequest, path);
+		resumeService.insertResume(resumeRequest, path);
 		
 		return "redirect:/";
 	}
