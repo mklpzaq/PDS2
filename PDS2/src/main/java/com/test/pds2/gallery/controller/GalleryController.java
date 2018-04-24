@@ -27,13 +27,16 @@ public class GalleryController {
 	public String insertGallery() {
 		return "/gallery/insertGallery";
 	}
-	
+	/*
+	 * jsp 폼에서 넘어온값을 처리한다.
+	 * service에 절대경로와 galleryRequest객체를 넘긴다.
+	 */	
 	@RequestMapping(value = "/insertGallery", method = RequestMethod.POST)
 	public String insertGallery(GalleryRequest galleryRequest, HttpSession session) {
-		logger.info("=============== galleryRequest :  " + galleryRequest);
-		String path = SystemPath.SYSTEM_PATH;
+		logger.debug("GalleryController.insertGallery(galleryRequest) : " + galleryRequest);
+		String path = SystemPath.SYSTEM_PATH;		
+		logger.debug("path : " + path);
 		
-		logger.info("=============== path : " + path);
 		galleryService.insertGallery(galleryRequest, path);
 		return "redirect:/";
 	}
