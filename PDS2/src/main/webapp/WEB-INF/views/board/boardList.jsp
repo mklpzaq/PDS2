@@ -53,10 +53,7 @@
 				<div class="col-sm-6">
 				<!-- Begin Content -->
 				
-				
-				
-				
-				
+		
 					<div class="panel panel-default">
 						<div class="panel-body text-center">
 							<div class="row">
@@ -203,11 +200,6 @@
 						</div>
 					</div>					
 				
-				
-				
-				
-					
-					
 					
 				<!-- End Content -->
 				</div>

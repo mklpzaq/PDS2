@@ -24,15 +24,15 @@ public class BoardService {
 	
 	public Map<String, Object> getBoardList(int currentPage, int pagePerRow, String searchSelect, String searchWord){
 		logger.debug("getBoardList BoardService");
-int beginRow = (currentPage-1)*pagePerRow;
+		int beginRow = (currentPage-1)*pagePerRow;
 		
 		/*Map<String, Integer> map = new HashMap<String, Integer>();*/
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
-		logger.info("currentPage :" + currentPage);
-		logger.info("beginRow :" + beginRow);
-		logger.info("pagePerRow :" + pagePerRow);
+		logger.debug("currentPage :" + currentPage);
+		logger.debug("beginRow :" + beginRow);
+		logger.debug("pagePerRow :" + pagePerRow);
 		
 		/* searchSignal : 1 일경우 '검색버튼'을 누른경우가 되므로 
 		 * selectAddressList() 메서드를 사용하여 list를 가져올때,
@@ -43,8 +43,8 @@ int beginRow = (currentPage-1)*pagePerRow;
 		
 		map.put("searchSelect", searchSelect);
 		map.put("searchWord", searchWord);
-		logger.info("searchSelect :" + searchSelect);
-		logger.info("searchWord :" + searchWord);
+		logger.debug("searchSelect :" + searchSelect);
+		logger.debug("searchWord :" + searchWord);
 		
 		/* beginRow와 pagePerRow값에 따라 SQL문의 LIMIT문이 작동될 것이고
 		 * 그에 맞는 list가 반환된다.

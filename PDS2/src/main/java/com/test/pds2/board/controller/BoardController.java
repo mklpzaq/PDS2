@@ -23,13 +23,13 @@ public class BoardController {
 	private BoardService boardService;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
-	/* searchSignal 값이 1이 넘어왔을 경우는 addressList에서 '검색버튼'을 누른 경우이다.
+	/* searchSignal 값이 1이 넘어왔을 경우는 boardList에서 '검색버튼'을 누른 경우이다.
 	 * 그리고 '검색버튼'을 누르지 않았을 겨우는 defaultValue값으로 0이 들어오게 설정하였다.
 	 * searchSignal : 1 => '검색버튼'을 누름
 	 * searchSignal : 0 => '검색버튼'을 누르지 아니함.
 	 * 
 	 * 그리고 searchWord의 defaultValue 값을 ""로 설정한 이유는 '검색버튼'을 누르지 않았을경우
-	 * AddressList페이지에서 오류가 생기지 않게 하기 위해서 defaultValue값을 그렇게 설정하였다.
+	 * BoardList페이지에서 오류가 생기지 않게 하기 위해서 defaultValue값을 그렇게 설정하였다.
 	 *  */
 	@RequestMapping(value="/getBoardList", method=RequestMethod.GET)
 	public String getBoardList(Model model
@@ -71,11 +71,11 @@ public class BoardController {
 	public String insertBoard(BoardRequest boardRequest, HttpSession session) {
 		logger.debug("POST /insertBoard BoardController");
 		logger.debug("boardRequest : " + boardRequest);
-		// service : ArticleRequest => Article + 실제 파일을 폴더에 저장(일단 DB에 말고 ) 트랜젝션 서비스가 필요하다 트랜젝션을 쓰려면 설정파일 설정해야한다.
-		// dao : insert 
 		
-		//세션이 만들어져 있는 톰켓 자체를 가리킨다.
 		/*
+		 * service : ArticleRequest => Article + 실제 파일을 폴더에 저장(일단 DB에 말고 ) 트랜젝션 서비스가 필요하다 트랜젝션을 쓰려면 설정파일 설정해야한다.
+		 * dao : insert 
+		 * 세션이 만들어져 있는 톰켓 자체를 가리킨다.
 		 * 내 안에 만들어져 있는 upload의 주소가 
 		 * '/resources'/upload
 		 * */
