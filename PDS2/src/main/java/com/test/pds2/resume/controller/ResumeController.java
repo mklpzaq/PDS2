@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.test.pds2.resume.service.ResumeRequest;
 import com.test.pds2.resume.service.ResumeService;
@@ -33,7 +34,7 @@ public class ResumeController {
 	}
 	
 	@RequestMapping(value = "/insertResume", method = RequestMethod.POST)
-	public String insertResume(ResumeRequest resumeRequest, HttpSession session){
+	public String insertResume(ResumeRequest resumeRequest, HttpSession session, MultipartHttpServletRequest multipartHttpServletRequest){
 		
 		logger.info(resumeRequest.toString());
 		String path = session.getServletContext().getRealPath("/resources/upload/resume");  //세션이 만들어진 톰캣 자체를 가져온다  resources/upload/resume
