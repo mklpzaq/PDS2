@@ -32,7 +32,7 @@ public class ResumeController {
 	public String insertResume(ResumeRequest resumeRequest, HttpSession session){
 		
 		logger.info(resumeRequest.toString());
-		String path = session.getServletContext().getRealPath("/resources/upload");  //세션이 만들어진 톰캣 자체를 가져온다  resources/upload
+		String path = session.getServletContext().getRealPath("/resources/upload/resume");  //세션이 만들어진 톰캣 자체를 가져온다  resources/upload
 		System.out.println("insertResume+path : "+path);
 		// service : articleRequest를 -> article로 맞춰준다 + 파일 폴더 저장  + 트랜잭션 + 알파
 		// dao : insert 

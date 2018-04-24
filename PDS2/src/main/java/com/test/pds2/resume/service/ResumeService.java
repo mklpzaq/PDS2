@@ -4,11 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ResumeService {
+	
+	@Autowired ResumeDao resumeDao;
+	
 	public void insertResume(ResumeRequest resumeRequest, String path) {
 		MultipartFile multipartFile = resumeRequest.getMultipartFile();
 		
@@ -22,8 +26,8 @@ public class ResumeService {
 		// 유효 이름
 		UUID uuid = UUID.randomUUID();  //16진수의 유효 아이디가 만들어진다 랜덤 유효 아이디
 		String resumeFileName = uuid.toString();
-		resumeFileName = resumeFileName.replace("-", "");  //기존 문자열에서 발견되는 모든 문자 집합을 다른 지정 문자로 변경합니다.
-		resume.setResumeFile(resumeFile);
+		resumeFileName = resumeFileName.replace("-", "");  //기존 문자열에서 발견되는 모든 문자 집합을 다른 지정 문자로 변경합니다.		
+		resume.setResumeFile(resumeFile); //이게 왜들어갔지?
 		System.out.println("resumeFileName  : "+resumeFileName);
 		
 		// 파일 확장자
@@ -55,7 +59,15 @@ public class ResumeService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-	
+		
+		//resumeFile에 셋팅
+		resumeFile.setResumeId(resumeDao.insertResume(resume));
+		resumeFile.setResumeFileName(resumeFileName);
+		resumeFile.setResumeFileExt(resumeFileExt);
+		resumeFile.setResumeFileType(resumeFileType);
+		resumeFile.setResumeFileSize(resumeFileSize);
+		
+		resumeDao.insertResumeFile(resumeFile);
 		
 		
 	}

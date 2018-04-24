@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.test.pds2.resume.service.ResumeMapper">
+	
+	<insert id="insertResume" parameterType="com.test.pds2.resume.service.Resume">
+		
+		<selectKey resultType="int" keyProperty="resumeId" order="AFTER">  order="AFTER" - insert쿼리 실행후에 자동증가 값 
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+		
+		INSERT INTO resume
+				(resume_id
+				,resume_title
+				,resume_content
+				)
+			VALUES (
+				NULL
+				, ${resumeTitle}
+				, ${resumeContent}
+			)				
+	</insert>
+	
+	
+	<insert id="insertResumeFile" parameterType="com.test.pds2.resume.service.ResumeFile">
+		
+		INSERT INTO resume_file
+				(resume_file_id
+				,resume_file_name
+				,resume_file_ext
+				,resume_file_type
+				,resume_file_size
+				,resume_id)
+			VALUES 
+				(NULL
+				,#{resumeFileName}
+				,#{resumeFileExt}
+				,#{resumeFileType}
+				,#{resumeFileSize}
+				,#{resumeId})				
+	</insert>
+	
+</mapper>
