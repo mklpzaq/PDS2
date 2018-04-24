@@ -5,7 +5,8 @@
  
 <mapper namespace="com.test.pds2.notice.service.NoticeMapper">
 
-	<insert id="insertNotice" parameterType="com.test.pds2.notice.service.Notice">
+	<insert id="insertNotice" 
+			parameterType="com.test.pds2.notice.service.Notice">
 		<selectKey resultType="int" keyProperty="noticeId" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>	
@@ -20,5 +21,54 @@
 			)
 	</insert>
 	
+	
+		<!-- selectItemList 테이블조인 -->
+	<!--	resultMap - type : 객체 타입
+			resultMap - id : resultMap 명
+			id : PK 멤버변수 지정. 
+			id - column : DB 칼럼명
+			id - property : 커맨드 객체 멤버변수 명
+			result : PK 이외의 멤버변수 지정
+			column, property는 id와 같은 방법으로 사용한다.
+			association : 연관된 데이터를 맵핑시킨다.
+			javaType : 조인될 객체 타입
+			property : 커맨드 객체에서의 변수명
+	 		
+	 		데이터를 매핑시켜준다. 
+			association => 1 : 1 관계 
+			collection => 1 : 다 관계 (한명의 유저가 작성한 글 목록)
+			일반 컬럼과 pk 구분 가능 pk 칼럼에게는 result 아닌 id 사용
+		-->
+	<resultMap type="com.test.pds2.notice.service.Notice" id="notice">
+		<id column="noticeId" property="noticeId" />
+		<result column="noticeTitle" property="noticeTitle" />
+		<collection ofType="com.test.pds2.notice.service.NoticeFile" property="noticeFile">
+			<id column="noticeFileId" property="noticeFileId"/>
+			<result column="noticeFileName" property="noticeFileName"/>
+			<result column="noticeFileExt" property="noticeFileExt"/>
+		</collection>
+	</resultMap>
+	
+	<!-- <select id="selectNoticeList"
+			parameterType="java.util.Map" 
+			resultType="notice">
+		SELECT
+			notice.notice_id
+			, notice.notice_title
+			, notice_file.notice_file_id
+			, notice_file.notice_file_name
+			, notice_file.notice_file_ext
+		FROM notice JOIN notice_file
+		ORDER BY notice_id DESC 
+		LIMIT #{beginRow},#{pagePerRow}
+	</select>
+	
+	<select id="totalCountNotice" 
+			parameterType="java.util.Map"
+			resultType="Integer">
+		SELECT 
+			count(*) 
+		FROM notice JOIN notice_file
+	</select> -->
 	
 </mapper>

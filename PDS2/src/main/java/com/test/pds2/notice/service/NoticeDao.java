@@ -1,5 +1,8 @@
 package com.test.pds2.notice.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,5 +21,19 @@ public class NoticeDao {
 		return sqlSession.insert(NS + "insertNotice", notice);
 	}
 	
+	public int insertNoticeFile(NoticeFile noticeFile) {
+		logger.debug("insertNoticeFile");
+		sqlSession.insert(NS + "insertNoticeFile", noticeFile);
+		return 0;
+	}
+	public List<Notice> selectNoticeList(Map<String, Integer> map) {
+		logger.debug("selectNoticeList");
+		return sqlSession.selectList(NS+"selectNoticeList", map);
+	}
+	
+	public int totalCountNotice() {
+		logger.debug("totalCountNotice");
+		return sqlSession.selectOne(NS+"totalCountNotice"); // 결과값이 하나 이므로 selectOne 사용
+	}
 	
 }

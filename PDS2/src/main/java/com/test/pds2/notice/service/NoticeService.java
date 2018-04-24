@@ -2,6 +2,9 @@ package com.test.pds2.notice.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -9,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 
 @Service
 public class NoticeService {
@@ -65,6 +69,39 @@ public class NoticeService {
 		notice.getNoticeFile().setNoticeId(notice.getNoticeId());
 		noticeDao.insertNotice(notice);
 		noticeFileDao.insertNoticeFile(notice.getNoticeFile());
+		
+	}
+	
+	public Map<String, Object> selectNoticeList(int currentPage, int pagePerRow) {
+		logger.debug("selectNoticeList");
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		int beginRow = (currentPage-1)*pagePerRow; //페이지의 첫번째 행을 지정해줌
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		List<Notice> list = noticeDao.selectNoticeList(map);
+		
+		int total = noticeDao.totalCountNotice();
+		int lastPage =0;
+		if(total%pagePerRow ==0) {
+			lastPage = total/pagePerRow;
+		}else {
+			lastPage = total/pagePerRow + 1;
+		}
+		
+		int pageView = 5;
+		int startPage = ((currentPage-1)/5)*5+1; //페이지 목록이 새로 나올 때, 첫번째로 뜨는 페이지 숫자
+		int endPage = startPage + pageView -1; //페이지 목록이 새로 나올 때, 마지막으로 뜨는 페이지 숫자
+		if(endPage>lastPage) {
+			endPage=lastPage;
+		}
+		
+		Map<String, Object> returnmap = new HashMap<String, Object>();
+		returnmap.put("list", list);
+		returnmap.put("lastPage", lastPage);
+		returnmap.put("startPage", startPage);
+		returnmap.put("endPage", endPage);
+		
+		return returnmap;
 		
 	}
 }
