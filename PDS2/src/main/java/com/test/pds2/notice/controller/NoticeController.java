@@ -19,17 +19,17 @@ public class NoticeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 	
-	@RequestMapping(value = "addNotice", method = RequestMethod.GET)
-	public String addNotice() {
-		return "addNotice";
+	@RequestMapping(value = "/insertNotice", method = RequestMethod.GET)
+	public String insertNotice() {
+		return "notice/insertNotice";
 	}
 	
-	@RequestMapping(value = "addNotice", method = RequestMethod.POST)
-	public String addNotice(NoticeRequest noticeRequest, HttpSession session ) {
+	@RequestMapping(value = "/insertNotice", method = RequestMethod.POST)
+	public String insertNotice(NoticeRequest noticeRequest, HttpSession session ) {
 		System.out.println("NoticeRequest");
-		String path = session.getServletContext().getRealPath("/resources/upload");
+		String path = session.getServletContext().getRealPath("/resources/upload/notice");
 		System.out.println("path" + path);
-		noticeService.addNotice(noticeRequest, path);
+		noticeService.insertNotice(noticeRequest, path);
 		return "redirect:/";
 	}
 }

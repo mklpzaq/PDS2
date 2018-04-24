@@ -1,40 +1,49 @@
 package com.test.pds2.notice.service;
 
 public class NoticeFile {
+	private int noticeFileId; //notice_file_id
+	private String noticeFileName; //notice_file_name
+	private String noticeFileExt; //notice_file_ext
+	private String noticeFileType; //notice_file_type
+	private int noticeFileSize; //notice_file_size
 	private int noticeId; //notice_id
-	private String noticeName; //notice_name
-	private String noticeExt; //notice_ext
-	private String noticeType; //notice_type
-	private int noticeSize; //notice_size
 	
+	public int getNoticeFileId() {
+		return noticeFileId;
+	}
+	public void setNoticeFileId(int noticeFileId) {
+		this.noticeFileId = noticeFileId;
+	}
+	public String getNoticeFileName() {
+		return noticeFileName;
+	}
+	public void setNoticeFileName(String noticeFileName) {
+		this.noticeFileName = noticeFileName;
+	}
+	public String getNoticeFileExt() {
+		return noticeFileExt;
+	}
+	public void setNoticeFileExt(String noticeFileExt) {
+		this.noticeFileExt = noticeFileExt;
+	}
+	public String getNoticeFileType() {
+		return noticeFileType;
+	}
+	public void setNoticeFileType(String noticeFileType) {
+		this.noticeFileType = noticeFileType;
+	}
+	public int getNoticeFileSize() {
+		return noticeFileSize;
+	}
+	public void setNoticeFileSize(int noticeFileSize) {
+		this.noticeFileSize = noticeFileSize;
+	}
 	public int getNoticeId() {
 		return noticeId;
 	}
 	public void setNoticeId(int noticeId) {
 		this.noticeId = noticeId;
 	}
-	public String getNoticeName() {
-		return noticeName;
-	}
-	public void setNoticeName(String noticeName) {
-		this.noticeName = noticeName;
-	}
-	public String getNoticeExt() {
-		return noticeExt;
-	}
-	public void setNoticeExt(String noticeExt) {
-		this.noticeExt = noticeExt;
-	}
-	public String getNoticeType() {
-		return noticeType;
-	}
-	public void setNoticeType(String noticeType) {
-		this.noticeType = noticeType;
-	}
-	public int getNoticeSize() {
-		return noticeSize;
-	}
-	public void setNoticeSize(int noticeSize) {
-		this.noticeSize = noticeSize;
-	}
+	
+	
 }

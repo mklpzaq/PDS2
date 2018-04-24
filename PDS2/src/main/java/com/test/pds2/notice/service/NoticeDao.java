@@ -15,7 +15,14 @@ public class NoticeDao {
 	private static final Logger logger = LoggerFactory.getLogger(ArticleDao.class);
 	final String NS = "com.test.pds2.notice.service.NoticeMapper.";
 	
-	public void insertNoitce() {
-		sqlSession.insert(NS + "insertNotic");
+	public int insertNotice(Notice notice) {
+		logger.info("insertNotice");
+		return sqlSession.insert(NS + "insertNotice", notice);
+	}
+	
+	public int insertNoticeFile(NoticeFile noticeFile) {
+		logger.info("insertNoticeFile");
+		sqlSession.insert(NS + "insertNoticeFile", noticeFile);
+		return 0;
 	}
 }

@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class NoticeService {
 	
-	public void addNotice(NoticeRequest noticeRequest, String path) {
+	public void insertNotice(NoticeRequest noticeRequest, String path) {
 		MultipartFile multipartFile = noticeRequest.getMultipartFile();
 		
 		Notice notice = new Notice();
@@ -23,7 +23,7 @@ public class NoticeService {
 		UUID uuid = UUID.randomUUID();
 		String filename = uuid.toString();
 		filename = filename.replace("-", "");
-		System.out.println("filename" + filename);
+		System.out.println("filename : " + filename);
 		
 		//2.파일확장자
 		int doIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
