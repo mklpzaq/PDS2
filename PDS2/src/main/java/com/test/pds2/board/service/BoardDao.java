@@ -15,5 +15,10 @@ public class BoardDao {
 	
 	public void insertBoard(Board board) {
 		sqlSession.insert(NS+"insertBoard", board);
+		logger.info(board.toString());
+	}
+	
+	public void insertBoardFile(BoardFile boardFile) {
+		sqlSession.insert(NS+"insertBoardFile", boardFile);
 	}
 }

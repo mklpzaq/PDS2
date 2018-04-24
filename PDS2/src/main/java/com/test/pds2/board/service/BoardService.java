@@ -80,9 +80,12 @@ public class BoardService {
 		}
 		
 		//board.id = 0;
+		board.setBoardFile(boardFile);
 		boardDao.insertBoard(board);
+		board.getBoardFile().setBoardId(board.getBoardId());
+		logger.info("board.getBoardFile().getBoardId() : " + board.getBoardFile().getBoardId());
+		boardDao.insertBoardFile(board.getBoardFile());
 		//board.id = 7;
-		
 		
 	}
 }
