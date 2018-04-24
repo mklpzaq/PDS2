@@ -5,6 +5,17 @@
  
 <mapper namespace="com.test.pds2.board.service.BoardMapper">
 	
+	<select id="getBoardList"
+			resultType="com.test.pds2.board.service.Board">
+		SELECT
+			board_id AS boardId
+			,board_title AS boardTitle
+			,board_content AS boardContent
+		FROM
+			board
+	</select>
+	
+	
 	<insert id="insertBoard"
 			parameterType="com.test.pds2.board.service.Board">
 		<selectKey resultType="Integer"

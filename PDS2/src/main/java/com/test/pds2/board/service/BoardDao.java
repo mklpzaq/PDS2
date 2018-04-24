@@ -1,5 +1,7 @@
 package com.test.pds2.board.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,10 @@ public class BoardDao {
 	private SqlSessionTemplate sqlSession;
 	private static final Logger logger = LoggerFactory.getLogger(BoardDao.class);
 	final String NS = "com.test.pds2.board.service.BoardMapper.";
+	
+	public List<Board> getBoardList(){
+		return sqlSession.selectList(NS+"getBoardList");
+	}
 	
 	public void insertBoard(Board board) {
 		sqlSession.insert(NS+"insertBoard", board);

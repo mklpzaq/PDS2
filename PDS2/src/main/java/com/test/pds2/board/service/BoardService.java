@@ -2,6 +2,7 @@ package com.test.pds2.board.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -17,6 +18,11 @@ public class BoardService {
 	@Autowired
 	private BoardFileDao boardFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
+	
+	
+	public List<Board> getBoardList(){
+		return boardDao.getBoardList();
+	}
 	
 	public void insertBoard(BoardRequest boardRequest, String path) {
 		MultipartFile multipartFile = boardRequest.getMultipartFile();
