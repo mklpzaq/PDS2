@@ -6,7 +6,10 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.test.pds2.path.SystemPath;
 
 @Service
 public class GalleryService {
@@ -14,6 +17,7 @@ public class GalleryService {
 	@Autowired 
 	GalleryDao galleryDao;
 	
+	@Transactional
 	public void insertGallery(GalleryRequest galleryRequest, String path) {
 		MultipartFile multipartFile = galleryRequest.getMultipartfile();
 		
@@ -36,7 +40,7 @@ public class GalleryService {
 		//4.파일 사이즈
 		long fileSize = multipartFile.getSize();
 		//5.파일 저장(매개변수 path를 이용)
-		File file = new File("d:\\upload\\"+filename+fileExt);
+		File file = new File(path+filename+fileExt);
 		
 		try {
 			multipartFile.transferTo(file);
@@ -52,6 +56,6 @@ public class GalleryService {
 		galleryFile.setGalleryFileType(fileType);
 		galleryFile.setGalleryFileSize(doIndex);
 		
-		galleryDao.insertGalleryFile(galleryFile);
+		//galleryDao.;
 	}
 }

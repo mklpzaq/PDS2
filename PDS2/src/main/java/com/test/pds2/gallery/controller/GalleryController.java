@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.test.pds2.gallery.service.GalleryRequest;
 import com.test.pds2.gallery.service.GalleryService;
+import com.test.pds2.path.SystemPath;
 
 @Controller
 public class GalleryController {
@@ -30,7 +31,7 @@ public class GalleryController {
 	@RequestMapping(value = "/insertGallery", method = RequestMethod.POST)
 	public String insertGallery(GalleryRequest galleryRequest, HttpSession session) {
 		logger.info("=============== galleryRequest :  " + galleryRequest);
-		String path = session.getServletContext().getRealPath("");
+		String path = SystemPath.SYSTEM_PATH;
 		
 		logger.info("=============== path : " + path);
 		galleryService.insertGallery(galleryRequest, path);

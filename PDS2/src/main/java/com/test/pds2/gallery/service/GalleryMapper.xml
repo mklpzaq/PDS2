@@ -19,20 +19,4 @@
 			,#{galleryContent})
 	</insert>
 	
-	<insert id="insertgalleryFile" 
-			parameterType="com.test.pds2.gallery.service.GalleryFile">
-		INSERT INTO gallery_file
-			(gallery_id
-			,gallery_file_name
-			,gallery_file_ext
-			,gallery_file_type
-			,gallery_file_size)
-		VALUES
-			(#{galleryId}
-			,#{galleryFileName}
-			,#{galleryFileExt}
-			,#{galleryFileType}
-			,#{galleryFileSize})
-	</insert>	
-
 </mapper>
