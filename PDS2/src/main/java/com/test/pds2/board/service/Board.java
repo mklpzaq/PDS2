@@ -5,6 +5,7 @@ public class Board {
 	private String boardTitle;
 	private String boardContent;
 	private BoardFile boardFile;	//지금은 1:1, 나중에 1:N으로 구현해야 한다.
+	
 	public int getBoardId() {
 		return boardId;
 	}

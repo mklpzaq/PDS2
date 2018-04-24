@@ -13,7 +13,7 @@ public class BoardDao {
 	private static final Logger logger = LoggerFactory.getLogger(BoardDao.class);
 	final String NS = "com.test.pds2.board.service.BoardMapper.";
 	
-	public void insertBoard() {
-		//sqlSession.insert(NS+"insertBoard");
+	public void insertBoard(Board board) {
+		sqlSession.insert(NS+"insertBoard", board);
 	}
 }

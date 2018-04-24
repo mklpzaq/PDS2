@@ -5,8 +5,17 @@
  
 <mapper namespace="com.test.pds2.board.service.BoardMapper">
 	
-	<insert id="insertBoard">
-	
+	<insert id="insertBoard"
+			parameterType="com.test.pds2.board.service.Board">
+		INSERT INTO board(
+				board_title
+				, board_content
+			)
+		VALUES(
+			#{boardTitle}
+			,#{boardContent}
+		)
+		
 	</insert>
 	
 </mapper>

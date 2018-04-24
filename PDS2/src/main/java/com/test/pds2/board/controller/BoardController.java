@@ -39,7 +39,7 @@ public class BoardController {
 		String path = session.getServletContext().getRealPath("/resources/upload/board");
 		logger.info(path);
 		
-		boardService.insertBoard();
+		boardService.insertBoard(boardRequest, path);
 			
 		return "redirect:/";
 	}
