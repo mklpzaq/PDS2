@@ -17,11 +17,5 @@ public class GalleryDao {
 		logger.info("====== insertGallery : ");
 		int row = sqlSession.insert(NS+"insertGallery",gallery);
 		return row;
-	}
-	
-	public int insertGalleryFile(GalleryFile galleryFile) {
-		logger.info("====== insertGalleryFile : ");
-		int row = sqlSession.insert(NS+"insertgalleryFile",galleryFile);
-		return row;
-	}
+	}	
 }
