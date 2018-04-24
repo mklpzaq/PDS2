@@ -28,11 +28,20 @@ public class BoardController {
 	public String insertBoard(BoardRequest boardRequest, HttpSession session) {
 		logger.info("POST /insertBoard BoardController");
 		logger.info("boardRequest : " + boardRequest);
+		// service : ArticleRequest => Article + 실제 파일을 폴더에 저장(일단 DB에 말고 ) 트랜젝션 서비스가 필요하다 트랜젝션을 쓰려면 설정파일 설정해야한다.
+		// dao : insert 
 		
+		//세션이 만들어져 있는 톰켓 자체를 가리킨다.
+		/*
+		 * 내 안에 만들어져 있는 upload의 주소가 
+		 * '/resources'/upload
+		 * */
+		String path = session.getServletContext().getRealPath("/resources/upload/board");
+		logger.info(path);
 		
 		boardService.insertBoard();
 			
-		return "home";
+		return "redirect:/";
 	}
 	
 }
