@@ -53,8 +53,9 @@ public class ResumeService {
 		//파일 사이즈
 		long resumeFileSize = multipartFile.getSize(); //multipartFile의 사이즈를 가져옴 
 			System.out.println("resumeFileSize : "+resumeFileSize);	
+			
 		//파일 저장(매개변수 path 위치 가지고 해야한다 path+"/"+resumeFileName+"."+resumeFileExt)
-		File file = new File(path+"/"+resumeFileName+"."+resumeFileExt);
+		File file = new File("d:\\upload\\"+resumeFileName+"."+resumeFileExt);
 		
 		try {
 			multipartFile.transferTo(file); //파일을 만드는 매서드. multipartFile에 빈파일을 만들어 만든 file을 넣는다
@@ -85,7 +86,7 @@ public class ResumeService {
 		
 		int beginRow = (currentPage-1)*pagePerRow;
 		
-		System.out.println("pagePerRow : "+pagePerRow);
+		System.out.println("beginRow : "+beginRow);
 		
 			map.put("beginRow", beginRow);
 			map.put("pagePerRow", pagePerRow);

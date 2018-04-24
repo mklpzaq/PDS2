@@ -101,7 +101,7 @@
 													<th scope = "row">${resume.resumeId}</th>
 													<td>${resume.resumeTitle}</td>
 													<td>${resume.resumeContent}</td>
-													<td>${resume.resumeFile.resumeFileName}</td>
+													<td><a>${resume.resumeFile.resumeFileName}</a></td>
 													<td>${resume.resumeFile.resumeFileExt}</td>
 													<td>${resume.resumeFile.resumeFileSize}</td>
 												</tr>
@@ -135,7 +135,7 @@
 								</ul>
 							</nav>
 							<div>
-								<form action="<%=request.getContextPath()%>/resumeList" method="get">
+								<%-- <form action="<%=request.getContextPath()%>/resumeList" method="get">
 										<select id="searchOption" name="searchOption" onclick="changehtml();">											
 										<option value="all" <c:if test="${searchOption == 'all'}">selected</c:if>>전체검색</option>
 										<option value="resume_title" <c:if test="${searchOption == '"resume_title"'}">selected</c:if>>이력서 제목</option>
@@ -144,7 +144,7 @@
 									<!-- <dr id="keyword"></dr> -->
 									<input id="keyword" name="keyword" value="${keyword}">
 									<input type="submit" value="검색버튼" >
-								</form>
+								</form> --%>
 							</div>
 							<div>
 						  		<button id="button">주문 취소</button>

@@ -19,25 +19,25 @@ public class ResumeDao {
 	private static final Logger logger = LoggerFactory.getLogger(ResumeDao.class);
 	
 	public int insertResume(Resume resume) {
-		logger.info("ResumeDao - insertResume : "+resume.toString());
+		logger.debug("ResumeDao - insertResume : "+resume.toString());
 		sqlSession.insert(NS+"insertResume", resume);
 		return resume.getResumeId();
 	}
 	
 	public int insertResumeFile(ResumeFile resumeFile) {
-		logger.info("ResumeDao - insertResumeFile : "+resumeFile.toString());
+		logger.debug("ResumeDao - insertResumeFile - resumeFile : "+resumeFile.toString());
 		 
 		return sqlSession.insert(NS+"insertResumeFile", resumeFile);
 	}
 	
 	public List<Resume> selectResumeList(Map<String, Object> map) {
-		logger.info("ResumeDao - selectResumeList : "+map.toString());
+		logger.debug("ResumeDao - selectResumeList - resumeFile : "+map.toString());
 		 
 		return sqlSession.selectList(NS+"selectResumeList", map);
 	}
 	
 	public int totalCountResume(Map<String, Object> map) {
-		logger.info("ResumeDao - totalCountResume : "+map.toString());
+		logger.debug("ResumeDao - totalCountResume : "+map.toString());
 		 
 		return sqlSession.selectOne(NS+"totalCountResume", map);
 	}
