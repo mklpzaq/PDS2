@@ -46,7 +46,8 @@
         <property name="mapperLocations">
             <list>
             	<value>classpath:com/test/pds2/article/service/ArticleMapper.xml</value>
-            	<value>classpath:com/test/pds2/board/service/BoardMapper.xml</value>           
+            	<value>classpath:com/test/pds2/board/service/BoardMapper.xml</value>
+            	<value>classpath:com/test/pds2/notice/service/NoticeMapper.xml</value>           
             </list>
         </property>
     </bean>
