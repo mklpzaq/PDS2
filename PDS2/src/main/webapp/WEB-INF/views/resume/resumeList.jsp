@@ -101,7 +101,7 @@
 													<th scope = "row">${resume.resumeId}</th>
 													<td>${resume.resumeTitle}</td>
 													<td>${resume.resumeContent}</td>
-													<td><a>${resume.resumeFile.resumeFileName}</a></td>
+													<td><a href="D:\\upload\\${resume.resumeFile.resumeFileName}.${resume.resumeFile.resumeFileExt}">${resume.resumeFile.resumeFileName}</a></td>
 													<td>${resume.resumeFile.resumeFileExt}</td>
 													<td>${resume.resumeFile.resumeFileSize}</td>
 												</tr>

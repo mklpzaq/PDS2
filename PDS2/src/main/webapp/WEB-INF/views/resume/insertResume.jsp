@@ -10,6 +10,8 @@
 		<div><input type="text" name="resumeTitle"></div>
 		<textarea name="resumeContent"></textarea>
 		<div><input type="file" name="multipartFile"></div>
+		<div><input type="file" name="multipartFile"></div>
+		<div><input type="file" name="multipartFile"></div>
 		<div><input type="submit"></div>
 	</form>
 </body>

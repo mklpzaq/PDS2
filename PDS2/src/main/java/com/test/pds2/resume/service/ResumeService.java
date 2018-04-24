@@ -14,17 +14,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds2.path.SystemPath;
+
 @Service
 public class ResumeService {
 	
-	@Autowired ResumeDao resumeDao;
+	@Autowired 
+	private ResumeDao resumeDao;	
+	@Autowired 
+	private ResumeFileDao resumeFileDao;
+	
 	private static final Logger logger = LoggerFactory.getLogger(ResumeService.class);
 	
 	@Transactional
 	public void insertResume(ResumeRequest resumeRequest, String path) {
-		MultipartFile multipartFile = resumeRequest.getMultipartFile();
 		
-		Resume resume = new Resume();
+		Resume resume = new Resume();	
 		resume.setResumeTitle(resumeRequest.getResumeTitle());
 		resume.setResumeContent(resumeRequest.getResumeContent());
 		
@@ -38,43 +43,60 @@ public class ResumeService {
 		resume.setResumeFile(resumeFile); //이게 왜들어갔지?
 		System.out.println("resumeFileName  : "+resumeFileName);
 		
+		int resumeId= resumeDao.insertResume(resume);
+		
+		for(int i = 0; i<resumeRequest.getMultipartFile().size(); i++) {
+			MultipartFile multipartFile = resumeRequest.getMultipartFile().get(i);			
+			int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");  
+			String resumeFileExt = multipartFile.getOriginalFilename().substring(dotIndex+1);
+			String resumeFileType = multipartFile.getContentType();
+			long resumeFileSize = multipartFile.getSize();
+			File file = new File(SystemPath.SYSTEM_PATH+"/"+resumeFileName+"."+resumeFileExt);		
+			try {
+				multipartFile.transferTo(file); 
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			} 
+			
+			resumeFile.setResumeId(resumeId);
+			resumeFile.setResumeFileName(resumeFileName);
+			resumeFile.setResumeFileExt(resumeFileExt);
+			resumeFile.setResumeFileType(resumeFileType);
+			resumeFile.setResumeFileSize(resumeFileSize);
+			
+			resumeFileDao.insertResumeFile(resumeFile);	
+		}
+		
+		
 		// 파일 확장자		
-		String sss = "abcdabcd";
+		/*String sss = "abcdabcd";
 		System.out.println(sss.indexOf("ab"));  //0부터 시작이니까 0
 		System.out.println(sss.lastIndexOf("ab")); //뒤에서부터 찾는데 번호 자체는 어차피 첫번째부터 셈. 4
-		System.out.println(multipartFile.getOriginalFilename());  //현재 파일의 전체 이름 예를 들어 ajax.txt
-		int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");  //IndexOf, lastIndexOf에서 ""안에 문자가 몇번째에 있는지 찾는 매서드 IndexOf는 앞부터 lastIndexOf는 뒤부터
-		String resumeFileExt = multipartFile.getOriginalFilename().substring(dotIndex+1); 		
-		System.out.println("resumeFileExt  : "+resumeFileExt);
+		System.out.println(multipartFile.getOriginalFilename());  //현재 파일의 전체 이름 예를 들어 ajax.txt*/		
+		
+			
+			//IndexOf, lastIndexOf에서 ""안에 문자가 몇번째에 있는지 찾는 매서드 IndexOf는 앞부터 lastIndexOf는 뒤부터
+		
 				
 		//파틸 타입
-		String resumeFileType = multipartFile.getContentType(); //multipartFile의 파일타입을 가져옴 
-		System.out.println("resumeFileType : "+resumeFileType);
+		 //multipartFile의 파일타입을 가져옴 
 		//파일 사이즈
-		long resumeFileSize = multipartFile.getSize(); //multipartFile의 사이즈를 가져옴 
-			System.out.println("resumeFileSize : "+resumeFileSize);	
+		 //multipartFile의 사이즈를 가져옴 
 			
 		//파일 저장(매개변수 path 위치 가지고 해야한다 path+"/"+resumeFileName+"."+resumeFileExt)
-		File file = new File("d:\\upload\\"+resumeFileName+"."+resumeFileExt);
 		
-		try {
-			multipartFile.transferTo(file); //파일을 만드는 매서드. multipartFile에 빈파일을 만들어 만든 file을 넣는다
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
 		
-		//resumeFile에 셋팅		
-		resumeFile.setResumeId(resumeDao.insertResume(resume));
-		resumeFile.setResumeFileName(resumeFileName);
-		resumeFile.setResumeFileExt(resumeFileExt);
-		resumeFile.setResumeFileType(resumeFileType);
-		resumeFile.setResumeFileSize(resumeFileSize);
 		
-		resumeDao.insertResumeFile(resumeFile);				
+		
+		
+		//resumeFile에 셋팅	
+		
+	
+		
+		
 	}
 	
 	
