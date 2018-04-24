@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class BoardService {
 	@Autowired
 	private BoardDao boardDao;
+	@Autowired
+	private BoardFileDao boardFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
 	
 	public void insertBoard(BoardRequest boardRequest, String path) {
@@ -39,7 +41,7 @@ public class BoardService {
 		logger.info("filename : " + filename);
 		filename = filename.replace("-", "");
 		logger.info("repalced filename : " + filename);
-		boardFile.setBoardFileName(filename);
+		
 		
 		/*
 		 * 2. 파일 확장자
@@ -48,14 +50,14 @@ public class BoardService {
 		int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
 		String fileExt = multipartFile.getOriginalFilename().substring(dotIndex+1);
 		logger.info("fileExt : " + fileExt);
-		boardFile.setBoardFileExt(fileExt);
+		
 		
 		/*
 		 * 3. 파일 타입
 		 * */
 		String fileType = multipartFile.getContentType();
 		logger.info("fileType : " + fileType);
-		boardFile.setBoardFileType(fileType);
+		
 		
 		/*
 		 * 4. 파일 사이즈 
@@ -64,14 +66,15 @@ public class BoardService {
 		logger.info("longFileSize : " + longFileSize);
 		int fileSize = (int)longFileSize;
 		logger.info("fileSize : " + fileSize);
-		boardFile.setBoardFileSize(fileSize);
+		
 		
 		/*
 		 * 5. 파일 저장(매개변수 path를 사용)
 		 * File file = new File(path+"/"+filename+"."+fileExt);
 		 * */
 		//File file = new File("d:\\upload\\"+filename+"."+fileExt);
-		File file = new File(path+"\\"+filename+"."+fileExt);
+		logger.info("파일 저장 경로 : " + path+filename+"."+fileExt);
+		File file = new File(path+filename+"."+fileExt);
 		try {
 			multipartFile.transferTo(file);
 		} catch (IllegalStateException e) {
@@ -80,12 +83,16 @@ public class BoardService {
 			e.printStackTrace();
 		}
 		
+		boardFile.setBoardFileName(filename);
+		boardFile.setBoardFileExt(fileExt);
+		boardFile.setBoardFileType(fileType);
+		boardFile.setBoardFileSize(fileSize);
 		
 		board.setBoardFile(boardFile);
 		boardDao.insertBoard(board);
 		board.getBoardFile().setBoardId(board.getBoardId());
 		logger.info("board.getBoardFile().getBoardId() : " + board.getBoardFile().getBoardId());
-		boardDao.insertBoardFile(board.getBoardFile());
+		boardFileDao.insertBoardFile(board.getBoardFile());
 		
 		
 	}

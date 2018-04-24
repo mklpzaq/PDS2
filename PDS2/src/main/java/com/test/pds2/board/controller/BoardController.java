@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.test.pds2.board.service.BoardRequest;
 import com.test.pds2.board.service.BoardService;
+import com.test.pds2.path.SystemPath;
 
 @Controller
 public class BoardController {
@@ -37,7 +38,7 @@ public class BoardController {
 		 * '/resources'/upload
 		 * */
 		//String path = session.getServletContext().getRealPath("/resources/upload/board");
-		String path = "D:\\upload";
+		String path = SystemPath.SYSTEM_PATH;
 		logger.info("path : " + path);
 		
 		boardService.insertBoard(boardRequest, path);

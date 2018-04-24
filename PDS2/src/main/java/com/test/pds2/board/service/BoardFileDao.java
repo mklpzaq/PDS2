@@ -7,16 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BoardDao {
+public class BoardFileDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	private static final Logger logger = LoggerFactory.getLogger(BoardDao.class);
-	final String NS = "com.test.pds2.board.service.BoardMapper.";
+	private static final Logger logger = LoggerFactory.getLogger(BoardFileDao.class);
+	final String NS = "com.test.pds2.board.service.BoardFileMapper.";
 	
-	public void insertBoard(Board board) {
-		sqlSession.insert(NS+"insertBoard", board);
-		logger.info(board.toString());
+	public void insertBoardFile(BoardFile boardFile) {
+		sqlSession.insert(NS+"insertBoardFile", boardFile);
 	}
 	
-
 }

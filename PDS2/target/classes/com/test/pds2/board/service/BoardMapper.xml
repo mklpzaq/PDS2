@@ -23,23 +23,7 @@
 		)
 	</insert>
 	
-	<insert id="insertBoardFile"
-			parameterType="com.test.pds2.board.service.BoardFile">
-		INSERT INTO board_file(
-			board_id
-			,board_file_name
-			,board_file_ext
-			,board_file_type
-			,board_file_size
-		)
-		VALUES(
-			#{boardId}
-			,#{boardFileName}
-			,#{boardFileExt}
-			,#{boardFileType}
-			,#{boardFileSize}
-		)
-	</insert>
+	
 	
 </mapper>
 

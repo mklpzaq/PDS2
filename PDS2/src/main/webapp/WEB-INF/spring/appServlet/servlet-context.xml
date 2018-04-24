@@ -52,6 +52,7 @@
             	<value>classpath:com/test/pds2/resume/service/ResumeMapper.xml</value>
             	<value>classpath:com/test/pds2/resume/service/ResumeFileMapper.xml</value>
             	<value>classpath:com/test/pds2/gallery/service/GalleryMapper.xml</value>            
+            	<value>classpath:com/test/pds2/board/service/BoardFileMapper.xml</value>
             </list>
         </property>
     </bean>
