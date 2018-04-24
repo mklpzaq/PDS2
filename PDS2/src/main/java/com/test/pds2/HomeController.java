@@ -25,12 +25,6 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.debug("Welcome home! The client locale is {}.", locale);
-		logger.debug("sample debug");
-		logger.info("sample info");
-		logger.warn("sample warning");
-		logger.error("sample error");
-		
-		
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);

@@ -36,36 +36,36 @@ public class BoardService {
 		 * - 문자를 아무것도 없는 문자로 변경시킨다.
 		 * */
 		UUID uuid = UUID.randomUUID();
-		logger.info("uuid : " + uuid);
+		logger.debug("uuid : " + uuid);
 		String filename = uuid.toString();
-		logger.info("filename : " + filename);
+		logger.debug("filename : " + filename);
 		filename = filename.replace("-", "");
-		logger.info("repalced filename : " + filename);
+		logger.debug("repalced filename : " + filename);
 		
 		
 		/*
 		 * 2. 파일 확장자
 		 * */
-		logger.info("originalFilename : " + multipartFile.getOriginalFilename());
+		logger.debug("originalFilename : " + multipartFile.getOriginalFilename());
 		int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
 		String fileExt = multipartFile.getOriginalFilename().substring(dotIndex+1);
-		logger.info("fileExt : " + fileExt);
+		logger.debug("fileExt : " + fileExt);
 		
 		
 		/*
 		 * 3. 파일 타입
 		 * */
 		String fileType = multipartFile.getContentType();
-		logger.info("fileType : " + fileType);
+		logger.debug("fileType : " + fileType);
 		
 		
 		/*
 		 * 4. 파일 사이즈 
 		 * */
 		long longFileSize = multipartFile.getSize();
-		logger.info("longFileSize : " + longFileSize);
+		logger.debug("longFileSize : " + longFileSize);
 		int fileSize = (int)longFileSize;
-		logger.info("fileSize : " + fileSize);
+		logger.debug("fileSize : " + fileSize);
 		
 		
 		/*
@@ -73,7 +73,7 @@ public class BoardService {
 		 * File file = new File(path+"/"+filename+"."+fileExt);
 		 * */
 		//File file = new File("d:\\upload\\"+filename+"."+fileExt);
-		logger.info("파일 저장 경로 : " + path+filename+"."+fileExt);
+		logger.debug("파일 저장 경로 : " + path+filename+"."+fileExt);
 		File file = new File(path+filename+"."+fileExt);
 		try {
 			multipartFile.transferTo(file);
@@ -91,7 +91,7 @@ public class BoardService {
 		board.setBoardFile(boardFile);
 		boardDao.insertBoard(board);
 		board.getBoardFile().setBoardId(board.getBoardId());
-		logger.info("board.getBoardFile().getBoardId() : " + board.getBoardFile().getBoardId());
+		logger.debug("board.getBoardFile().getBoardId() : " + board.getBoardFile().getBoardId());
 		boardFileDao.insertBoardFile(board.getBoardFile());
 		
 		

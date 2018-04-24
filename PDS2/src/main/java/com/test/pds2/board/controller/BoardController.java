@@ -35,8 +35,8 @@ public class BoardController {
 	
 	@RequestMapping(value="/insertBoard", method=RequestMethod.POST)
 	public String insertBoard(BoardRequest boardRequest, HttpSession session) {
-		logger.info("POST /insertBoard BoardController");
-		logger.info("boardRequest : " + boardRequest);
+		logger.debug("POST /insertBoard BoardController");
+		logger.debug("boardRequest : " + boardRequest);
 		// service : ArticleRequest => Article + 실제 파일을 폴더에 저장(일단 DB에 말고 ) 트랜젝션 서비스가 필요하다 트랜젝션을 쓰려면 설정파일 설정해야한다.
 		// dao : insert 
 		
@@ -47,7 +47,7 @@ public class BoardController {
 		 * */
 		//String path = session.getServletContext().getRealPath("/resources/upload/board");
 		String path = SystemPath.SYSTEM_PATH;
-		logger.info("path : " + path);
+		logger.debug("path : " + path);
 		
 		boardService.insertBoard(boardRequest, path);
 			

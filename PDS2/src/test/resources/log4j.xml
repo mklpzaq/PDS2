@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
-<!--
-	log4j.xml파일의 root tag인  <log4j:configuration>은
-	하위에 appender, logger, root등의 tag를 가질 수 있다.
-	appender : 로그가 출력될 대상과 방법을 정의한다. 여러 appender정의 가능
-	logger : 어플리케이션에서 사용될 Logger를 정의한다. 여러 logger정의 가능
-	root : 모든 logger의 상위 logger를 정의한다.
--->
+
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
 	<!-- Appenders -->
@@ -19,24 +13,24 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.test.pds2">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
-		<level value="debug" />
+		<level value="info" />
 	</logger>	
 	
 	<logger name="org.springframework.beans">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 	
 	<logger name="org.springframework.context">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 
 	<logger name="org.springframework.web">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 
 	<!-- Root Logger -->

@@ -15,7 +15,7 @@ public class BoardDao {
 	
 	public void insertBoard(Board board) {
 		sqlSession.insert(NS+"insertBoard", board);
-		logger.info(board.toString());
+		logger.debug(board.toString());
 	}
 	
 
