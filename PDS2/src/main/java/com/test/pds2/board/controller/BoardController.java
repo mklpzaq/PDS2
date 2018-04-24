@@ -21,8 +21,6 @@ public class BoardController {
 	@RequestMapping(value="/insertBoard", method=RequestMethod.GET)
 	public String insertBoard() {
 		logger.info("GET /insertBoard BoardController");
-		boardService.insertBoard();
-			
 		return "insertBoardForm";
 	}
 	
@@ -30,6 +28,8 @@ public class BoardController {
 	public String insertBoard(BoardRequest boardRequest, HttpSession session) {
 		logger.info("POST /insertBoard BoardController");
 		logger.info("boardRequest : " + boardRequest);
+		
+		
 		boardService.insertBoard();
 			
 		return "home";
