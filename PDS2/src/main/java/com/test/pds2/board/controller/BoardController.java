@@ -19,10 +19,18 @@ public class BoardController {
 	private BoardService boardService;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
+	
+	@RequestMapping(value="/getBoardList", method=RequestMethod.GET)
+	public String getBoardList() {
+		logger.debug("GET /getBoardList BoardController");
+		
+		return "/board/insertBoardForm";
+	}
+	
 	@RequestMapping(value="/insertBoard", method=RequestMethod.GET)
 	public String insertBoard() {
-		logger.info("GET /insertBoard BoardController");
-		return "insertBoardForm";
+		logger.debug("GET /insertBoard BoardController");
+		return "/board/insertBoardForm";
 	}
 	
 	@RequestMapping(value="/insertBoard", method=RequestMethod.POST)
