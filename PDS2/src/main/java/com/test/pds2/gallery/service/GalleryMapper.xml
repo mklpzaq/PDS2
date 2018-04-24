@@ -5,18 +5,30 @@
   
 <mapper namespace="com.test.pds2.gallery.service.GalleryMapper">
 
+	<insert id="insertGallery"
+			parameterType="com.test.pds2.gallery.service.Gallery">
+		<selectKey resultType="int" keyProperty="galleryId" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+			
+		INSERT INTO gallery
+			(gallery_title
+			,gallery_content)
+		VALUES
+			(#{galleryTitle}
+			,#{galleryContent})
+	</insert>
+	
 	<insert id="insertgalleryFile" 
 			parameterType="com.test.pds2.gallery.service.GalleryFile">
 		INSERT INTO gallery_file
-			(gallery_file_id
-			,gallery_id
+			(gallery_id
 			,gallery_file_name
 			,gallery_file_ext
 			,gallery_file_type
 			,gallery_file_size)
 		VALUES
-			(null
-			,#{galleryId}
+			(#{galleryId}
 			,#{galleryFileName}
 			,#{galleryFileExt}
 			,#{galleryFileType}

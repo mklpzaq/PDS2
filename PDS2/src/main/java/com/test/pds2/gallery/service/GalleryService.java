@@ -4,11 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class GalleryService {
+	
+	@Autowired 
+	GalleryDao galleryDao;
+	
 	public void insertGallery(GalleryRequest galleryRequest, String path) {
 		MultipartFile multipartFile = galleryRequest.getMultipartfile();
 		
@@ -40,8 +45,13 @@ public class GalleryService {
 		} catch (IOException e) {			
 			e.printStackTrace();
 		}
+				
+		galleryFile.setGalleryId(galleryDao.insertGallery(gallery));
+		galleryFile.setGalleryFileName(filename);
+		galleryFile.setGalleryFileExt(fileExt);
+		galleryFile.setGalleryFileType(fileType);
+		galleryFile.setGalleryFileSize(doIndex);
 		
-		//galleryFile.setGalleryId();
-		
+		galleryDao.insertGalleryFile(galleryFile);
 	}
 }
