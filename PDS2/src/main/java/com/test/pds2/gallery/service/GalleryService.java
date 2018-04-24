@@ -41,7 +41,7 @@ public class GalleryService {
 			e.printStackTrace();
 		}
 		
-		//gallery.setGalleryFile(galleryFile);
+		//galleryFile.setGalleryId();
 		
 	}
 }
