@@ -13,7 +13,7 @@
 	<appender name="console_two" class="org.apache.log4j.ConsoleAppender">
 		<param name="Target_two" value="System.out" />
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="===> %-5p: %c - %m%n\n" />
+			<param name="ConversionPattern" value="=============================\n\n===> %-5p: %c - %m%n\n=============================\n" />
 		</layout>
 	</appender>
 	
