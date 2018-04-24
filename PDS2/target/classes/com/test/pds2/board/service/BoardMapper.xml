@@ -5,7 +5,31 @@
  
 <mapper namespace="com.test.pds2.board.service.BoardMapper">
 	
+	<select id="totalCountBoard"
+			parameterType="java.util.Map"
+			resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			board
+		<if test="!searchWord.equals('')">
+			<choose>
+				<when test="searchSelect.equals('boardId')">
+					WHERE board_id = #{searchWord}
+				</when>
+				<when test="searchSelect.equals('boardTitle')">
+					WHERE board_title = #{searchWord}
+				</when>
+				<when test="searchSelect.equals('boardContent')">
+					WHERE board_content = #{searchWord}
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+	
 	<select id="getBoardList"
+			parameterType="java.util.Map"
 			resultType="com.test.pds2.board.service.Board">
 		SELECT
 			board_id AS boardId
@@ -13,6 +37,21 @@
 			,board_content AS boardContent
 		FROM
 			board
+		<if test="!searchWord.equals('')">
+			<choose>
+				<when test="searchSelect.equals('boardId')">
+					WHERE board_id = #{searchWord}
+				</when>
+				<when test="searchSelect.equals('boardTitle')">
+					WHERE board_title = #{searchWord}
+				</when>
+				<when test="searchSelect.equals('boardContent')">
+					WHERE board_content = #{searchWord}
+				</when>
+			</choose>
+		</if>
+		ORDER BY board_id DESC
+		LIMIT #{beginRow}, #{pagePerRow}	
 	</select>
 	
 	

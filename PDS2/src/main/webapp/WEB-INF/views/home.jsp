@@ -21,7 +21,7 @@
 						<P>The time on the server is ${serverTime}.</P>
 						
 						<a href="#">articleList</a> |
-						<a href="#">boardList</a> |
+						<a href="${pageContext.request.contextPath}/getBoardList">boardList</a> |
 						<a href="#">galleryList</a> |
 						<a href="${pageContext.request.contextPath}/selectNoticeList">noticeList</a> |
 						<a href="${pageContext.request.contextPath}/resumeList">resumeList</a>

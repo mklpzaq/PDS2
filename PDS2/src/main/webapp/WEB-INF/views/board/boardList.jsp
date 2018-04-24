@@ -23,7 +23,7 @@
 				
 				/* 드롭메뉴 클릭했을때 글자 바꾸기와 드롭메뉴 닫기 */
 				$('#dropDownMenu > li').click(function(){
-					/* searchButton을 누르면 searchWord변수의 값을 get방식으로 getAddressListController로 검색어와 함께 넘길 것이다.
+					/* searchButton을 누르면 searchWord변수의 값을 get방식으로 getBoardListController로 검색어와 함께 넘길 것이다.
 					*  클릭했을때 선택한 select내용의 값을 #selectButtonText에 넣어준다.
 					*/
 					$('#selectButtonText, #monitorSearchSelect').text($(this).text());
@@ -33,14 +33,14 @@
 				$('#selectPagePerRow').change(function() {
 					/* searchSelect = $('#monitorSearchSelect').text();
 					searchWord = $('#monitorSearchWord').val(); */
-					$(location).attr('href', './getAddressList?pagePerRow=' + $('#selectPagePerRow > option:selected').val() + '&searchSelect=' + $('#monitorSearchSelect').text() + '&searchWord=' + $('#monitorSearchWord').text());
+					$(location).attr('href', './getBoardList?pagePerRow=' + $('#selectPagePerRow > option:selected').val() + '&searchSelect=' + $('#monitorSearchSelect').text() + '&searchWord=' + $('#monitorSearchWord').text());
 				});
 				
 				/* 검색버튼을 클릭하면 get방식으로  searchSignal, searchSelect, searchWord값을 넘긴다.*/
 				$('#searchButton').click(function(){
 					searchSelect = $('#selectButtonText').text();
 					searchWord = $('#searchWord').val();
-					$(location).attr('href', './getAddressList?searchSignal=y&searchSelect=' + searchSelect + '&searchWord=' + searchWord);
+					$(location).attr('href', './getBoardList?searchSignal=y&searchSelect=' + searchSelect + '&searchWord=' + searchWord);
 				});
 				
 			});
@@ -94,9 +94,9 @@
 												<span id="selectButtonText">${searchSelect}</span> <span class="caret"></span>
 											</button>
 											<ul id="dropDownMenu" class="dropdown-menu" role="menu">
-												<li><a href="#">addressNo</a></li>
-												<li><a href="#">memberNo</a></li>
-												<li><a href="#">addressContent</a></li>
+												<li><a href="#">boardId</a></li>
+												<li><a href="#">boardTitle</a></li>
+												<li><a href="#">boardContent</a></li>
 											</ul>
 										</div>
 										<input type="text" id="searchWord" class="form-control" placeholder="검색어 입력">
@@ -113,21 +113,21 @@
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<td><strong>addressNo</strong></td>
-										<td><strong>memberNo</strong></td>
-										<td><strong>addressContent</strong></td>
+										<td><strong>boardId</strong></td>
+										<td><strong>boardTitle</strong></td>
+										<td><strong>boardContent</strong></td>
 										<td><strong>수정</strong></td>
 										<td><strong>삭제</strong></td>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="address" items="${list}">
+									<c:forEach var="board" items="${list}">
 										<tr>
-											<td><strong>${address.addressNo}</strong></td>
-											<td>${address.memberNo}</td>
-											<td>${address.addressContent}</td>
-											<td><a href="${pageContext.request.contextPath}/updateAddress?sendNo=${address.addressNo}">수정</a></td>
-											<td><a href="${pageContext.request.contextPath}/deleteAddress?sendNo=${address.addressNo}">삭제</a></td>
+											<td><strong>${board.boardId}</strong></td>
+											<td>${board.boardTitle}</td>
+											<td>${board.boardContent}</td>
+											<td><a href="${pageContext.request.contextPath}/updateboard?sendNo=${board.boardId}">수정</a></td>
+											<td><a href="${pageContext.request.contextPath}/deleteboard?sendNo=${board.boardId}">삭제</a></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -135,19 +135,19 @@
 							<nav>
 								<ul class="pagination">
 									<li>
-										<a href="${pageContext.request.contextPath}/getAddressList?currentPage=1&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}" aria-label="Previous">
+										<a href="${pageContext.request.contextPath}/getBoardList?currentPage=1&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}" aria-label="Previous">
 											<span aria-hidden="true">&laquo;</span>
 										</a>
 									</li>
 									<li>
 										<c:choose>
 											<c:when test="${currentPage > 1}">
-												<a href="${pageContext.request.contextPath}/getAddressList?currentPage=${currentPage-1}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}"aria-label="Previous">
+												<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${currentPage-1}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}"aria-label="Previous">
 													<span aria-hidden="true">&lt;</span>
 												</a>
 											</c:when>
 											<c:otherwise>
-												<a href="${pageContext.request.contextPath}/getAddressList?currentPage=1&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}"aria-label="Previous">
+												<a href="${pageContext.request.contextPath}/getBoardList?currentPage=1&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}"aria-label="Previous">
 													<span aria-hidden="true">&lt;</span>
 												</a>
 											</c:otherwise>
@@ -158,10 +158,10 @@
 											<c:forEach var="pageNum" begin="${beginPageNumForCurrentPage}" end="${beginPageNumForCurrentPage + 4}" step="1">
 												<c:choose>
 													<c:when test="${pageNum == currentPage}">
-														<li class="active"><a href="${pageContext.request.contextPath}/getAddressList?currentPage=${pageNum}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}">${pageNum}</a></li>
+														<li class="active"><a href="${pageContext.request.contextPath}/getBoardList?currentPage=${pageNum}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}">${pageNum}</a></li>
 													</c:when>
 													<c:otherwise>
-														<li><a href="${pageContext.request.contextPath}/getAddressList?currentPage=${pageNum}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}">${pageNum}</a></li>
+														<li><a href="${pageContext.request.contextPath}/getBoardList?currentPage=${pageNum}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}">${pageNum}</a></li>
 													</c:otherwise>
 												</c:choose>
 											</c:forEach>
@@ -170,10 +170,10 @@
 											<c:forEach var="pageNum" begin="${beginPageNumForCurrentPage}" end="${lastPage}" step="1">
 												<c:choose>
 													<c:when test="${pageNum == currentPage}">
-														<li class="active"><a href="${pageContext.request.contextPath}/getAddressList?currentPage=${pageNum}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}">${pageNum}</a></li>
+														<li class="active"><a href="${pageContext.request.contextPath}/getBoardList?currentPage=${pageNum}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}">${pageNum}</a></li>
 													</c:when>
 													<c:otherwise>
-														<li><a href="${pageContext.request.contextPath}/getAddressList?currentPage=${pageNum}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}">${pageNum}</a></li>
+														<li><a href="${pageContext.request.contextPath}/getBoardList?currentPage=${pageNum}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}">${pageNum}</a></li>
 													</c:otherwise>
 												</c:choose>
 											</c:forEach>
@@ -182,19 +182,19 @@
 									<li>
 										<c:choose>
 											<c:when test="${currentPage < lastPage}">
-												<a href="${pageContext.request.contextPath}/getAddressList?currentPage=${currentPage+1}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}" aria-label="Next">
+												<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${currentPage+1}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}" aria-label="Next">
 													<span aria-hidden="true">&gt;</span>
 												</a>
 											</c:when>
 											<c:otherwise>
-												<a href="${pageContext.request.contextPath}/getAddressList?currentPage=${lastPage}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}"aria-label="Next">
+												<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${lastPage}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}"aria-label="Next">
 													<span aria-hidden="true">&gt;</span>
 												</a>
 											</c:otherwise>
 										</c:choose>
 									</li>
 									<li>
-										<a href="${pageContext.request.contextPath}/getAddressList?currentPage=${lastPage}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}" aria-label="Next">
+										<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${lastPage}&pagePerRow=${pagePerRow}&searchSignal=${searchSignal}&searchSelect=${searchSelect}&searchWord=${searchWord}" aria-label="Next">
 											<span aria-hidden="true">&raquo;</span>
 										</a>
 									</li>
