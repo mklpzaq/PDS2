@@ -10,9 +10,9 @@
 			SELECT LAST_INSERT_ID()
 		</selectKey>	
 			INSERT INTO notice(
-				notice_id as noticeID
-				, notice_title as noticeTitle
-				, notice_content as noticeContent
+				notice_id
+				, notice_title
+				, notice_content
 			) VALUES (
 				NULL
 				, #{noticeTitle}
@@ -22,19 +22,17 @@
 	
 	<insert id="insertNoticeFile" parameterType="com.test.pds2.notice.service.NoticeFile">
 		INSERT INTO notice_file (
-			notice_file_id as noticeFileId
-			, notice_file_name as noticeFileName
-			, notice_file_ext as noticeFileExt
-			, notice_file_type as noticeFileType
-			, notice_file_size as noticeFileSize
-			, notice_id as noticeId
+			notice_file_id
+			, notice_file_name
+			, notice_file_ext
+			, notice_file_type
+			, notice_file_size
 		) VALUES (
 			NULL
 			, #{noticeFileName}
 			, #{noticeFileExt}
 			, #{noticeFileType}
 			, #{noticeFileSize}
-			, #{noticeId}
 		)
 	</insert>
 </mapper>

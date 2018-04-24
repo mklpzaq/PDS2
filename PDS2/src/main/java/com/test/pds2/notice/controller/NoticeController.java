@@ -21,11 +21,13 @@ public class NoticeController {
 	
 	@RequestMapping(value = "/insertNotice", method = RequestMethod.GET)
 	public String insertNotice() {
+		logger.info("insertNotice-GET");
 		return "notice/insertNotice";
 	}
 	
 	@RequestMapping(value = "/insertNotice", method = RequestMethod.POST)
 	public String insertNotice(NoticeRequest noticeRequest, HttpSession session ) {
+		logger.info("insertNotice-POST");
 		System.out.println("NoticeRequest");
 		String path = session.getServletContext().getRealPath("/resources/upload/notice");
 		System.out.println("path" + path);

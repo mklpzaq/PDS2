@@ -5,7 +5,7 @@ public class NoticeFile {
 	private String noticeFileName; //notice_file_name
 	private String noticeFileExt; //notice_file_ext
 	private String noticeFileType; //notice_file_type
-	private int noticeFileSize; //notice_file_size
+	private long noticeFileSize; //notice_file_size
 	private int noticeId; //notice_id
 	
 	public int getNoticeFileId() {
@@ -32,10 +32,10 @@ public class NoticeFile {
 	public void setNoticeFileType(String noticeFileType) {
 		this.noticeFileType = noticeFileType;
 	}
-	public int getNoticeFileSize() {
+	public long getNoticeFileSize() {
 		return noticeFileSize;
 	}
-	public void setNoticeFileSize(int noticeFileSize) {
+	public void setNoticeFileSize(long noticeFileSize) {
 		this.noticeFileSize = noticeFileSize;
 	}
 	public int getNoticeId() {
