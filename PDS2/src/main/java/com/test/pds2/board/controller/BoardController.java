@@ -36,8 +36,9 @@ public class BoardController {
 		 * 내 안에 만들어져 있는 upload의 주소가 
 		 * '/resources'/upload
 		 * */
-		String path = session.getServletContext().getRealPath("/resources/upload/board");
-		logger.info(path);
+		//String path = session.getServletContext().getRealPath("/resources/upload/board");
+		String path = "D:\\upload";
+		logger.info("path : " + path);
 		
 		boardService.insertBoard(boardRequest, path);
 			

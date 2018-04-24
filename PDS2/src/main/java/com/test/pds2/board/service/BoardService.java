@@ -70,7 +70,8 @@ public class BoardService {
 		 * 5. 파일 저장(매개변수 path를 사용)
 		 * File file = new File(path+"/"+filename+"."+fileExt);
 		 * */
-		File file = new File("d:\\upload\\"+filename+"."+fileExt);
+		//File file = new File("d:\\upload\\"+filename+"."+fileExt);
+		File file = new File(path+"\\"+filename+"."+fileExt);
 		try {
 			multipartFile.transferTo(file);
 		} catch (IllegalStateException e) {
@@ -79,13 +80,13 @@ public class BoardService {
 			e.printStackTrace();
 		}
 		
-		//board.id = 0;
+		
 		board.setBoardFile(boardFile);
 		boardDao.insertBoard(board);
 		board.getBoardFile().setBoardId(board.getBoardId());
 		logger.info("board.getBoardFile().getBoardId() : " + board.getBoardFile().getBoardId());
 		boardDao.insertBoardFile(board.getBoardFile());
-		//board.id = 7;
+		
 		
 	}
 }
