@@ -2,17 +2,25 @@ package com.test.pds2.resume.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ResumeService {
 	
 	@Autowired ResumeDao resumeDao;
+	private static final Logger logger = LoggerFactory.getLogger(ResumeService.class);
 	
+	@Transactional
 	public void insertResume(ResumeRequest resumeRequest, String path) {
 		MultipartFile multipartFile = resumeRequest.getMultipartFile();
 		
@@ -30,15 +38,13 @@ public class ResumeService {
 		resume.setResumeFile(resumeFile); //이게 왜들어갔지?
 		System.out.println("resumeFileName  : "+resumeFileName);
 		
-		// 파일 확장자
-		
+		// 파일 확장자		
 		String sss = "abcdabcd";
 		System.out.println(sss.indexOf("ab"));  //0부터 시작이니까 0
 		System.out.println(sss.lastIndexOf("ab")); //뒤에서부터 찾는데 번호 자체는 어차피 첫번째부터 셈. 4
 		System.out.println(multipartFile.getOriginalFilename());  //현재 파일의 전체 이름 예를 들어 ajax.txt
 		int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");  //IndexOf, lastIndexOf에서 ""안에 문자가 몇번째에 있는지 찾는 매서드 IndexOf는 앞부터 lastIndexOf는 뒤부터
 		String resumeFileExt = multipartFile.getOriginalFilename().substring(dotIndex+1); 		
-		
 		System.out.println("resumeFileExt  : "+resumeFileExt);
 				
 		//파틸 타입
@@ -60,15 +66,55 @@ public class ResumeService {
 			e.printStackTrace();
 		} 
 		
-		//resumeFile에 셋팅
+		//resumeFile에 셋팅		
 		resumeFile.setResumeId(resumeDao.insertResume(resume));
 		resumeFile.setResumeFileName(resumeFileName);
 		resumeFile.setResumeFileExt(resumeFileExt);
 		resumeFile.setResumeFileType(resumeFileType);
 		resumeFile.setResumeFileSize(resumeFileSize);
 		
-		resumeDao.insertResumeFile(resumeFile);
+		resumeDao.insertResumeFile(resumeFile);				
+	}
+	
+	
+	public Map<String, Object> resumeList(int currentPage, int pagePerRow, String searchOption, String keyword){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Resume> list;
+		int total;
+		/*String loginMemberId = loginMember.getMemberId();*/
 		
+		int beginRow = (currentPage-1)*pagePerRow;
 		
+		System.out.println("pagePerRow : "+pagePerRow);
+		
+			map.put("beginRow", beginRow);
+			map.put("pagePerRow", pagePerRow);
+			map.put("searchOption", searchOption);
+			map.put("keyword", keyword);/*
+			map.put("loginMemberId", loginMemberId);*/
+			list = resumeDao.selectResumeList(map);
+			total = resumeDao.totalCountResume(map);
+			
+		
+		int lastPage = 0;
+		if(total%pagePerRow == 0) {
+			lastPage = total/pagePerRow;
+		}else {
+			lastPage = total/pagePerRow + 1;
+		}
+		
+		int pageView = 5;
+		int startPage = ((currentPage-1)/5)*5+1; 
+		int endPage = startPage + pageView -1; 
+		if(endPage>lastPage) {
+			endPage=lastPage;
+		}
+		
+		Map<String, Object> returnmap = new HashMap<String, Object>();
+		returnmap.put("list", list);
+		returnmap.put("lastPage", lastPage);
+		returnmap.put("startPage", startPage);
+		returnmap.put("endPage", endPage);
+		return returnmap;
 	}
 }

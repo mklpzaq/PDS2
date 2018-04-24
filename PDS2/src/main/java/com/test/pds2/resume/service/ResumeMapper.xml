@@ -7,7 +7,7 @@
 	
 	<insert id="insertResume" parameterType="com.test.pds2.resume.service.Resume">
 		
-		<selectKey resultType="int" keyProperty="resumeId" order="AFTER">  order="AFTER" - insert쿼리 실행후에 자동증가 값 
+		<selectKey resultType="int" keyProperty="resumeId" order="AFTER">  <!-- order="AFTER" - insert쿼리 실행후에 자동증가 값  -->
             SELECT LAST_INSERT_ID()
         </selectKey>
 		
@@ -18,8 +18,8 @@
 				)
 			VALUES (
 				NULL
-				, ${resumeTitle}
-				, ${resumeContent}
+				, #{resumeTitle}
+				, #{resumeContent}
 			)				
 	</insert>
 	
@@ -42,4 +42,79 @@
 				,#{resumeId})				
 	</insert>
 	
+	
+	<!-- selectItemList 테이블조인 -->
+	<!--	resultMap - type : 객체 타입
+			resultMap - id : resultMap 명
+			id : PK 멤버변수 지정. 
+			id - column : DB 칼럼명
+			id - property : 커맨드 객체 멤버변수 명
+			result : PK 이외의 멤버변수 지정
+			column, property는 id와 같은 방법으로 사용한다.
+			association : 연관된 데이터를 맵핑시킨다.
+			javaType : 조인될 객체 타입
+			property : 커맨드 객체에서의 변수명
+	 		
+	 		데이터를 매핑시켜준다. 
+			association => 1 : 1 관계 
+			collection => 1 : 다 관계 (한명의 유저가 작성한 글 목록)
+			일반 컬럼과 pk 구분 가능 pk 칼럼에게는 result 아닌 id 사용
+		-->
+	<resultMap type="com.test.pds2.resume.service.Resume" id="resume">
+		<id column="resume_id" property="resumeId" />
+		<result column="resume_title" property="resumeTitle" />
+		<result column="resume_content" property="resumeContent" />
+		<collection ofType="com.test.pds2.resume.service.ResumeFile" property="resumeFile">
+				<id column="resume_file_id" property="resumeFileId"/>
+				<result column="resume_file_id" property="resumeFileId"/>
+				<result column="resume_file_name" property="resumeFileName"/>
+				<result column="resume_file_ext" property="resumeFileExt"/>
+				<result column="resume_file_size" property="resumeFileSize"/>			
+		</collection>
+	</resultMap>
+	
+	<select id="selectResumeList" parameterType="java.util.Map" resultMap="resume">
+		SELECT
+				rs.resume_id
+				,rs.resume_title
+				,rs.resume_content
+				,rsf.resume_file_id
+				,rsf.resume_file_name
+				,rsf.resume_file_ext
+				,rsf.resume_file_size
+			FROM resume as rs
+			join resume_file as rsf
+				using(resume_id)
+		
+			<choose>	      
+		        <when test="searchOption == 'all'">    
+		        	and resume_title like CONCAT('%', #{keyword},'%')
+		        	or resume_content like CONCAT('%', #{keyword},'%')       	           
+		        </when>
+		        <otherwise>
+		        	and #{searchOption} like CONCAT('%', #{keyword} ,'%')	             
+		        </otherwise>
+	    	</choose>
+		
+		ORDER BY resume_id DESC
+		LIMIT #{beginRow}, #{pagePerRow}
+	</select>
+	
+	<select id="totalCountResume"
+			parameterType="java.util.Map"
+			resultType="Integer">
+		SELECT
+		COUNT(*)
+			FROM resume
+			join resume_file
+				using(resume_id)
+		<choose>	      
+	        <when test="searchOption == 'all'">    
+	        	and resume like CONCAT('%', '#{keyword}','%')	        	           
+	        </when>
+	        <otherwise>
+	        	and #{searchOption} like CONCAT('%','${keyword}','%')	             
+	        </otherwise>
+	    </choose>
+	</select>
 </mapper>

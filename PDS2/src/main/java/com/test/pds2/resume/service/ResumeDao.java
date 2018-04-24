@@ -1,5 +1,8 @@
 package com.test.pds2.resume.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,13 +20,25 @@ public class ResumeDao {
 	
 	public int insertResume(Resume resume) {
 		logger.info("ResumeDao - insertResume : "+resume.toString());
-		 
-		return sqlSession.insert(NS+"insertResume", resume);
+		sqlSession.insert(NS+"insertResume", resume);
+		return resume.getResumeId();
 	}
 	
 	public int insertResumeFile(ResumeFile resumeFile) {
 		logger.info("ResumeDao - insertResumeFile : "+resumeFile.toString());
 		 
 		return sqlSession.insert(NS+"insertResumeFile", resumeFile);
+	}
+	
+	public List<Resume> selectResumeList(Map<String, Object> map) {
+		logger.info("ResumeDao - selectResumeList : "+map.toString());
+		 
+		return sqlSession.selectList(NS+"selectResumeList", map);
+	}
+	
+	public int totalCountResume(Map<String, Object> map) {
+		logger.info("ResumeDao - totalCountResume : "+map.toString());
+		 
+		return sqlSession.selectOne(NS+"totalCountResume", map);
 	}
 }
