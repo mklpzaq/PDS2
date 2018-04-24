@@ -3,21 +3,21 @@ package com.test.pds2.notice.service;
 import org.springframework.web.multipart.MultipartFile;
 
 public class NoticeRequest {
-	private String noticeTitle;
-	private String noticeContent;
+	private String NoticeTitle;
+	private String NoticeContent;
 	private MultipartFile multipartFile;
 	
 	public String getNoticeTitle() {
-		return noticeTitle;
+		return NoticeTitle;
 	}
 	public void setNoticeTitle(String noticeTitle) {
-		this.noticeTitle = noticeTitle;
+		NoticeTitle = noticeTitle;
 	}
 	public String getNoticeContent() {
-		return noticeContent;
+		return NoticeContent;
 	}
 	public void setNoticeContent(String noticeContent) {
-		this.noticeContent = noticeContent;
+		NoticeContent = noticeContent;
 	}
 	public MultipartFile getMultipartFile() {
 		return multipartFile;
@@ -25,4 +25,13 @@ public class NoticeRequest {
 	public void setMultipartFile(MultipartFile multipartFile) {
 		this.multipartFile = multipartFile;
 	}
+	
+	@Override
+	public String toString() {
+		return "NoticeRequest [NoticeTitle=" + NoticeTitle + ", NoticeContent=" + NoticeContent + ", multipartFile="
+				+ multipartFile + "]";
+	}
+	
+	
+
 }

@@ -10,13 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.test.pds2.board.service.BoardDao;
-import com.test.pds2.board.service.BoardService;
-
 @Service
 public class NoticeService {
 	@Autowired
 	private NoticeDao noticeDao;
+	private NoticeFileDao noticeFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(NoticeService.class);
 	
 	public void insertNotice(NoticeRequest noticeRequest, String path) {
@@ -32,7 +30,7 @@ public class NoticeService {
 		UUID uuid = UUID.randomUUID(); // 16진수 uuid 생성
 		String filename = uuid.toString();
 		filename = filename.replace("-", "");
-		System.out.println("filename : " + filename);
+		logger.debug("filename : " + filename);
 		noticeFile.setNoticeFileName(filename);
 		
 		//2.파일확장자
@@ -42,16 +40,16 @@ public class NoticeService {
 		
 		//3.파일컨텐트 타입
 		String fileType = multipartFile.getContentType();
-		System.out.println("fileType : " + fileType);
+		logger.debug("fileType : " + fileType);
 		noticeFile.setNoticeFileType(fileType);
 		
 		//4.파일사이즈
 		long fileSize = multipartFile.getSize();
-		System.out.println("fileSize : " + fileSize);
+		logger.debug("fileSize : " + fileSize);
 		noticeFile.setNoticeFileSize(fileSize);
 		
 		//5.파일저장(매개변수 path를 이용하여 저장장소를 지정해준다. path+"\\"+filename + "."+fileExt)
-		File file = new File(path+"\\"+filename + "."+fileExt);;
+		File file = new File("d:\\upload\\"+filename+fileExt);
 		try {
 			multipartFile.transferTo(file);
 		} catch (IllegalStateException e) {
@@ -66,7 +64,7 @@ public class NoticeService {
 		notice.setNoticeFile(noticeFile);
 		notice.getNoticeFile().setNoticeId(notice.getNoticeId());
 		noticeDao.insertNotice(notice);
-		noticeDao.insertNoticeFile(notice.getNoticeFile());
+		noticeFileDao.insertNoticeFile(notice.getNoticeFile());
 		
 	}
 }
