@@ -35,7 +35,7 @@ public class ArticleController {
 		String path = SystemPath.SYSTEM_PATH;
 		logger.debug("path : " + path);
 		
-		//articleService.insertArticle(articleRequest, path);
+		articleService.insertArticle(articleRequest, path);
 		return "redirect:/home";
 	}
 	

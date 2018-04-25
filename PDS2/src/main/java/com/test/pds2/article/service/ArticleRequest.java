@@ -5,17 +5,10 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ArticleRequest {
-	private int articleId;
 	private String articleTitle;
 	private String articleContent;
 	private List<MultipartFile> multipartFile;
 	
-	public int getArticleId() {
-		return articleId;
-	}
-	public void setArticleId(int articleId) {
-		this.articleId = articleId;
-	}
 	public String getArticleTitle() {
 		return articleTitle;
 	}
@@ -36,7 +29,7 @@ public class ArticleRequest {
 	}
 	@Override
 	public String toString() {
-		return "ArticleRequest [articleId=" + articleId + ", articleTitle=" + articleTitle + ", articleContent="
-				+ articleContent + ", multipartFile=" + multipartFile + "]";
+		return "ArticleRequest [articleTitle=" + articleTitle + ", articleContent=" + articleContent
+				+ ", multipartFile=" + multipartFile + "]";
 	}
 }

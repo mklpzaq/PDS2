@@ -11,7 +11,24 @@ public class ArticleService {
 	private ArticleDao articleDao;
 	private static final Logger logger = LoggerFactory.getLogger(ArticleService.class);
 	
-	public void insertArticle() {
-		//articleDao.insertArticle();
+	public void insertArticle(ArticleRequest articleRequest, String path) {
+		logger.debug("insertArticle ArticleService");
+		
+		Article article = new Article();
+		article.setArticleTitle(articleRequest.getArticleTitle());
+		article.setArticleContent(articleRequest.getArticleContent());
+		logger.debug("");
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		articleDao.insertArticle();
 	}
 }
