@@ -5,6 +5,23 @@
   
 <mapper namespace="com.test.pds2.gallery.service.GalleryMapper">
 
+	<select id="totalCountGallery" 
+			resultType="Integer">
+		SELECT COUNT(*) FROM gallery
+	</select>	
+	
+	<select id="selectGalleryList"
+			parameterType="java.util.Map"
+			resultType="com.test.pds2.gallery.service.Gallery">
+			SELECT
+				gallery_id as galleryId
+				,gallery_title as galleryTitle
+				,gallery_content as galleryContent
+			FROM gallery
+			ORDER BY gallery_id DESC
+			LIMIT #{beginRow}, #{pagePerRow}	
+	</select>
+	
 	<insert id="insertGallery"
 			parameterType="com.test.pds2.gallery.service.Gallery">
 		<selectKey resultType="int" keyProperty="galleryId" order="AFTER">
