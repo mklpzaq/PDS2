@@ -1,10 +1,17 @@
 package com.test.pds2.board.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
 	private int boardId;
 	private String boardTitle;
 	private String boardContent;
-	private BoardFile boardFile;	//지금은 1:1, 나중에 1:N으로 구현해야 한다.
+	private List<BoardFile> boardFile;	//지금은 1:1, 나중에 1:N으로 구현해야 한다.
+
+	public Board() {
+		this.boardFile = new ArrayList<BoardFile>();
+	}
 	
 	public int getBoardId() {
 		return boardId;
@@ -24,10 +31,10 @@ public class Board {
 	public void setBoardContent(String boardContent) {
 		this.boardContent = boardContent;
 	}
-	public BoardFile getBoardFile() {
+	public List<BoardFile> getBoardFile() {
 		return boardFile;
 	}
-	public void setBoardFile(BoardFile boardFile) {
+	public void setBoardFile(List<BoardFile> boardFile) {
 		this.boardFile = boardFile;
 	}
 	@Override
@@ -35,5 +42,4 @@ public class Board {
 		return "Board [boardId=" + boardId + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
 				+ ", boardFile=" + boardFile + "]";
 	}
-	
 }

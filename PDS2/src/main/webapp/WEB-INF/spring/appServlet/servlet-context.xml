@@ -15,6 +15,17 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
 
+	<!-- 디폴트 서블릿 핸들러가 없을 경우,
+		 스프링 안에 요청 매핑이 없으면 스프링이 다 가로채가게 된다.
+		 하지만 디폴트 서블릿 핸들러가 있을 경우,
+		 건트롤러 안에 매핑이 없으면 그 요청을 톰캣에 돌려놓게 된다.
+		 디폴트 서블릿 핸들러를 쓰는 이유는 원래, jsp파일을 보호하기 위해서 썼으나,
+		 요새는 jsp파일이 이미 WEB-INF파일 안에 있어 보호받기 때문에 이게 없어도 상관이 없다.
+		 그리고 다음의 매핑으로 mapping="/resources/**" 리소스 파일안에 있는것은 스프링이 가로채지 않게 작성하였기 때문에,
+		 이게 없어도 상관이 없지만 일단 기억을 하기 위해 적어놓는다. 
+	 -->
+	<mvc:default-servlet-handler/>
+
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 
