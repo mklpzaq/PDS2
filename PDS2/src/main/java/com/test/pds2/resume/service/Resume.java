@@ -1,10 +1,13 @@
 package com.test.pds2.resume.service;
+
+import java.util.List;
+
 //resume테이블
 public class Resume {
 	private int resumeId; //resume_id auto_increment primary
 	private String resumeTitle; //resume_title 
 	private String resumeContent; //resume_content
-	private ResumeFile resumeFile;
+	private List<ResumeFile> resumeFile;
 	public int getResumeId() {
 		return resumeId;
 	}
@@ -23,10 +26,10 @@ public class Resume {
 	public void setResumeContent(String resumeContent) {
 		this.resumeContent = resumeContent;
 	}
-	public ResumeFile getResumeFile() {
+	public List<ResumeFile> getResumeFile() {
 		return resumeFile;
 	}
-	public void setResumeFile(ResumeFile resumeFile) {
+	public void setResumeFile(List<ResumeFile> resumeFile) {
 		this.resumeFile = resumeFile;
 	}
 	@Override
@@ -34,6 +37,7 @@ public class Resume {
 		return "Resume [resumeId=" + resumeId + ", resumeTitle=" + resumeTitle + ", resumeContent=" + resumeContent
 				+ ", resumeFile=" + resumeFile + "]";
 	}
+	
 	
 	
 	

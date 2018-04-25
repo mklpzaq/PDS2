@@ -16,7 +16,7 @@ public class ResumeFileDao {
 	
 	
 	public int insertResumeFile(ResumeFile resumeFile) {
-		logger.info("ResumeFileDao - insertResumeFile - resumeFile : "+resumeFile.toString());
+		logger.debug("insertResumeFile - resumeFile : "+resumeFile.toString());
 		 
 		return sqlSession.insert(NS+"insertResumeFile", resumeFile);  
 	}

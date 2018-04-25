@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.test.pds2.path.SystemPath;
 
@@ -30,38 +31,47 @@ public class ResumeService {
 	@Transactional
 	public void insertResume(ResumeRequest resumeRequest, String path) {
 		
+		logger.debug("insertResume - parameter - resumeRequest : " + resumeRequest.toString());
+		logger.debug("insertResume - parameter - path : " + path);
 		Resume resume = new Resume();	
 		resume.setResumeTitle(resumeRequest.getResumeTitle());
 		resume.setResumeContent(resumeRequest.getResumeContent());
+			
 		
-		//multipartFile을 resumeFile에 끼워맞춘다
-		
-		ResumeFile resumeFile = new ResumeFile();
-		// 유효 이름
-		UUID uuid = UUID.randomUUID();  //16진수의 유효 아이디가 만들어진다 랜덤 유효 아이디
-		String resumeFileName = uuid.toString();
-		resumeFileName = resumeFileName.replace("-", "");  //기존 문자열에서 발견되는 모든 문자 집합을 다른 지정 문자로 변경합니다.		
-		resume.setResumeFile(resumeFile); //이게 왜들어갔지?
-		System.out.println("resumeFileName  : "+resumeFileName);
-		
-		int resumeId= resumeDao.insertResume(resume);
-		
-		for(int i = 0; i<resumeRequest.getMultipartFile().size(); i++) {
-			MultipartFile multipartFile = resumeRequest.getMultipartFile().get(i);			
-			int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");  
+		ResumeFile resumeFile = new ResumeFile();		
+			
+		//resume.setResumeFile(resumeFile); //이게 왜들어갔지?	
+				
+		int resumeId= resumeDao.insertResume(resume); //resume insert부터 처리 후 반환되는 키값 resumeId변수에 저장
+				
+		/*for(int i= 0; i<resumeRequest.getMultipartFile().size(); i++) {
+			//multipartFile을 resumeFile에 끼워맞춘다
+			MultipartFile multipartFile = resumeRequest.getMultipartFile().get(i);
+			
+			// 유효 이름
+			UUID uuid = UUID.randomUUID();  //16진수의 유효 아이디가 만들어진다 랜덤 유효 아이디
+			String resumeFileName = uuid.toString();
+			resumeFileName = resumeFileName.replace("-", "");  //기존 문자열에서 발견되는 모든 문자 집합을 다른 지정 문자로 변경합니다.	
+			// 파일 확장자	
+			int dotIndex = multipartFile.getOriginalFilename().lastIndexOf("."); 			
 			String resumeFileExt = multipartFile.getOriginalFilename().substring(dotIndex+1);
-			String resumeFileType = multipartFile.getContentType();
-			long resumeFileSize = multipartFile.getSize();
-			File file = new File(SystemPath.SYSTEM_PATH+"/"+resumeFileName+"."+resumeFileExt);		
+			//IndexOf, lastIndexOf에서 ""안에 문자가 몇번째에 있는지 찾는 매서드 IndexOf는 앞부터 lastIndexOf는 뒤부터
+			
+			//파틸 타입
+			String resumeFileType = multipartFile.getContentType();	 //multipartFile의 파일타입을 가져옴 
+			//파일 사이즈
+			long resumeFileSize = multipartFile.getSize();  //multipartFile의 사이즈를 가져옴 
+
+			//파일 저장(매개변수 path 위치 가지고 해야한다 path+"/"+resumeFileName+"."+resumeFileExt)
+			File file = new File(SystemPath.SYSTEM_PATH+"/"+resumeFileName+"."+resumeFileExt);	
 			try {
 				multipartFile.transferTo(file); 
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
-
 				e.printStackTrace();
 			} 
-			
+			//resumeFile에 셋팅
 			resumeFile.setResumeId(resumeId);
 			resumeFile.setResumeFileName(resumeFileName);
 			resumeFile.setResumeFileExt(resumeFileExt);
@@ -69,55 +79,63 @@ public class ResumeService {
 			resumeFile.setResumeFileSize(resumeFileSize);
 			
 			resumeFileDao.insertResumeFile(resumeFile);	
-		}
-		
-		
-		// 파일 확장자		
-		/*String sss = "abcdabcd";
-		System.out.println(sss.indexOf("ab"));  //0부터 시작이니까 0
-		System.out.println(sss.lastIndexOf("ab")); //뒤에서부터 찾는데 번호 자체는 어차피 첫번째부터 셈. 4
-		System.out.println(multipartFile.getOriginalFilename());  //현재 파일의 전체 이름 예를 들어 ajax.txt*/		
-		
+		}*/
 			
-			//IndexOf, lastIndexOf에서 ""안에 문자가 몇번째에 있는지 찾는 매서드 IndexOf는 앞부터 lastIndexOf는 뒤부터
+		MultipartFile multipartFile = resumeRequest.getMultipartFile();
 		
-				
+		// 유효 이름
+		UUID uuid = UUID.randomUUID();  //16진수의 유효 아이디가 만들어진다 랜덤 유효 아이디
+		String resumeFileName = uuid.toString();
+		resumeFileName = resumeFileName.replace("-", "");  //기존 문자열에서 발견되는 모든 문자 집합을 다른 지정 문자로 변경합니다.	
+		// 파일 확장자	
+		int dotIndex = multipartFile.getOriginalFilename().lastIndexOf("."); 			
+		String resumeFileExt = multipartFile.getOriginalFilename().substring(dotIndex+1);
+		//IndexOf, lastIndexOf에서 ""안에 문자가 몇번째에 있는지 찾는 매서드 IndexOf는 앞부터 lastIndexOf는 뒤부터
+		
 		//파틸 타입
-		 //multipartFile의 파일타입을 가져옴 
+		String resumeFileType = multipartFile.getContentType();	 //multipartFile의 파일타입을 가져옴 
 		//파일 사이즈
-		 //multipartFile의 사이즈를 가져옴 
-			
+		long resumeFileSize = multipartFile.getSize();  //multipartFile의 사이즈를 가져옴 
+
 		//파일 저장(매개변수 path 위치 가지고 해야한다 path+"/"+resumeFileName+"."+resumeFileExt)
+		File file = new File(SystemPath.SYSTEM_PATH+"/"+resumeFileName+"."+resumeFileExt);	
+		try {
+			multipartFile.transferTo(file); 
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+		//resumeFile에 셋팅
+		resumeFile.setResumeId(resumeId);
+		resumeFile.setResumeFileName(resumeFileName);
+		resumeFile.setResumeFileExt(resumeFileExt);
+		resumeFile.setResumeFileType(resumeFileType);
+		resumeFile.setResumeFileSize(resumeFileSize);
 		
-		
-		
-		
-		
-		//resumeFile에 셋팅	
-		
-	
-		
+		resumeFileDao.insertResumeFile(resumeFile);	
 		
 	}
 	
-	
 	public Map<String, Object> resumeList(int currentPage, int pagePerRow, String searchOption, String keyword){
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<Resume> list;
-		int total;
+		logger.debug("resumeList - method : ");
+		logger.debug("resumeList - currentPage : " + currentPage);
+		logger.debug("resumeList - pagePerRow : " + pagePerRow);
+		logger.debug("resumeList - searchOption : " + searchOption);
+		logger.debug("resumeList - keyword : " + keyword);
+		
 		/*String loginMemberId = loginMember.getMemberId();*/
 		
 		int beginRow = (currentPage-1)*pagePerRow;
-		
-		System.out.println("beginRow : "+beginRow);
-		
+
+		Map<String, Object> map = new HashMap<String, Object>();
 			map.put("beginRow", beginRow);
 			map.put("pagePerRow", pagePerRow);
 			map.put("searchOption", searchOption);
 			map.put("keyword", keyword);/*
 			map.put("loginMemberId", loginMemberId);*/
-			list = resumeDao.selectResumeList(map);
-			total = resumeDao.totalCountResume(map);
+			List<Resume> list = resumeDao.selectResumeList(map);
+			int total = resumeDao.totalCountResume(map);
 			
 		
 		int lastPage = 0;
@@ -140,5 +158,14 @@ public class ResumeService {
 		returnmap.put("startPage", startPage);
 		returnmap.put("endPage", endPage);
 		return returnmap;
+	}
+	
+	public Resume resumeView(Resume resume) {
+		logger.debug("resumeView - resume : " + resume);
+				
+		Resume resumeView = resumeDao.resumeView(resume);
+		
+		logger.debug("resumeView - resumeView : " + resumeView.toString());
+		return resumeView;
 	}
 }

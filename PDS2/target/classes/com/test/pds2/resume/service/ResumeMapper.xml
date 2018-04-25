@@ -46,25 +46,19 @@
 		<result column="resume_content" property="resumeContent" />
 		<collection ofType="com.test.pds2.resume.service.ResumeFile" property="resumeFile">
 				<id column="resume_file_id" property="resumeFileId"/>
-				<result column="resume_file_id" property="resumeFileId"/>
 				<result column="resume_file_name" property="resumeFileName"/>
 				<result column="resume_file_ext" property="resumeFileExt"/>
 				<result column="resume_file_size" property="resumeFileSize"/>			
 		</collection>
 	</resultMap>
 	
-	<select id="selectResumeList" parameterType="java.util.Map"  resultMap="resume">
+	<select id="selectResumeList" parameterType="java.util.Map"  resultType="com.test.pds2.resume.service.Resume">
 		SELECT
-				rs.resume_id
-				,rs.resume_title
-				,rs.resume_content
-				,rsf.resume_file_id
-				,rsf.resume_file_name
-				,rsf.resume_file_ext
-				,rsf.resume_file_size
-			FROM resume as rs
-			join resume_file as rsf
-				using(resume_id)
+				resume_id as resumeId
+				,resume_title as resumeTitle
+				,resume_content as resumeContent
+			FROM resume
+			
 		
 			<!-- <choose>	      
 		        <when test="searchOption == 'all'">    
@@ -76,8 +70,8 @@
 		        </otherwise>
 	    	</choose> -->
 		
-		ORDER BY rs.resume_id DESC
-		LIMIT #{beginRow},#{pagePerRow}
+		ORDER BY resume_id DESC
+		LIMIT #{beginRow}, #{pagePerRow}
 	</select>
 	
 	<select id="totalCountResume"
@@ -86,8 +80,6 @@
 		SELECT
 		COUNT(*)
 			FROM resume
-			join resume_file
-				using(resume_id)
 		<!-- <choose>	      
 	        <when test="searchOption == 'all'">    
 	        	and resume like CONCAT('%', '#{keyword}','%')	        	           
@@ -97,4 +89,20 @@
 	        </otherwise>
 	    </choose> -->
 	</select>
+	
+	<select id="selectResumeOne" parameterType="com.test.pds2.resume.service.Resume"  resultMap="resume">
+		SELECT
+			rs.resume_id
+			,rs.resume_title
+			,rs.resume_content
+			,rsf.resume_file_id
+			,rsf.resume_file_name
+			,rsf.resume_file_ext
+			,rsf.resume_file_size
+			FROM resume as rs
+			join resume_file as rsf
+				using(resume_id)
+				where resume_id = #{resumeId}
+	</select>
+	
 </mapper>

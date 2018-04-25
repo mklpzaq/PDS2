@@ -10,15 +10,14 @@
 		<script>
 			$(document).ready(function() {
 				$('#pagePerRow').change(function() {
-					$(location).attr('href', './orderList?pagePerRow=' + $('#pagePerRow > option:selected').val()+'&searchOption='+$('#searchOption').val()+'&keyword='+$('#keyword').val());
+					$(location).attr('href', './resumeList?pagePerRow=' + $('#pagePerRow > option:selected').val()+'&searchOption='+$('#searchOption').val()+'&keyword='+$('#keyword').val());
 				});
 			});
 			
 			$(document).ready(function(){
 				$("#button").click(function(){
 					$('input[name="deleteCheckbox"]:checked').each(function(){							
-						var text = $(this).val();
-						alert("categoryNo"+text+"삭제");					
+						var text = $(this).val();				
 						$("#form1").submit();	
 					});
 				})	
@@ -37,7 +36,7 @@
 			/* function changehtml(){
 				var property = $("#searchOption").val();
 				var show = $("#keyword");
-				if(property=="order_date"){
+				if(property=="resume_date"){
 					$("#keyword").html('<input type="date" name="keyword">~<input type="date" name="keyword">');
 				}else {
 					$("#keyword").html('<input type="text" name="keyword">');
@@ -55,7 +54,7 @@
 				<div class="col-sm-6">
 					<!-- Begin Content -->
 					<a href="${pageContext.request.contextPath}/">Home</a>
-					<%-- <button><a href = "${pageContext.request.contextPath}/insertBoardForm">글쓰기</a></button> --%>
+					<button><a href = "${pageContext.request.contextPath}/insertResume">글쓰기</a></button>
 					<div class="panel panel-default">
 						<div class="panel-body text-center">
 							<div class="row">
@@ -68,7 +67,7 @@
 											</strong>
 								</div>
 								<div class="col-sm-6">
-									<h3>Order List</h3>
+									<h3>Resume List</h3>
 								</div>
 								<div class="col-sm-3">
 									<select id="pagePerRow">
@@ -83,27 +82,21 @@
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<th><input type="checkbox" id="checkboxAll" value=""></th>
-										<td width="15%">이력서 번호</td>
-										<td width="15%">이력서 제목</td>
-										<td width="20%">이력서 내용</td>
-										<td width="20%">이력서 첨부 파일명</td>
-										<td width="15%">이력서 첨부 파일확장자</td>
-										<td width="15%">이력서 첨부 파일사이즈</td>
+										<th width="15%"><input type="checkbox" id="checkboxAll" value="">전체선택</th>
+										<td width="10%">이력서 번호</td>
+										<td width="25%">이력서 제목</td>
+										<td width="35%">이력서 내용</td>
 									</tr>
 								</thead>
 								<tbody>
-									<form id="form1" method="get" action="${pageContext.request.contextPath}/deleteOrder">
+									<form id="form1" method="get" action="${pageContext.request.contextPath}/deleteResume">
 										<c:forEach var="resume" items="${list}">
 											<tbody>
 												<tr>
 													<th><input type="checkbox" name="deleteCheckbox" value="${resume.resumeId}"></th>
 													<th scope = "row">${resume.resumeId}</th>
-													<td>${resume.resumeTitle}</td>
-													<td>${resume.resumeContent}</td>
-													<td><a href="D:\\upload\\${resume.resumeFile.resumeFileName}.${resume.resumeFile.resumeFileExt}">${resume.resumeFile.resumeFileName}</a></td>
-													<td>${resume.resumeFile.resumeFileExt}</td>
-													<td>${resume.resumeFile.resumeFileSize}</td>
+													<td><a href="${pageContext.request.contextPath}/resumeView?resumeId=${resume.resumeId}">${resume.resumeTitle}</a></td>
+													<td>${resume.resumeContent}</td>																							
 												</tr>
 											</tbody>
 										</c:forEach>
@@ -113,24 +106,24 @@
 							<nav>
 								<ul class="pagination">								
 									<c:if test="${currentPage>1}">
-										<li><a href="${pageContext.request.contextPath}/orderList?pagePerRow=${pagePerRow}&searchOption=${searchOption}&keyword=${keyword}">처음으로</a></li>
-										<li><a href="${pageContext.request.contextPath}/orderList?currentPage=${currentPage-1}&pagePerRow=${pagePerRow}&searchOption=${searchOption}&keyword=${keyword}">이전</a></li>
+										<li><a href="${pageContext.request.contextPath}/resumeList?pagePerRow=${pagePerRow}&searchOption=${searchOption}&keyword=${keyword}">처음으로</a></li>
+										<li><a href="${pageContext.request.contextPath}/resumeList?currentPage=${currentPage-1}&pagePerRow=${pagePerRow}&searchOption=${searchOption}&keyword=${keyword}">이전</a></li>
 									</c:if>
 									
 									<c:forEach var="iCount" begin="${startPage}" end="${endPage}">
 										<c:choose>
 											<c:when test="${iCount == currentPage}">
-												<li class="active"><a href="${pageContext.request.contextPath}/orderList?currentPage=${iCount}&pagePerRow=${pagePerRow}&searchOption=${searchOption}&keyword=${keyword}">${iCount}</a></li>
+												<li class="active"><a href="${pageContext.request.contextPath}/resumeList?currentPage=${iCount}&pagePerRow=${pagePerRow}&searchOption=${searchOption}&keyword=${keyword}">${iCount}</a></li>
 											</c:when>
 											<c:otherwise>
-												<li><a href="${pageContext.request.contextPath}/orderList?currentPage=${iCount}&pagePerRow=${pagePerRow}&searchOption=${searchOption}&keyword=${keyword}">${iCount}</a></li>
+												<li><a href="${pageContext.request.contextPath}/resumeList?currentPage=${iCount}&pagePerRow=${pagePerRow}&searchOption=${searchOption}&keyword=${keyword}">${iCount}</a></li>
 											</c:otherwise>
 										</c:choose>								
 									</c:forEach>
 									
 									<c:if test="${currentPage < lastPage}">
-										<li><a href="${pageContext.request.contextPath}/orderList?currentPage=${currentPage+1}&pagePerRow=${pagePerRow}&searchOption=${searchOption}&keyword=${keyword}">다음</a></li>
-										<li><a href="${pageContext.request.contextPath}/orderList?currentPage=${lastPage}&pagePerRow=${pagePerRow}&searchOption=${searchOption}&keyword=${keyword}">마지막으로</a></li>
+										<li><a href="${pageContext.request.contextPath}/resumeList?currentPage=${currentPage+1}&pagePerRow=${pagePerRow}&searchOption=${searchOption}&keyword=${keyword}">다음</a></li>
+										<li><a href="${pageContext.request.contextPath}/resumeList?currentPage=${lastPage}&pagePerRow=${pagePerRow}&searchOption=${searchOption}&keyword=${keyword}">마지막으로</a></li>
 									</c:if>
 								</ul>
 							</nav>
@@ -147,7 +140,7 @@
 								</form> --%>
 							</div>
 							<div>
-						  		<button id="button">주문 취소</button>
+						  		<button id="button">삭제</button>
 							</div>	
 						</div>
 					</div>
