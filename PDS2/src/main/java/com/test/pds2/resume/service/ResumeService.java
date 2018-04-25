@@ -21,8 +21,8 @@ import com.test.pds2.path.SystemPath;
 @Service
 public class ResumeService {
 	 
-	@Autowired 
-	private ResumeDao resumeDao;	
+	@Autowired                            //@Autowired는 한꺼번에 하는게 안되는 것 같다 
+	private ResumeDao resumeDao;			//두개의 클래스를 주입시키고 싶을때는 두번 써야하는듯
 	@Autowired 
 	private ResumeFileDao resumeFileDao;
 	
