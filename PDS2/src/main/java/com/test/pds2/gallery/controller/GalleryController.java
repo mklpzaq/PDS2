@@ -2,6 +2,8 @@ package com.test.pds2.gallery.controller;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.test.pds2.gallery.service.Gallery;
 import com.test.pds2.gallery.service.GalleryRequest;
 import com.test.pds2.gallery.service.GalleryService;
 import com.test.pds2.path.SystemPath;
@@ -26,11 +29,28 @@ public class GalleryController {
 	private GalleryService galleryService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(GalleryController.class);
+	
+	@RequestMapping(value ="/viewDetailGallery", method = RequestMethod.GET)
+	public String viewDetailGallery(
+									) {
+		return "";
+	}
+	
+	@RequestMapping(value = "/searchGallery", method = RequestMethod.POST)
+	public String searchGallery(@RequestParam(value="searchOption", defaultValue="all") String searchOption
+								,@RequestParam(value="keyword", defaultValue="") ArrayList<String> keyword
+								,Model model) {
+		
+		List<Gallery> list = galleryService.listAll(searchOption, keyword);
+		
+		return "galleryList";
+	}
+	
 	/*
 	 * currentPage의 디폴트 지정값은 1로 설정 리스트에 아무것도 없는 경우는 1페이지다.
 	 * pagePerRow 한번에 보여줄 리스트의 양은 10개로 지정해놓는다. 
 	 * required=ture 로 설정해놓으면 값이 무조건 넘어온다.
-	 */
+	 */	
 	@RequestMapping(value="/galleryList", method = RequestMethod.GET)
 	public String galleryList(Model model
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage

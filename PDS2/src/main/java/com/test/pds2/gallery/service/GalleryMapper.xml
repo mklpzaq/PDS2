@@ -5,6 +5,22 @@
   
 <mapper namespace="com.test.pds2.gallery.service.GalleryMapper">
 
+	<select id="listAll"
+			parameterType="java.util.Map"
+			resultType="com.test.pds2.gallery.service.Gallery">
+		SELECT
+			gallery_id as galleryId
+			,gallery_title as galleryTitle
+			,gallery_content as galleryContent
+		FROM gallery		
+		<include refid="search"></include>
+		ORDER BY gallery_id DESC
+	</select>
+	
+	<sql id="search">
+		WHERE ${searchOption} like CONCAT('%','${keyword}','%')	
+	</sql>
+
 	<select id="totalCountGallery" 
 			resultType="Integer">
 		SELECT COUNT(*) FROM gallery

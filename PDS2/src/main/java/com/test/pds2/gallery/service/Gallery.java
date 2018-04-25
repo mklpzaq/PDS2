@@ -1,10 +1,17 @@
 package com.test.pds2.gallery.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Gallery {
 	private int galleryId; //gallery_id
 	private String galleryTitle; //gallery_title
-	private String galleryContent; //gallery_content
-	private GalleryFile galleryFile; 
+	private String galleryContent; //gallery_content	
+	private List<GalleryFile> galleryFile; 
+	
+	public Gallery() {
+		this.galleryFile = new ArrayList<GalleryFile>();
+	}
 	
 	public int getGalleryId() {
 		return galleryId;
@@ -24,10 +31,10 @@ public class Gallery {
 	public void setGalleryContent(String galleryContent) {
 		this.galleryContent = galleryContent;
 	}
-	public GalleryFile getGalleryFile() {
+	public List<GalleryFile> getGalleryFile() {
 		return galleryFile;
 	}
-	public void setGalleryFile(GalleryFile galleryFile) {
+	public void setGalleryFile(List<GalleryFile> galleryFile) {
 		this.galleryFile = galleryFile;
 	}
 	@Override
@@ -35,6 +42,7 @@ public class Gallery {
 		return "Gallery [galleryId=" + galleryId + ", galleryTitle=" + galleryTitle + ", galleryContent="
 				+ galleryContent + ", galleryFile=" + galleryFile + "]";
 	}
+	
 	
 	
 	

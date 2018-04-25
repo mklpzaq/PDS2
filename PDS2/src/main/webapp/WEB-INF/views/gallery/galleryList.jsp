@@ -14,6 +14,14 @@
 				$(location).attr('href', './galleryList?pagePerRow=' + $('#selectPagePerRow > option:selected').val() + '&searchSelect=' + $('#monitorSearchSelect').text() + '&searchWord=' + $('#monitorSearchWord').text());
 			});			
 		});	
+		
+		function changehtml(){
+			var property = $('#searchOption').val();
+			var show = $('#keyword');
+			if(property=="gallery_content"){
+				$('#keyword').html('<input type="text" name="keyword">');				
+			}
+		}
 	</script>
 </head>
 <body>	
@@ -45,6 +53,15 @@
 						</div>
  					</div>
  					<hr/> 
+ 						<form action="${pageContext.request.contextPath}/searchGallery" method="post">
+ 							<select id="searchOption" name="searchOption" onclick="changehtml();">
+ 								<option value="gallery_id" <c:out value="${searchOption == 'gallery_id'?'selected':''}"/>>사진관 아이디</option>
+ 								<option value="gallery_title" <c:out value="${searchOption == 'gallery_title'?'selected':''}"/>>사진관 제목</option>						
+ 								<option value="gallery_content" <c:out value="${searchOption == 'gallery_content'?'selected':''}"/>>사진관 내용</option>
+ 							</select>
+ 							<dr id="keyword"></dr>
+ 							<input type="submit" value="검색버튼"> 						
+ 						</form>
  					<table class="table table-striped">
 						<thead>
 							<tr>
@@ -52,17 +69,19 @@
 								<td><strong>GalleryTitle</strong></td>
 								<td><strong>GalleryContent</strong></td>
 								<td><strong>수정</strong></td>
-								<td><strong>삭제</strong></td>								
+								<td><strong>삭제</strong></td>
+								<td><strong>자료추가</strong></td>								
 							</tr>						
 						</thead>
 						<tbody>
 							<c:forEach var="gallery" items="${list}">
 								<tr>
 									<td><strong>${gallery.galleryId}</strong></td>
-									<td>${gallery.galleryTitle}</td>
+									<td><a href="${pageContext.request.contextPath}/viewDetailGallery?sendId=${gallery.galleryId}">${gallery.galleryTitle}</a></td>
 									<td>${gallery.galleryContent}</td>
 									<td><a href="#">수정</a></td>
-									<td id="#"><a href="#">삭제</a></td>											
+									<td id="#"><a href="#">삭제</a></td>
+									<td><a href="#">자료추가</a></td>											
 								</tr>
 							</c:forEach>
 						</tbody>

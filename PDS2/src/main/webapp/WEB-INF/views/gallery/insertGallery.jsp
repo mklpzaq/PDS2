@@ -20,6 +20,10 @@
 			<label for="multipartfile">파일 업로드</label>
 			<input type="file" name="multipartfile">			
 		</div>
+		<div class="form-group">
+			<label for="multipartfile">파일 업로드</label>
+			<input type="file" name="multipartfile">			
+		</div>
 		<!-- <div class="checkbox">
 			<label>
 				<input type="checkbox"> 입력을 기억합니다

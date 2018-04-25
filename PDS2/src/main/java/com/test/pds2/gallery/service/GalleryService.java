@@ -2,6 +2,7 @@ package com.test.pds2.gallery.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,55 +35,65 @@ public class GalleryService {
 	 */
 	@Transactional
 	public void insertGallery(GalleryRequest galleryRequest, String path) {
-		MultipartFile multipartFile = galleryRequest.getMultipartfile();
+		List<MultipartFile> multipartFileList = galleryRequest.getMultipartfile();
 		
 		//Gallery의 값에 galleryRequest에서 받아온 값으로 세팅해준다.
 		Gallery gallery = new Gallery();
 		gallery.setGalleryTitle(galleryRequest.getGalleryTitle());
 		gallery.setGalleryContent(galleryRequest.getGalleryContent());
 		
-		GalleryFile galleryFile = new GalleryFile();
-		//16진수 유효아이디가 만들어진다?
-		UUID uuid = UUID.randomUUID();
-		String filename = uuid.toString();
-		logger.debug("String filename : " + filename);
-		//-문자를 찾아 없에고 문자열을 반환한다. 
-		filename = filename.replace("-", "");
-		//2.파일 확장자
-		//lastIndexOf()문자열에서 마지막 문자열을 반환한다.
-		//getOriginalFilename() 올린 파일의 전체 이름
-		int doIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
-		logger.info("int doIndex : " + doIndex);
-		String fileExt = multipartFile.getOriginalFilename().substring(doIndex+1);
-		logger.info("String fileExt : " + fileExt);
+		for(MultipartFile multipartFile : multipartFileList) {
 		
-		//3.파일 컨텐트 타입
-		String fileType = multipartFile.getContentType();
-		logger.info("String fileType : " + fileType);		
-		
-		//4.파일 사이즈
-		long fileSize = multipartFile.getSize();
-		//5.파일 저장(매개변수 path를 이용)
-		File file = new File(path+filename+fileExt);
-		
-		try {
-			multipartFile.transferTo(file);
-		} catch (IllegalStateException e) {			
-			e.printStackTrace();
-		} catch (IOException e) {			
-			e.printStackTrace();
-		}
-		
-		int galleryId = galleryDao.insertGallery(gallery);
+			//16진수 유효아이디가 만들어진다?
+			UUID uuid = UUID.randomUUID();
+			String filename = uuid.toString();
+			logger.debug("String filename : " + filename);
+			//-문자를 찾아 없에고 문자열을 반환한다. 
+			filename = filename.replace("-", "");
+			//2.파일 확장자
+			//lastIndexOf()문자열에서 마지막 문자열을 반환한다.
+			//getOriginalFilename() 올린 파일의 전체 이름
+			int doIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
+			logger.info("int doIndex : " + doIndex);
+			String fileExt = multipartFile.getOriginalFilename().substring(doIndex+1);
+			logger.info("String fileExt : " + fileExt);
+			
+			//3.파일 컨텐트 타입
+			String fileType = multipartFile.getContentType();
+			logger.info("String fileType : " + fileType);		
+			
+			//4.파일 사이즈
+			long fileSize = multipartFile.getSize();
+			//5.파일 저장(매개변수 path를 이용)
+			File file = new File(path+filename+fileExt);
+			
+			try {
+				multipartFile.transferTo(file);
+			} catch (IllegalStateException e) {			
+				e.printStackTrace();
+			} catch (IOException e) {			
+				e.printStackTrace();
+			}
+			
+			GalleryFile galleryFile = new GalleryFile();			
 				
-		galleryFile.setGalleryId(galleryId);
-		galleryFile.setGalleryFileName(filename);
-		galleryFile.setGalleryFileExt(fileExt);
-		galleryFile.setGalleryFileType(fileType);
-		galleryFile.setGalleryFileSize(doIndex);
-		
-		galleryFileDao.insertGalleryFile(galleryFile);
+			galleryFile.setGalleryFileName(filename);
+			galleryFile.setGalleryFileExt(fileExt);
+			galleryFile.setGalleryFileType(fileType);
+			galleryFile.setGalleryFileSize(doIndex);
+			logger.debug("galleryFile : " + galleryFile);
+			gallery.getGalleryFile().add(galleryFile);			
+			
+		}
+			logger.debug("gallery : " + gallery);
+			galleryDao.insertGallery(gallery);
+			
+			for(GalleryFile galleryFile : gallery.getGalleryFile()) {
+				galleryFile.setGalleryId(gallery.getGalleryId());
+				galleryFileDao.insertGalleryFile(galleryFile);
+			}
 	}
+	
 	/*
 	 * Map에 넣어야 할 값이 List와 int이다. 이럴경우 모든형은 받는 Object를 쓴다.
 	 */
@@ -126,5 +137,9 @@ public class GalleryService {
 		returnMap.put("beginPageNumForCurrentPage", beginPageNumForCurrentPage);
 		
 		return returnMap;
+	}
+	public List<Gallery> listAll(String searchOption, ArrayList<String> keyword) {
+		
+		return galleryDao.listAll(searchOption, keyword);
 	}
 }

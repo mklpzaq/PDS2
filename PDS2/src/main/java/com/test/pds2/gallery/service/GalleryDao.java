@@ -1,5 +1,6 @@
 package com.test.pds2.gallery.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,5 +29,10 @@ public class GalleryDao {
 
 	public int totalCountGallery() {		
 		return sqlSession.selectOne(NS+"totalCountGallery");
+	}
+
+	public List<Gallery> listAll(String searchOption, ArrayList<String> keyword) {
+		
+		return null;
 	}	
 }
