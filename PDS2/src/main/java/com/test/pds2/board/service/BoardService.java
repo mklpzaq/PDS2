@@ -175,11 +175,17 @@ public class BoardService {
 		
 		
 		boardDao.insertBoard(board);
-		logger.debug("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		
-		/*board.getBoardFile().setBoardId(board.getBoardId());
-		logger.debug("board.getBoardFile().getBoardId() : " + board.getBoardFile().getBoardId());
-		boardFileDao.insertBoardFile(board.getBoardFile());*/
+		for(BoardFile boardFile : board.getBoardFile()) {
+			boardFile.setBoardId(board.getBoardId());
+			boardFileDao.insertBoardFile(boardFile);
+			logger.debug("boardFile.getBoardId() : " + boardFile.getBoardId());
+		}
+		//board.getBoardFile().setBoardId(board.getBoardId());
+		
+		//logger.debug("board.getBoardFile().getBoardId() : " + board.getBoardFile().getBoardId());
+		logger.debug("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
+		//boardFileDao.insertBoardFile(board.getBoardFile());
 		
 		
 	}

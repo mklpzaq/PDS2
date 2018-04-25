@@ -49,6 +49,8 @@
 	<body>
 		<jsp:include page="../navbar.jsp"/>
 	
+		<!-- <a href="/pds2/resources/upload/aaa.txt">다운로드 테스트</a> -->
+		<!-- <img src="/pds2/resources/upload/kkk.png"/> -->
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-3"></div>
