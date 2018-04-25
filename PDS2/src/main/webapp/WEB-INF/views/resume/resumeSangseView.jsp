@@ -28,7 +28,7 @@
 	</head>
 	<body>
 		
-			
+		<jsp:include page="../navbar.jsp"/>
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-2"></div>
@@ -60,8 +60,8 @@
 							</div>
 							<div class="panel-body" style="height:100px;">
 								첨부파일
-								<c:forEach var="resumeFile" items="${list}">
-									<a href="${pageContext.request.contextPath}/resumeView?resumeId=">${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}</a><br/>
+								<c:forEach var="resumeFile" items="${list}">								
+									<a href="D:\\upload//${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}">${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}</a><br/>
 								</c:forEach>
 							</div>
 						</div>

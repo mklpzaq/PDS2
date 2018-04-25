@@ -48,7 +48,7 @@
 		</script>
 	</head>
 	<body>	
-		<div class="container-fluid">
+		<jsp:include page="../navbar.jsp"/>
 			<div class="row">
 				<div class="col-sm-3"></div>
 				<div class="col-sm-6">
@@ -147,5 +147,6 @@
 					<!-- End Content -->
 				</div>
 				<div class="col-sm-3"></div>
+			</div>
 	</body>
 </html>
