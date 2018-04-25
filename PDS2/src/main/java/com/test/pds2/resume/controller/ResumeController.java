@@ -1,19 +1,28 @@
 package com.test.pds2.resume.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.test.pds2.path.SystemPath;
 import com.test.pds2.resume.service.Resume;
 import com.test.pds2.resume.service.ResumeFile;
 import com.test.pds2.resume.service.ResumeRequest;
@@ -41,7 +50,7 @@ public class ResumeController {
 		logger.debug("insertResume - method = RequestMethod.POST : ");	
 		logger.debug("insertResume - resumeRequest : " + resumeRequest.toString());
 		
-		String path = session.getServletContext().getRealPath("/resources/upload/resume");  //세션이 만들어진 톰캣 자체를 가져온다  resources/upload/resume
+		String path = session.getServletContext().getRealPath("D:\\upload");  //세션이 만들어진 톰캣 자체를 가져온다  resources/upload/resume
 		logger.debug("insertResume - path : " + path);
 		// MultipartHttpServletRequest 멀티파일을 기본적으로 리스트로 받을 수 있게 해주는 클래스. 이런곳도 있다
 		// service : ResumeRequest를 -> Resume로 맞춰준다 + 파일 폴더 저장  + 트랜잭션 + 알파
@@ -91,4 +100,77 @@ public class ResumeController {
 				
 		return "/resume/resumeSangseView";
 	}
+	
+	
+	
+	
+	 @RequestMapping(value = "/download", method= RequestMethod.GET)
+	    public void download(@RequestParam("resumeFileName") String resumeFileName
+	                            ,@RequestParam("resumeFileExt") String resumeFileExt
+	                            , RedirectAttributes redirectAttributes
+	                            , HttpServletRequest request
+	                            , HttpServletResponse response) throws Exception {	         
+	        String fullPath = SystemPath.SYSTEM_PATH + "\\" + resumeFileName + "." + resumeFileExt;
+	         
+	        File file = new File(fullPath);
+	        
+	        response.setContentType("application/download; utf-8");
+	        response.setContentLength((int)file.length());
+	        
+	        String userAgent = request.getHeader("User-Agent");
+
+	        boolean ie = userAgent.indexOf("MSIE") > -1;
+	         
+	        String fileName = null;
+	        
+	        if(ie){
+	             
+	            fileName = URLEncoder.encode(file.getName(), "utf-8");
+	                         
+	        } else {
+	             
+	            fileName = new String(file.getName().getBytes("utf-8"));
+	             
+	        }
+
+	        
+	        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");
+	         
+	        response.setHeader("Content-Transfer-Encoding", "binary");
+	         
+	        OutputStream out = response.getOutputStream();
+	         
+	        FileInputStream fis = null;
+	         
+	        try {
+	             
+	            fis = new FileInputStream(file);
+	             
+	            FileCopyUtils.copy(fis, out);
+	             
+	             
+	        } catch(Exception e){
+	             
+	            e.printStackTrace();
+	             
+	        }finally{
+	             
+	            if(fis != null){
+	                 
+	                try{
+	                    fis.close();
+	                }catch(Exception e){}
+	            }
+	             
+	        }// try end;
+	         
+	        out.flush();
+
+	        
+	        //redirectAttributes.addFlashAttribute("file", file);
+	        
+	        //return "download";
+	    }
+	 
+	   
 }

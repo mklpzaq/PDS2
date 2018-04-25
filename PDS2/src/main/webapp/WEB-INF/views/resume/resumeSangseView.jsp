@@ -61,7 +61,7 @@
 							<div class="panel-body" style="height:100px;">
 								첨부파일
 								<c:forEach var="resumeFile" items="${list}">								
-									<a href="D:\\upload//${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}">${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}</a><br/>
+									<a href="${pageContext.request.contextPath}/download?path=${path}&resumeFileName=${resumeFile.resumeFileName}&resumeFileExt=${resumeFile.resumeFileExt}">${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}</a><br/>
 								</c:forEach>
 							</div>
 						</div>
