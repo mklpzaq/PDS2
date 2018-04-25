@@ -4,6 +4,51 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.test.pds2.gallery.service.GalleryMapper">
+	
+	<select id="selectGalleryOne" 
+			parameterType="com.test.pds2.gallery.service.Gallery"
+			resultMap="gallery">
+		SELECT
+			gl.gallery_id
+			,gl.gallery_title
+			,gl.gallery_content
+			,glf.gallery_file_id
+			,glf.gallery_file_ext
+			,glf.gallery_file_type
+			,glf.gallery_file_size
+		FROM gallery as gl
+		join gallery_file as glf
+			using(gallery_id)
+			WHERE gallery_id = #{galleryId}			
+	</select>
+	
+	<!--	resultMap - type : 객체 타입
+			resultMap - id : resultMap 명
+			id : PK 멤버변수 지정. 
+			id - column : DB 칼럼명
+			id - property : 커맨드 객체 멤버변수 명
+			result : PK 이외의 멤버변수 지정
+			column, property는 id와 같은 방법으로 사용한다.
+			association : 연관된 데이터를 맵핑시킨다.
+			javaType : 조인될 객체 타입
+			property : 커맨드 객체에서의 변수명
+	 		
+	 		데이터를 매핑시켜준다. 
+			association => 1 : 1 관계 
+			collection => 1 : 다 관계 (한명의 유저가 작성한 글 목록)
+			일반 컬럼과 pk 구분 가능 pk 칼럼에게는 result 아닌 id 사용
+		-->
+	<resultMap type="com.test.pds2.gallery.service.Gallery" id="gallery">
+		<id column="gallery_id" property="galleryId"/>
+		<result column="gallery_title" property="galleryTitle"/>
+		<result column="gallery_content" property="galleryContent"/>
+		<collection ofType="com.test.pds2.gallery.service.GalleryFile" property="galleryFile">
+			<id column="gallery_file_id" property="galleryFileId"/>
+			<result column="gallery_file_ext" property="galleryFileExt"/>
+			<result column="gallery_file_type" property="galleryFileType"/>
+			<result column="gallery_file_size" property="galleryFileSize"/>
+		</collection>
+	</resultMap>
 
 	<select id="listAll"
 			parameterType="java.util.Map"

@@ -31,9 +31,12 @@ public class GalleryController {
 	private static final Logger logger = LoggerFactory.getLogger(GalleryController.class);
 	
 	@RequestMapping(value ="/viewDetailGallery", method = RequestMethod.GET)
-	public String viewDetailGallery(
-									) {
-		return "";
+	public String viewDetailGallery(Model model
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10", required=true) int pagePerRow) {
+		logger.debug("GalleryController.viewDetailGallery()");
+		
+		return "/gallery/galleryDetailView";
 	}
 	
 	@RequestMapping(value = "/searchGallery", method = RequestMethod.POST)
@@ -43,7 +46,7 @@ public class GalleryController {
 		
 		List<Gallery> list = galleryService.listAll(searchOption, keyword);
 		
-		return "galleryList";
+		return "redirect:/gallery/galleryList";
 	}
 	
 	/*

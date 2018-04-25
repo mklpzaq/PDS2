@@ -6,26 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<title>Gallery List</title>
-	<script>
-		$(document).ready(function(){
-			/* 5개 단위 이벤트*/
-			$('#selectPagePerRow').change(function(){
-				$(location).attr('href', './galleryList?pagePerRow=' + $('#selectPagePerRow > option:selected').val() + '&searchSelect=' + $('#monitorSearchSelect').text() + '&searchWord=' + $('#monitorSearchWord').text());
-			});			
-		});	
-		
-		function changehtml(){
-			var property = $('#searchOption').val();
-			var show = $('#keyword');
-			if(property=="gallery_content"){
-				$('#keyword').html('<input type="text" name="keyword">');				
-			}
-		}
-	</script>
+<title>View Detail</title>
 </head>
-<body>	
-	<jsp:include page="../navbar.jsp"/>
+<body>
 	<div class="container-fluid">
   		<div class="row">
  			<div class="col-sm-3"></div>
@@ -39,7 +22,7 @@
 							pagePerRow : <strong id="textPagePerRow">${pagePerRow}</strong>
 						</div>
  						<div class="col-sm-6">
-							<h3>Gallery List</h3>
+							<h3>Detail Gallery</h3>
 						</div>
  						<div class="col-sm-3">
 							<select id="selectPagePerRow" name="selectPagePerRow">
@@ -54,7 +37,7 @@
 						</div>
  					</div>
  					<hr/> 
- 						<form action="${pageContext.request.contextPath}/searchGallery" method="post">
+ 						<%-- <form action="${pageContext.request.contextPath}/searchGallery" method="post">
  							<select id="searchOption" name="searchOption" onclick="changehtml();">
  								<option value="gallery_id" <c:out value="${searchOption == 'gallery_id'?'selected':''}"/>>사진관 아이디</option>
  								<option value="gallery_title" <c:out value="${searchOption == 'gallery_title'?'selected':''}"/>>사진관 제목</option>						
@@ -62,16 +45,19 @@
  							</select>
  							<dr id="keyword"></dr>
  							<input type="submit" value="검색버튼"> 						
- 						</form>
+ 						</form> --%>
  					<table class="table table-striped">
+								<div><strong>수정</strong></div>
+								<div><strong>삭제</strong></div>
+								<div><strong>자료추가</strong></div>		
 						<thead>
 							<tr>
+								<td><strong>PICTURES</strong></td>
 								<td><strong>GalleryId</strong></td>
 								<td><strong>GalleryTitle</strong></td>
-								<td><strong>GalleryContent</strong></td>
-								<td><strong>수정</strong></td>
-								<td><strong>삭제</strong></td>
-								<td><strong>자료추가</strong></td>								
+								<td><strong>GalleryFileExt</strong></td>
+								<td><strong>GalleryFileType</strong></td>
+								<td><strong>GalleryFileSize</strong></td>														
 							</tr>						
 						</thead>
 						<tbody>
@@ -87,6 +73,7 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					
 					<nav>
 						 <ul class="pagination">
 						    <li>
@@ -161,6 +148,6 @@
   		</div>
   		<!-- container-fluid END -->
 	</div>
-	
+
 </body>
 </html>
