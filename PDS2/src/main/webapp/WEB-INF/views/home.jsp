@@ -9,6 +9,8 @@
 		<title>Home</title>
 	</head>
 	<body>
+		<jsp:include page="./navbar.jsp"/>
+		
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-3"></div>
@@ -19,12 +21,6 @@
 					<div class="text-center">
 						<h1>Welcome Teme2 Page!</h1>
 						<P>The time on the server is ${serverTime}.</P>
-						
-						<a href="#">articleList</a> |
-						<a href="${pageContext.request.contextPath}/getBoardList">boardList</a> |
-						<a href="#">galleryList</a> |
-						<a href="${pageContext.request.contextPath}/selectNoticeList">noticeList</a> |
-						<a href="${pageContext.request.contextPath}/resumeList">resumeList</a>
 					</div>
 					
 					

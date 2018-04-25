@@ -9,12 +9,27 @@
 		<title>Insert Board Form</title>
 	</head>
 	<body>
-		<h3>insert Board</h3>
-		<form action="${pageContext.request.contextPath}/insertBoard" method="post" enctype="multipart/form-data">
-			<div>boardTitle : <input type="text" name="boardTitle"></div>
-			<div>boardContent : <input type="text" name="boardContent"></div>
-			<div>boardFile : <input type="file" name="multipartFile"></div>		
-			<button type="submit">입력버튼</button>
-		</form>
+		<jsp:include page="../navbar.jsp"/>
+		
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-6">
+				<!-- Begin Content -->
+					
+					<h3>insert Board</h3>
+					<form action="${pageContext.request.contextPath}/insertBoard" method="post" enctype="multipart/form-data">
+						<div>boardTitle : <input type="text" name="boardTitle"></div>
+						<div>boardContent : <input type="text" name="boardContent"></div>
+						<div>boardFile : <input type="file" name="multipartFile"></div>		
+						<button type="submit">입력버튼</button>
+					</form>
+					
+				<!-- End Content -->
+				</div>
+				<div class="col-sm-3"></div>
+			</div>
+		</div>
+		
 	</body>
 </html>

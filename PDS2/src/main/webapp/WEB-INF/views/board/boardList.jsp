@@ -47,12 +47,15 @@
 		</script>
 	</head>
 	<body>
+		<jsp:include page="../navbar.jsp"/>
+	
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-3"></div>
 				<div class="col-sm-6">
 				<!-- Begin Content -->
-				
+					
+					<a href="${pageContext.request.contextPath}/insertBoard">insertBoard & boardFile</a>
 		
 					<div class="panel panel-default">
 						<div class="panel-body text-center">
