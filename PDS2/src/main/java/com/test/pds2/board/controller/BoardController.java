@@ -26,11 +26,12 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@RequestMapping(value="/getDetailBoard", method=RequestMethod.GET)
-	public String getDetailBoard() {
+	public String getDetailBoard(@RequestParam(value="sendNo") int boardId) {
+		
+		boardService.getDetailBoard(boardId);
 		
 		return null;
 	}
-	
 	
 	/* searchSignal 값이 1이 넘어왔을 경우는 boardList에서 '검색버튼'을 누른 경우이다.
 	 * 그리고 '검색버튼'을 누르지 않았을 겨우는 defaultValue값으로 0이 들어오게 설정하였다.

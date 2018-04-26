@@ -5,6 +5,12 @@
  
 <mapper namespace="com.test.pds2.board.service.BoardMapper">
 	
+	<select id="getDetailBoard"
+			>
+	
+	</select>
+	
+	
 	<select id="totalCountBoard"
 			parameterType="java.util.Map"
 			resultType="Integer">

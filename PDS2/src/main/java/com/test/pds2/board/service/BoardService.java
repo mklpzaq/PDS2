@@ -23,6 +23,11 @@ public class BoardService {
 	private BoardFileDao boardFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
 	
+	public void getDetailBoard(int boardId) {
+		logger.debug("getDetailBoard BoardService");
+		//Board board = boardFileDao.getDetailBoard(boardId);
+	}
+	
 	public Map<String, Object> getBoardList(int currentPage, int pagePerRow, String searchSelect, String searchWord){
 		logger.debug("getBoardList BoardService");
 		int beginRow = (currentPage-1)*pagePerRow;
