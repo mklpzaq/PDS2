@@ -105,4 +105,10 @@
 				where resume_id = #{resumeId}
 	</select>
 	
+	<delete id="deleteResume" parameterType="com.test.pds2.resume.service.Resume">
+		DELETE 
+			FROM resume
+			WHERE resume_id=#{resumeId}
+	</delete>
+	
 </mapper>

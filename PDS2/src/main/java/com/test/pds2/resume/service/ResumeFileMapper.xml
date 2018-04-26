@@ -23,4 +23,9 @@
 				,#{resumeId})				
 	</insert>
 
+	<delete id="deleteFileResume" parameterType="com.test.pds2.resume.service.Resume">
+		DELETE 
+			FROM resume_file 
+			WHERE resume_id=#{resumeId}
+	</delete>
 </mapper>

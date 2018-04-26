@@ -101,7 +101,14 @@ public class ResumeController {
 		return "/resume/resumeSangseView";
 	}
 	
-	
+	@RequestMapping(value = "/deleteResume", method= RequestMethod.GET)
+	public String deleteResume(Resume resume, Model model) {
+		logger.debug("deleteResume - resume : " + resume.toString());
+				
+		resumeService.deleteResume(resume);
+		
+		return "redirect:/resumeList";
+	}
 	
 	
 	 @RequestMapping(value = "/download", method= RequestMethod.GET)

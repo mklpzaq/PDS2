@@ -168,4 +168,14 @@ public class ResumeService {
 		logger.debug("resumeView - resumeView : " + resumeView.toString());
 		return resumeView;
 	}
+	
+	@Transactional
+	public void deleteResume(Resume resume) {
+		logger.debug("deleteResume - resume : " + resume.toString());
+		
+		resumeFileDao.deleteFileResume(resume);
+		
+		resumeDao.deleteResume(resume);
+		
+	}
 }

@@ -38,31 +38,32 @@
 							<a href="./updateBoardForm?boardNo=${board.boardNo}">
 								[수정]
 							</a>&nbsp;&nbsp;
-							<a href="./deleteBoard?boardNo=${board.boardNo}">
+							<a href="./deleteResume?resumeId=${resumeView.resumeId}">
 								[삭제]
 							</a>&nbsp;&nbsp;
 							<a href="./resumeList">
 								[목록]
 							</a>
-						</div>
-						
+						</div>						
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<div class="row">
-									<div class="col-sm-4">
-										번호 : ${resumeView.resumeId}<br/>
-										제목 : ${resumeView.resumeTitle}
+									<div class="col-sm-2">
+										번호 : ${resumeView.resumeId}<br/>										
 									</div>
-									<div class="col-sm-4 text-center">
-										<h3 class="panel-title">${resumeView.resumeContent}</h3>
+									<div class="col-sm-10 text-center">
+										제목 : ${resumeView.resumeTitle}										
 									</div>
 								</div>
 							</div>
-							<div class="panel-body" style="height:100px;">
-								첨부파일
-								<c:forEach var="resumeFile" items="${list}">								
-									<a href="${pageContext.request.contextPath}/download?path=${path}&resumeFileName=${resumeFile.resumeFileName}&resumeFileExt=${resumeFile.resumeFileExt}">${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}</a><br/>
-								</c:forEach>
+							<div class="panel-body" style="height:100%;">								
+								<textarea class="panel-title" style="height:90%; width:90%;">${resumeView.resumeContent}</textarea>
+								<div>
+									첨부파일 : <br/>
+									<c:forEach var="resumeFile" items="${list}">								
+										<a href="${pageContext.request.contextPath}/download?path=${path}&resumeFileName=${resumeFile.resumeFileName}&resumeFileExt=${resumeFile.resumeFileExt}">${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}</a><br/>
+									</c:forEach>
+								</div>
 							</div>
 						</div>
 					<!-- resumeSangse end -->

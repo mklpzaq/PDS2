@@ -41,4 +41,10 @@ public class ResumeDao {
 		
 		return sqlSession.selectOne(NS+"selectResumeOne", resume);
 	}
+	
+	public int deleteResume(Resume resume) {
+		logger.debug("deleteResume - resume : "+resume.toString());
+		 
+		return sqlSession.delete(NS+"deleteResume", resume);  
+	}
 }

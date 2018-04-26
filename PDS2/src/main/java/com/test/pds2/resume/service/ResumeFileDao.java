@@ -20,4 +20,10 @@ public class ResumeFileDao {
 		 
 		return sqlSession.insert(NS+"insertResumeFile", resumeFile);  
 	}
+	
+	public int deleteFileResume(Resume resume) {
+		logger.debug("deleteFileResume - resume : "+resume.toString());
+		 
+		return sqlSession.delete(NS+"deleteFileResume", resume);  
+	}
 }
