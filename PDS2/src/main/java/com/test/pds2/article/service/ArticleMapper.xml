@@ -5,6 +5,55 @@
  
 <mapper namespace="com.test.pds2.article.service.ArticleMapper">
 	
+	<select id="totalCountArticle"
+			parameterType="java.util.Map"
+			resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			article
+		<if test="!searchWord.equals('')">
+			<choose>
+				<when test="searchSelect.equals('articleId')">
+					WHERE article_id = #{searchWord}
+				</when>
+				<when test="searchSelect.equals('articleTitle')">
+					WHERE article_title = #{searchWord}
+				</when>
+				<when test="searchSelect.equals('articleContent')">
+					WHERE article_content = #{searchWord}
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+	<select id="getArticleList"
+			parameterType="java.util.Map"
+			resultType="com.test.pds2.article.service.Article">
+		SELECT
+			article_id AS articleId
+			,article_title AS articleTitle
+			,article_content AS articleContent
+		FROM
+			article
+		<if test="!searchWord.equals('')">
+			<choose>
+				<when test="searchSelect.equals('articleId')">
+					WHERE article_id = #{searchWord}
+				</when>
+				<when test="searchSelect.equals('articleTitle')">
+					WHERE article_title = #{searchWord}
+				</when>
+				<when test="searchSelect.equals('articleContent')">
+					WHERE article_content = #{searchWord}
+				</when>
+			</choose>
+		</if>
+		ORDER BY article_id DESC
+		LIMIT #{beginRow}, #{pagePerRow}	
+	</select>
+	
+	
 	<insert id="insertArticle"
 			parameterType="com.test.pds2.article.service.Article">
 		<selectKey resultType="Integer"

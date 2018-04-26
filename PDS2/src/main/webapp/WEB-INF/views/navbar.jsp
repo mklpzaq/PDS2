@@ -23,7 +23,7 @@
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="${pageContext.request.contextPath}/articleList">articleList</a></li>
+						<li><a href="${pageContext.request.contextPath}/getArticleList">articleList</a></li>
 						<li><a href="${pageContext.request.contextPath}/getBoardList">boardList</a></li>
 						<li><a href="${pageContext.request.contextPath}/galleryList">galleryList</a></li>
 						<li><a href="${pageContext.request.contextPath}/selectNoticeList">noticeList</a></li>
