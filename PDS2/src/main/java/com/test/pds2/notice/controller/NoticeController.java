@@ -42,7 +42,7 @@ public class NoticeController {
 		String path = SystemPath.SYSTEM_PATH;	
 		logger.debug("path" + path);
 		noticeService.insertNotice(noticeRequest, path);
-		return "redirect:/noticeList";
+		return "redirect:/selectNoticeList";
 	}
 	
 	@RequestMapping(value = "/selectNoticeList", method = RequestMethod.GET)

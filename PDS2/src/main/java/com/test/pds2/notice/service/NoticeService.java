@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds2.path.SystemPath;
 import com.test.pds2.resume.service.Resume;
 
 
@@ -62,7 +63,7 @@ public class NoticeService {
 		noticeFile.setNoticeFileSize(fileSize);
 		
 		//5.파일저장(매개변수 path를 이용하여 저장장소를 지정해준다. path+"\\"+filename + "."+fileExt)
-		File file = new File("d:\\upload\\"+filename+fileExt);
+		File file = new File(SystemPath.SYSTEM_PATH+"/"+filename+"."+fileExt);
 		try {
 			multipartFile.transferTo(file);
 		} catch (IllegalStateException e) {
@@ -75,10 +76,7 @@ public class NoticeService {
 		
 		//셋팅
 		noticeFile.setNoticeId(noticeId);
-		noticeFile.setNoticeFileName(noticeFileName);
-		noticeFile.setNoticeFileExt(noticeFileExt);
-		noticeFile.setNoticeFileType(noticeFileType);
-		noticeFile.setNoticeFileSize(noticeFileSize);
+		
 		noticeFileDao.insertNoticeFile(noticeFile);
 	}
 	
