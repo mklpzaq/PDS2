@@ -62,7 +62,7 @@
 									첨부파일 : <br/>
 									<c:forEach var="resumeFile" items="${list}">								
 										<a href="${pageContext.request.contextPath}/download?noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">${noticeFile.noticeFileName}.${noticeFile.noticeFileExt}</a>
-										<button><a href="${pageContext.request.contextPath}/deletenoticeFile?noticeFileId=${noticeFile.noticeFileId}&noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">삭제</a></button><br/>
+										<button><a href="${pageContext.request.contextPath}/deleteNoticeFile?noticeFileId=${noticeFile.noticeFileId}&noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">삭제</a></button><br/>
 									</c:forEach>
 								</div>
 							</div>
