@@ -34,7 +34,7 @@ public class BoardController {
 		logger.debug("board : "+ board.toString());
 		model.addAttribute("detailBoard", board);
 		
-		return null;
+		return "/board/boardDetailView";
 	}
 	
 	/* searchSignal 값이 1이 넘어왔을 경우는 boardList에서 '검색버튼'을 누른 경우이다.
