@@ -5,11 +5,42 @@
  
 <mapper namespace="com.test.pds2.board.service.BoardMapper">
 	
+	<resultMap id="baseBoard" type="com.test.pds2.board.service.Board">
+		<id column="board_id" property="boardId"/>
+		<result column="board_title" property="boardTitle"/>
+		<result column="board_content" property="boardContent"/>
+		<collection property="boardFile" ofType="com.test.pds2.board.service.BoardFile">
+			<id property="boardFileId" column="board_file_id"/>
+			<id property="boardId" column="board_id"/>
+			<result property="boardFileName" column="board_file_name"/>
+			<result property="boardFileExt" column="board_file_ext"/>
+			<result property="boardFileType" column="board_file_type"/>
+			<result property="boardFileSize" column="board_file_size"/>
+		</collection>
+	</resultMap>
+	
 	<select id="getDetailBoard"
-			>
-	
+			parameterType="Integer"
+			resultType="com.test.pds2.board.service.Board"
+			resultMap="baseBoard">
+		SELECT
+			board.board_id AS board_id
+			,board.board_title AS board_title
+			,board.board_content AS board_content
+			,board_file.board_file_id AS board_file_id
+			,board_file.board_file_name AS board_file_name
+			,board_file.board_file_ext AS board_file_ext
+			,board_file.board_file_type AS board_file_type
+			,board_file.board_file_size AS board_file_size
+		FROM
+			board
+			INNER JOIN
+			board_file
+		ON
+			board.board_id = board_file.board_id
+		WHERE
+			board.board_id = #{boardId}
 	</select>
-	
 	
 	<select id="totalCountBoard"
 			parameterType="java.util.Map"

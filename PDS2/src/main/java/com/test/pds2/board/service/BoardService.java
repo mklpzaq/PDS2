@@ -23,9 +23,9 @@ public class BoardService {
 	private BoardFileDao boardFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
 	
-	public void getDetailBoard(int boardId) {
+	public Board getDetailBoard(int boardId) {
 		logger.debug("getDetailBoard BoardService");
-		//Board board = boardFileDao.getDetailBoard(boardId);
+		return boardDao.getDetailBoard(boardId);
 	}
 	
 	public Map<String, Object> getBoardList(int currentPage, int pagePerRow, String searchSelect, String searchWord){

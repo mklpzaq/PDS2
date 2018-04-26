@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds2.board.service.Board;
 import com.test.pds2.board.service.BoardRequest;
 import com.test.pds2.board.service.BoardService;
 import com.test.pds2.path.SystemPath;
@@ -26,9 +27,12 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@RequestMapping(value="/getDetailBoard", method=RequestMethod.GET)
-	public String getDetailBoard(@RequestParam(value="sendNo") int boardId) {
+	public String getDetailBoard(Model model
+								,@RequestParam(value="sendNo") int boardId) {
 		
-		boardService.getDetailBoard(boardId);
+		Board board = boardService.getDetailBoard(boardId);
+		logger.debug("board : "+ board.toString());
+		model.addAttribute("detailBoard", board);
 		
 		return null;
 	}
