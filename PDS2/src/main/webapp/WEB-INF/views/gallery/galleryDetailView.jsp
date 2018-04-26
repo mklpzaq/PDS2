@@ -47,9 +47,11 @@
  							<input type="submit" value="검색버튼"> 						
  						</form> --%>
  					<table class="table table-striped">
-								<div><strong>수정</strong></div>
-								<div><strong>삭제</strong></div>
-								<div><strong>자료추가</strong></div>		
+								<div>
+									<strong>수정</strong>
+									<strong>삭제</strong>
+									<strong>자료추가</strong>
+								</div>		
 						<thead>
 							<tr>
 								<td><strong>PICTURES</strong></td>
@@ -61,11 +63,12 @@
 							</tr>						
 						</thead>
 						<tbody>
-							<c:forEach var="gallery" items="${list}">
+							<c:forEach var="galleryview" items="${detailList}">
 								<tr>
-									<td><strong>${gallery.galleryId}</strong></td>
-									<td><a href="${pageContext.request.contextPath}/viewDetailGallery?sendId=${gallery.galleryId}">${gallery.galleryTitle}</a></td>
-									<td>${gallery.galleryContent}</td>
+									<td><img src="..." alt="..." class="img-circle"></td>
+									<td>${galleryview.galleryId}</td>
+									<td>${galleryview.galleryTitle}</a></td>
+									<td>${galleryview.galleryContent}</td>
 									<td><a href="#">수정</a></td>
 									<td id="#"><a href="#">삭제</a></td>
 									<td><a href="#">자료추가</a></td>											
@@ -77,19 +80,19 @@
 					<nav>
 						 <ul class="pagination">
 						    <li>
-						      <a href="${pageContext.request.contextPath}/galleryList?currentPage=1&pagePerRow=${pagePerRow}" aria-label="Previous">
+						      <a href="${pageContext.request.contextPath}/viewDetailGallery?currentPage=1&pagePerRow=${pagePerRow}" aria-label="Previous">
 						        <span aria-hidden="true">&laquo;</span>
 						      </a>
 						    </li>							   
 						    <li>
 						    	<c:choose>
 						    		<c:when test="${currentPage > 1}">
-							      		<a href="${pageContext.request.contextPath}/galleryList?currentPage=${currentPage-1}&pagePerRow=${pagePerRow}" aria-label="Previous">
+							      		<a href="${pageContext.request.contextPath}/viewDetailGallery?currentPage=${currentPage-1}&pagePerRow=${pagePerRow}" aria-label="Previous">
 							        		<span aria-hidden="true">&lt;</span>
 							      		</a>
 						      		</c:when>
 						      		<c:otherwise>
-						      			<a href="${pageContext.request.contextPath}/galleryList?currentPage=1&pagePerRow=${pagePerRow}" aria-label="Previous">
+						      			<a href="${pageContext.request.contextPath}/viewDetailGallery?currentPage=1&pagePerRow=${pagePerRow}" aria-label="Previous">
 							        		<span aria-hidden="true">&lt;</span>
 							      		</a>
 						      		</c:otherwise>
@@ -100,10 +103,10 @@
 									<c:forEach var="pageNum" begin="${beginPageNumForCurrentPage}" end="${beginPageNumForCurrentPage + 4}" step="1">
 										<c:choose>
 											<c:when test="${pageNum == currentPage}">
-												<li class="active"><a href="${pageContext.request.contextPath}/galleryList?currentPage=${pageNum}&pagePerRow=${pagePerRow}">${pageNum}</a></li>
+												<li class="active"><a href="${pageContext.request.contextPath}/viewDetailGallery?currentPage=${pageNum}&pagePerRow=${pagePerRow}">${pageNum}</a></li>
 											</c:when>
 											<c:otherwise>
-												<li><a href="${pageContext.request.contextPath}/galleryList?currentPage=${pageNum}&pagePerRow=${pagePerRow}">${pageNum}</a></li>
+												<li><a href="${pageContext.request.contextPath}/viewDetailGallery?currentPage=${pageNum}&pagePerRow=${pagePerRow}">${pageNum}</a></li>
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
@@ -112,10 +115,10 @@
 									<c:forEach var="pageNum" begin="${beginPageNumForCurrentPage}" end="${lastPage}" step="1">
 										<c:choose>
 											<c:when test="${pageNum == currentPage}">
-												<li class="active"><a href="${pageContext.request.contextPath}/galleryList?currentPage=${pageNum}&pagePerRow=${pagePerRow}">${pageNum}</a></li>
+												<li class="active"><a href="${pageContext.request.contextPath}/viewDetailGallery?currentPage=${pageNum}&pagePerRow=${pagePerRow}">${pageNum}</a></li>
 											</c:when>
 											<c:otherwise>
-												<li><a href="${pageContext.request.contextPath}/galleryList?currentPage=${pageNum}&pagePerRow=${pagePerRow}">${pageNum}</a></li>
+												<li><a href="${pageContext.request.contextPath}/viewDetailGallery?currentPage=${pageNum}&pagePerRow=${pagePerRow}">${pageNum}</a></li>
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
@@ -124,19 +127,19 @@
 						    <li>
 								<c:choose>
 									<c:when test="${currentPage < lastPage}">
-										<a href="${pageContext.request.contextPath}/galleryList?currentPage=${currentPage+1}&pagePerRow=${pagePerRow}" aria-label="Next">
+										<a href="${pageContext.request.contextPath}/viewDetailGallery?currentPage=${currentPage+1}&pagePerRow=${pagePerRow}" aria-label="Next">
 											<span aria-hidden="true">&gt;</span>
 										</a>
 									</c:when>
 									<c:otherwise>
-										<a href="${pageContext.request.contextPath}/galleryList?currentPage=${lastPage}&pagePerRow=${pagePerRow}"aria-label="Next">
+										<a href="${pageContext.request.contextPath}/viewDetailGallery?currentPage=${lastPage}&pagePerRow=${pagePerRow}"aria-label="Next">
 											<span aria-hidden="true">&gt;</span>
 										</a>
 									</c:otherwise>
 								</c:choose>
 							</li>
 							<li>
-								<a href="${pageContext.request.contextPath}/galleryList?currentPage=${lastPage}&pagePerRow=${pagePerRow}" aria-label="Next">
+								<a href="${pageContext.request.contextPath}/viewDetailGallery?currentPage=${lastPage}&pagePerRow=${pagePerRow}" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</li>

@@ -34,5 +34,10 @@ public class GalleryDao {
 	public List<Gallery> listAll(String searchOption, ArrayList<String> keyword) {
 		
 		return null;
+	}
+
+	public Gallery selectDetailList(Map<String, Object> map) {
+		logger.info("====== selectDetailList : " + map.toString());
+		return sqlSession.selectOne(NS+"selectGalleryDetail", map);		
 	}	
 }

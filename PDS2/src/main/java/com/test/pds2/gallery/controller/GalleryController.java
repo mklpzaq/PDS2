@@ -32,10 +32,17 @@ public class GalleryController {
 	
 	@RequestMapping(value ="/viewDetailGallery", method = RequestMethod.GET)
 	public String viewDetailGallery(Model model
+									,Gallery gallery
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 									,@RequestParam(value="pagePerRow", defaultValue="10", required=true) int pagePerRow) {
-		logger.debug("GalleryController.viewDetailGallery()");
-		
+		logger.debug("GalleryController.viewDetailGallery()");		
+		Map<String, Object> map = galleryService.viewDetailGallery(gallery, currentPage, pagePerRow);
+		model.addAttribute("detailList", map.get("detailList"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("lastPageGalleryCnt", map.get("lastPageGalleryCnt"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("pagePerRow", pagePerRow);
+		model.addAttribute("beginPageNumForCurrentPage", map.get("beginPageNumForCurrentPage"));		
 		return "/gallery/galleryDetailView";
 	}
 	

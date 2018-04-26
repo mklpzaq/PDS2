@@ -5,8 +5,8 @@
   
 <mapper namespace="com.test.pds2.gallery.service.GalleryMapper">
 	
-	<select id="selectGalleryOne" 
-			parameterType="com.test.pds2.gallery.service.Gallery"
+	<select id="selectGalleryDetail" 
+			parameterType="java.util.Map"
 			resultMap="gallery">
 		SELECT
 			gl.gallery_id

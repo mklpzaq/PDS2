@@ -27,7 +27,7 @@ public class GalleryService {
 	GalleryDao galleryDao;
 	@Autowired
 	GalleryFileDao galleryFileDao;
-	private static final Logger logger = LoggerFactory.getLogger(GalleryController.class);
+	private static final Logger logger = LoggerFactory.getLogger(GalleryService.class);
 		
 	/*
 	 * 2개이상의 쿼리문을 사용 하기에 하나의 쿼리문이 오류가 나도 원래상태로 되돌리는 @Transactional을 쓴다.
@@ -95,7 +95,7 @@ public class GalleryService {
 	}
 	
 	/*
-	 * Map에 넣어야 할 값이 List와 int이다. 이럴경우 모든형은 받는 Object를 쓴다.
+	 * Map에 넣어야 할 값이 List와 int이다. 이럴경우 모든형을 받는 Object를 쓴다.
 	 */
 	public Map<String, Object> galleryList(int currentPage, int pagePerRow) {
 		logger.debug("GalleryService.galleryList");
@@ -141,5 +141,44 @@ public class GalleryService {
 	public List<Gallery> listAll(String searchOption, ArrayList<String> keyword) {
 		
 		return galleryDao.listAll(searchOption, keyword);
+	}
+	// 상세보기 List
+	public Map<String, Object> viewDetailGallery(Gallery gallery, int currentPage, int pagePerRow) {
+		logger.debug("GalleryService.viewDetailGallery");
+		Map<String,Object> map = new HashMap<String,Object>();
+		int beginRow = (currentPage -1)*pagePerRow;		
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);		
+		map.put("gallery", gallery.getGalleryId());
+		logger.debug("GalleryService.viewDetailGallery.getGalleryId : " + gallery.getGalleryId());
+		
+		Gallery detailList = galleryDao.selectDetailList(map);
+		int total = galleryDao.totalCountGallery();
+		logger.debug("GalleryService.total  : " + total);
+		
+		int lastPage = 0;
+		int lastPageGalleryCnt = 0;
+		if(0 == total) {
+			lastPage = 1;
+		}else if(total%pagePerRow == 0) {
+			lastPage = total/pagePerRow;			
+		}else {
+			lastPage = total/pagePerRow+1;
+		}
+		
+		int temp = (currentPage -1)/5;
+		int beginPageNumForCurrentPage = temp * 5 + 1;
+		
+		//====================
+		
+		
+		
+		Map<String,Object> returnmap = new HashMap<String, Object>();
+		returnmap.put("detailList", detailList);
+		returnmap.put("lastPage", lastPage);
+		returnmap.put("lastPageGalleryCnt", lastPageGalleryCnt);
+		returnmap.put("beginPageNumForCurrentPage", beginPageNumForCurrentPage);
+		
+		return returnmap;
 	}
 }

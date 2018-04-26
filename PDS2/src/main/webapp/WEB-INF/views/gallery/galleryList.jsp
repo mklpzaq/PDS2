@@ -78,7 +78,7 @@
 							<c:forEach var="gallery" items="${list}">
 								<tr>
 									<td><strong>${gallery.galleryId}</strong></td>
-									<td><a href="${pageContext.request.contextPath}/viewDetailGallery?sendId=${gallery.galleryId}">${gallery.galleryTitle}</a></td>
+									<td><a href="${pageContext.request.contextPath}/viewDetailGallery?galleryId=${gallery.galleryId}">${gallery.galleryTitle}</a></td>
 									<td>${gallery.galleryContent}</td>
 									<td><a href="#">수정</a></td>
 									<td id="#"><a href="#">삭제</a></td>
