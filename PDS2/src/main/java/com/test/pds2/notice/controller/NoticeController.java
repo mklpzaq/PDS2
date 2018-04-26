@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.test.pds2.notice.service.NoticeRequest;
 import com.test.pds2.notice.service.NoticeService;
+import com.test.pds2.path.SystemPath;
 
 @Controller
 public class NoticeController {
@@ -26,14 +27,14 @@ public class NoticeController {
 	@RequestMapping(value = "/insertNotice", method = RequestMethod.GET)
 	public String insertNotice() {
 		logger.debug("insertNotice-GET");
-		return "notice/insertNotice";
+		return "/notice/insertNotice";
 	}
 	
 	@RequestMapping(value = "/insertNotice", method = RequestMethod.POST)
 	public String insertNotice(NoticeRequest noticeRequest, HttpSession session ) {
 		logger.debug("insertNotice-POST");
 		logger.debug("NoticeRequest");
-		String path = session.getServletContext().getRealPath("/resources/upload/notice");
+		String path = SystemPath.SYSTEM_PATH;	
 		logger.debug("path" + path);
 		noticeService.insertNotice(noticeRequest, path);
 		return "redirect:/";
@@ -51,6 +52,6 @@ public class NoticeController {
 		model.addAttribute("startPage", map.get("startPage"));
 		model.addAttribute("endPage", map.get("endPage"));
 		model.addAttribute("pagePerRow", pagePerRow);
-		return "NoticeList";
+		return "/notice/noticeList";
 	}
 }

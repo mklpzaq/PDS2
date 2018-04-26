@@ -18,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class NoticeService {
 	@Autowired
 	private NoticeDao noticeDao;
+	@Autowired
 	private NoticeFileDao noticeFileDao;
+	
 	private static final Logger logger = LoggerFactory.getLogger(NoticeService.class);
 	
 	public void insertNotice(NoticeRequest noticeRequest, String path) {

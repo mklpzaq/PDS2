@@ -11,7 +11,7 @@ public class NoticeFileDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	private static final Logger logger = LoggerFactory.getLogger(NoticeFileDao.class);
-	final String NS = "com.test.pds2.notice.service.NoticeMapper.";
+	final String NS = "com.test.pds2.notice.service.NoticeFileMapper.";
 
 	public int insertNoticeFile(NoticeFile noticeFile) {
 		logger.debug("insertNoticeFile");
