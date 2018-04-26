@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.test.pds2.board.service.Board;
 import com.test.pds2.board.service.BoardRequest;
@@ -25,6 +26,16 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	
+	@RequestMapping(value="/boardFileDownload", method=RequestMethod.GET)
+	public String download(RedirectAttributes redirectAttributes
+							,@RequestParam(value="sendNo") int boardId) {
+		logger.debug("GET /boardFileDownload BoardController");
+		logger.debug("★★★★★★★★★★★★★★★★★★★★★★★★★★");
+		redirectAttributes.addFlashAttribute("sendNo", boardId);
+		return "redirect:/getDetailBoard";
+	}
+	
 	
 	@RequestMapping(value="/getDetailBoard", method=RequestMethod.GET)
 	public String getDetailBoard(Model model

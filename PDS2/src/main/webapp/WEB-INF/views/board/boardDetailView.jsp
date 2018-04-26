@@ -18,6 +18,7 @@
 				<!-- Begin Content -->
 					
 					<!-- detailBoard를 쓰자 -->
+					<h3 class="text-center">Board Detail</h3>
 					<div class="panel panel-default">
 						<div class="panel-heading">boardId : ${detailBoard.boardId}, boardTitle : ${detailBoard.boardTitle}</div>
 						<div class="panel-body">
@@ -30,7 +31,8 @@
 									boardFileName : ${boardFile.boardFileName}<br/>
 									boardFileExt : ${boardFile.boardFileExt}<br/>
 									boardFileType : ${boardFile.boardFileType}<br/>
-									boardFileSize : ${boardFile.boardFileSize}
+									boardFileSize : ${boardFile.boardFileSize}<br/>
+									<a href="${pageContext.request.contextPath}/boardFileDownload?sendNo=${boardFile.boardId}">파일 다운로드</a>
 								</div>
 								<hr/>
 							</c:forEach>
