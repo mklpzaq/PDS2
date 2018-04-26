@@ -34,8 +34,8 @@ public class NoticeDao {
 	}
 	
 	public Notice noticeView(Notice notice) {
-		logger.debug("noticeView : "+notice.toString());
-		return sqlSession.selectOne(NS+"noticeView", notice);
-	}
-	
+		logger.debug("noticeView - notice : "+notice.toString());
+		
+		return sqlSession.selectOne(NS+"selectNoticeOne", notice);
+	}	
 }

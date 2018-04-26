@@ -68,13 +68,17 @@ public class NoticeController {
 	
 	@RequestMapping(value = "/noticeView", method= RequestMethod.GET)
 	public String noticeView(Notice notice, Model model) {
-		logger.debug("noticeView : " + notice.toString());
+		logger.debug("noticeView - notice : " + notice.toString());
+		
 		Notice noticeView = noticeService.noticeView(notice);
-		logger.debug("noticeView : " + noticeView.toString());
-		model.addAttribute("noticeView", noticeView);
+		logger.debug("noticeView - noticeView : " + noticeView.toString());		
+		model.addAttribute("noticeView", noticeView);		
+		
 		List <NoticeFile> list = noticeView.getNoticeFile();
-		logger.debug("noticeFile : " + list.toString());
+		logger.debug("noticeView - noticeFile : " + list.toString());
 		model.addAttribute("list", list);
+				
 		return "/notice/noticeView";
 	}
+	
 }

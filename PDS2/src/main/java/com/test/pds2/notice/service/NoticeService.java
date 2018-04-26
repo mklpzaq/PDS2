@@ -23,10 +23,6 @@ public class NoticeService {
 	private NoticeDao noticeDao;
 	@Autowired
 	private NoticeFileDao noticeFileDao;
-	private String noticeFileName;
-	private String noticeFileExt;
-	private String noticeFileType;
-	private long noticeFileSize;
 	
 	private static final Logger logger = LoggerFactory.getLogger(NoticeService.class);
 	
@@ -113,9 +109,9 @@ public class NoticeService {
 	}
 	
 	public Notice noticeView(Notice notice) {
-		logger.debug("noticeView : " + notice);
+		logger.debug("noticeView - notice : " + notice);
 		Notice noticeView = noticeDao.noticeView(notice);
-		logger.debug("noticeView : " + noticeView.toString());
+		logger.debug("noticeView - noticeView : " + noticeView.toString());
 		return noticeView;
 	}
 }
