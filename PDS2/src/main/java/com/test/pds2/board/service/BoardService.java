@@ -23,6 +23,27 @@ public class BoardService {
 	private BoardFileDao boardFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
 	
+	public void boardFileDownload(String fileName, String fileExt) {
+		File serverFile = new File("D:"+File.separator+"upload"+File.separator+fileName+"."+fileExt);
+		logger.debug("D:"+File.separator+"upload"+File.separator+fileName+"."+fileExt);
+		if(serverFile.exists() == false) {
+			logger.debug("원본 파일이 존재하지 않습니다.");
+			return ;
+		}
+		
+		File downLoadDir = new File("D:"+File.separator+"download");
+		downLoadDir.mkdir();
+		File reFile = new File(downLoadDir, fileName+"."+fileExt);
+		
+		serverFile.renameTo(reFile);
+		if(reFile.exists() == true) {
+			logger.debug("파일이동에 성공하였습니다.");
+		}else {
+			logger.debug("파일이동에 실패하였습니다.");
+		}
+	}
+	
+	
 	public Board getDetailBoard(int boardId) {
 		logger.debug("getDetailBoard BoardService");
 		return boardDao.getDetailBoard(boardId);

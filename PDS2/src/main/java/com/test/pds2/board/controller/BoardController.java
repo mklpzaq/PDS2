@@ -28,12 +28,25 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@RequestMapping(value="/boardFileDownload", method=RequestMethod.GET)
-	public String download(RedirectAttributes redirectAttributes
-							,@RequestParam(value="sendNo") int boardId) {
+	public String download(Model model
+							,@RequestParam(value="sendNo") int boardId
+							,@RequestParam(value="fileName") String fileName
+							,@RequestParam(value="fileExt") String fileExt) {
 		logger.debug("GET /boardFileDownload BoardController");
+		
+		
 		logger.debug("★★★★★★★★★★★★★★★★★★★★★★★★★★");
-		redirectAttributes.addFlashAttribute("sendNo", boardId);
-		return "redirect:/getDetailBoard";
+		Board board = boardService.getDetailBoard(boardId);
+		logger.debug("board : "+ board.toString());
+		model.addAttribute("detailBoard", board);
+		
+		boardService.boardFileDownload(fileName, fileExt);
+		
+		
+		
+		//RedirectAttributes redirectAttributes
+		//redirectAttributes.addFlashAttribute("sendNo", boardId);
+		return "/board/boardDetailView";
 	}
 	
 	

@@ -32,7 +32,7 @@
 									boardFileExt : ${boardFile.boardFileExt}<br/>
 									boardFileType : ${boardFile.boardFileType}<br/>
 									boardFileSize : ${boardFile.boardFileSize}<br/>
-									<a href="${pageContext.request.contextPath}/boardFileDownload?sendNo=${boardFile.boardId}">파일 다운로드</a>
+									<a href="${pageContext.request.contextPath}/boardFileDownload?sendNo=${boardFile.boardId}&fileName=${boardFile.boardFileName}&fileExt=${boardFile.boardFileExt}">파일 다운로드</a>
 								</div>
 								<hr/>
 							</c:forEach>
