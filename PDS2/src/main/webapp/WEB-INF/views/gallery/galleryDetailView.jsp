@@ -9,12 +9,13 @@
 <title>View Detail</title>
 </head>
 <body>
+	<jsp:include page="../navbar.jsp"/>
 	<div class="container-fluid">
   		<div class="row">
  			<div class="col-sm-3"></div>
  			<div class="col-sm-6">
  				<!-- Begin Content -->
- 				<div class="panel panel-default">
+ 				<%-- <div class="panel panel-default">
  					<div class="panel-body text-center">
  						<div class="row">
  						<div class="col-sm-3">
@@ -35,8 +36,8 @@
 								<option value="50"<c:if test="${pagePerRow == 50}">selected</c:if>>50</option>
 							</select>개씩 보기
 						</div>
- 					</div>
- 					<hr/> 
+ 					</div> --%>
+ 					<!-- <hr/>  -->
  						<%-- <form action="${pageContext.request.contextPath}/searchGallery" method="post">
  							<select id="searchOption" name="searchOption" onclick="changehtml();">
  								<option value="gallery_id" <c:out value="${searchOption == 'gallery_id'?'selected':''}"/>>사진관 아이디</option>
@@ -46,38 +47,29 @@
  							<dr id="keyword"></dr>
  							<input type="submit" value="검색버튼"> 						
  						</form> --%>
- 					<table class="table table-striped">
-								<div>
-									<strong>수정</strong>
-									<strong>삭제</strong>
-									<strong>자료추가</strong>
-								</div>		
-						<thead>
-							<tr>
-								<td><strong>PICTURES</strong></td>
-								<td><strong>GalleryId</strong></td>
-								<td><strong>GalleryTitle</strong></td>
-								<td><strong>GalleryFileExt</strong></td>
-								<td><strong>GalleryFileType</strong></td>
-								<td><strong>GalleryFileSize</strong></td>														
-							</tr>						
-						</thead>
-						<tbody>
-							<c:forEach var="galleryview" items="${detailList}">
-								<tr>
-									<td><img src="..." alt="..." class="img-circle"></td>
-									<td>${galleryview.galleryId}</td>
-									<td>${galleryview.galleryTitle}</a></td>
-									<td>${galleryview.galleryContent}</td>
-									<td><a href="#">수정</a></td>
-									<td id="#"><a href="#">삭제</a></td>
-									<td><a href="#">자료추가</a></td>											
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+ 					<div class="panel panel-default">
+ 						<div class="panel-heading">
+ 							<div class="row">
+								<div class="col-sm-2">
+									사진관아이디 :${viewGallery.galleryId}<br/>										
+								</div>
+								<div class="col-sm-10 text-center">
+									사진관제목 : ${viewGallery.galleryTitle}										
+								</div> 							
+ 							</div>
+ 						</div>
+					 	<div class="panel-body" style="height:100%;">								
+							<textarea class="panel-title" style="height:90%; width:90%;">${viewGallery.galleryContent}</textarea>
+							<div>
+								첨부파일 : <br/>
+								<c:forEach var="galleryFile" items="${list}">								
+									<img src="${pageContext.request.contextPath}/" alt="..." class="img-circle"><br/>
+								</c:forEach>
+							</div>
+						</div>				
+ 					</div>
 					
-					<nav>
+				<%-- 	<nav>
 						 <ul class="pagination">
 						    <li>
 						      <a href="${pageContext.request.contextPath}/viewDetailGallery?currentPage=1&pagePerRow=${pagePerRow}" aria-label="Previous">
@@ -144,9 +136,9 @@
 								</a>
 							</li>
 						</ul>						
-					</nav>	
+					</nav>	 --%>
  				<!-- Begin Content END -->
- 				</div> 			
+ 				<!-- </div> 	 -->		
  			</div> 			   
   		</div>
   		<!-- container-fluid END -->

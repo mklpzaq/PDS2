@@ -142,7 +142,7 @@ public class GalleryService {
 		
 		return galleryDao.listAll(searchOption, keyword);
 	}
-	// 상세보기 List
+	/*// 상세보기 List
 	public Map<String, Object> viewDetailGallery(Gallery gallery, int currentPage, int pagePerRow) {
 		logger.debug("GalleryService.viewDetailGallery");
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -180,5 +180,14 @@ public class GalleryService {
 		returnmap.put("beginPageNumForCurrentPage", beginPageNumForCurrentPage);
 		
 		return returnmap;
+	}*/
+	
+	public Gallery viewDetailGallery(Gallery gallery) {
+		logger.debug("GalleryService.viewDetailGallery()");
+		// DAO에서 join문 쿼리를 불러 온다.
+		Gallery viewDetailGallery = galleryDao.selectDetailList(gallery);
+		
+		logger.debug("GalleryService.viewDetailGallery(). viewDetailGallery : " +  viewDetailGallery);
+		return viewDetailGallery;
 	}
 }

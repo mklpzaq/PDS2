@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.test.pds2.gallery.service.Gallery;
+import com.test.pds2.gallery.service.GalleryFile;
 import com.test.pds2.gallery.service.GalleryRequest;
 import com.test.pds2.gallery.service.GalleryService;
 import com.test.pds2.path.SystemPath;
@@ -30,7 +31,7 @@ public class GalleryController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(GalleryController.class);
 	
-	@RequestMapping(value ="/viewDetailGallery", method = RequestMethod.GET)
+	/*@RequestMapping(value ="/viewDetailGallery", method = RequestMethod.GET)
 	public String viewDetailGallery(Model model
 									,Gallery gallery
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
@@ -43,6 +44,26 @@ public class GalleryController {
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pagePerRow", pagePerRow);
 		model.addAttribute("beginPageNumForCurrentPage", map.get("beginPageNumForCurrentPage"));		
+		return "/gallery/galleryDetailView";
+	}*/
+	
+	/*
+	 * 상세보기 컨트롤러 리스트에서 제목을 눌러 galleryId값을 받아왔다.  
+	 */
+	@RequestMapping(value = "/viewDetailGallery", method = RequestMethod.GET)
+	public String viewDetailGallery(Gallery gallery
+									,Model model) {
+		logger.debug("GalleryController.viewDetailGallery()");
+		// join문 쿼리를 받아서 Gallery viewGallery에 대입했다.
+		Gallery viewGallery = galleryService.viewDetailGallery(gallery);
+		// Gallery 에 List<GalleryFile>를 getting하고 list에 담는다.
+		// 화면에 보여줄 준비를 한다.
+		List<GalleryFile> list = viewGallery.getGalleryFile();
+		logger.debug("Gallery viewGallery : " + viewGallery);
+		logger.debug("List<GalleryFile> list : " + list);
+		model.addAttribute("viewGallery", viewGallery);
+		model.addAttribute("list", list);
+		
 		return "/gallery/galleryDetailView";
 	}
 	
