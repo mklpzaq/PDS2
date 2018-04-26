@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -6,46 +7,51 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<title>Notice View</title>
+		<style>
+			.none{display:none;}
+		</style>
 	</head>
 	<body>
+		
 		<jsp:include page="../navbar.jsp"/>
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-2"></div>
 					<div class="col-md-8">
-					<!-- Notice View -->
+					<!-- noticeView -->
 						<div>
 							<a href="./updateNotice?noticeId=${notice.noticeId}">
 								[수정]
 							</a>&nbsp;&nbsp;
-							<a href="./deleteNotice?noticeId=${notice.noticeId}">
+							<a href="./deleteNotice?noticeId=${noticeView.noticeId}">
 								[삭제]
 							</a>&nbsp;&nbsp;
 							<a href="./noticeList">
 								[목록]
 							</a>
-						</div>
-						
+						</div>						
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<div class="row">
-									<div class="col-sm-4">
-										번호 : ${noticeView.noticeId}<br/>
-										제목 : ${noticeView.noticeTitle}
+									<div class="col-sm-2">
+										번호 : ${noticeView.noticeId}<br/>										
 									</div>
-									<div class="col-sm-4 text-center">
-										<h3 class="panel-title">${noticeView.noticeContent}</h3>
+									<div class="col-sm-10 text-center">
+										제목 : ${noticeView.noticeTitle}										
 									</div>
 								</div>
 							</div>
-							<div class="panel-body" style="height:100px;">
-								첨부파일
-								<c:forEach var="notideFile" items="${list}">								
-									<a href="${pageContext.request.contextPath}/download?path=${path}&noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">${noticeFile.noticeFileName}.${noticeFile.noticeFileExt}</a><br/>
-								</c:forEach>
+							<div class="panel-body" style="height:100%;">								
+								<textarea class="panel-title" style="height:90%; width:90%;">${noticeView.noticeContent}</textarea>
+								<div>
+									첨부파일 : <br/>
+									<c:forEach var="noticeFile" items="${list}">								
+										<a href="${pageContext.request.contextPath}/download?path=${path}&noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">${noticeFile.noticeFileName}.${noticeFile.noticeFileExt}</a><br/>
+									</c:forEach>
+								</div>
 							</div>
 						</div>
-					<!-- Notice View end -->
+					<!-- noticeView -->
 					</div>
 					<div class="col-md-2"></div>
 				</div>

@@ -42,37 +42,39 @@ public class NoticeController {
 		String path = SystemPath.SYSTEM_PATH;	
 		logger.debug("path" + path);
 		noticeService.insertNotice(noticeRequest, path);
-		return "redirect:/";
+		return "redirect:/noticeList";
 	}
 	
 	@RequestMapping(value = "/selectNoticeList", method = RequestMethod.GET)
 	public String selectNoticeList(Model model
-									, @RequestParam(value="currentPage", defaultValue="1") int currentPage
-									,@RequestParam(value="pagePerRow", required=true, defaultValue="10") int pagePerRow) {
-		logger.info("selectNoticeList");
+									, HttpSession session										
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", required=true, defaultValue="10") int pagePerRow
+									,@RequestParam(value="searchOption", defaultValue="all") String searchOption
+									,@RequestParam(value="keyword", defaultValue="") String keyword) {
+	logger.info("selectNoticeList");
 		Map<String, Object> map = noticeService.selectNoticeList(currentPage,pagePerRow);
+		
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("startPage", map.get("startPage"));
 		model.addAttribute("endPage", map.get("endPage"));
 		model.addAttribute("pagePerRow", pagePerRow);
+		model.addAttribute("searchOption", searchOption);
+		model.addAttribute("keyword", keyword);
 		return "/notice/noticeList";
 	}
 	
 	@RequestMapping(value = "/noticeView", method= RequestMethod.GET)
 	public String noticeView(Notice notice, Model model) {
 		logger.debug("noticeView : " + notice.toString());
-		
-		
 		Notice noticeView = noticeService.noticeView(notice);
-		List <NoticeFile> list = noticeView.getNoticeFile();
 		logger.debug("noticeView : " + noticeView.toString());
-		logger.debug("noticeFile : " + list.toString());
 		model.addAttribute("noticeView", noticeView);
+		List <NoticeFile> list = noticeView.getNoticeFile();
+		logger.debug("noticeFile : " + list.toString());
 		model.addAttribute("list", list);
-				
 		return "/notice/noticeView";
 	}
-	
 }

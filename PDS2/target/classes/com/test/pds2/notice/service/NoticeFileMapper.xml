@@ -12,12 +12,14 @@
 			, notice_file_ext
 			, notice_file_type
 			, notice_file_size
+			, notice_id
 		) VALUES (
 			NULL
 			, #{noticeFileName}
 			, #{noticeFileExt}
 			, #{noticeFileType}
 			, #{noticeFileSize}
+			, #{noticeId}
 		)
 	</insert>
 </mapper>

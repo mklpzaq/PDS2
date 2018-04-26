@@ -49,7 +49,7 @@
 	
 	<select id="selectNoticeList" parameterType="java.util.Map" resultType="com.test.pds2.notice.service.Notice">
 		SELECT
-			notice_id as noitceId
+			notice_id as noticeId
 			, notice_title as noticeTitle
 		FROM notice
 		ORDER BY notice_id DESC 
@@ -70,6 +70,7 @@
 			, notice_file.notice_file_ext
 			, notice_file.notice_file_size
 		FROM notice JOIN notice_file
+		using(notice_id)
 		WHERE notice_id = #{noticeId}
 	</select>
 	
