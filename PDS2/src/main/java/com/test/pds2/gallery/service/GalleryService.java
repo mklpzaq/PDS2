@@ -31,7 +31,7 @@ public class GalleryService {
 		
 	/*
 	 * 2개이상의 쿼리문을 사용 하기에 하나의 쿼리문이 오류가 나도 원래상태로 되돌리는 @Transactional을 쓴다.
-	 * 아직 파일전송은 1:1 로 했다. 
+	 * 파일전송은 1:N 로 했다. 
 	 */
 	@Transactional
 	public void insertGallery(GalleryRequest galleryRequest, String path) {
@@ -41,7 +41,8 @@ public class GalleryService {
 		Gallery gallery = new Gallery();
 		gallery.setGalleryTitle(galleryRequest.getGalleryTitle());
 		gallery.setGalleryContent(galleryRequest.getGalleryContent());
-		
+		// 다중 파일 업로드를 위해 for문으로 반복 시킨다.
+		// 파일 업로드의 갯수만큼 갯수당 파일명을 입력해주는 반복문이 필요하다.
 		for(MultipartFile multipartFile : multipartFileList) {
 		
 			//16진수 유효아이디가 만들어진다?
@@ -74,7 +75,7 @@ public class GalleryService {
 			} catch (IOException e) {			
 				e.printStackTrace();
 			}
-			
+			//
 			GalleryFile galleryFile = new GalleryFile();			
 				
 			galleryFile.setGalleryFileName(filename);
