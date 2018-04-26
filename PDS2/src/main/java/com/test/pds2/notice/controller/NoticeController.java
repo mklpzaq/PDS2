@@ -1,5 +1,6 @@
 package com.test.pds2.notice.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -13,9 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.test.pds2.notice.service.Notice;
+import com.test.pds2.notice.service.NoticeFile;
 import com.test.pds2.notice.service.NoticeRequest;
 import com.test.pds2.notice.service.NoticeService;
 import com.test.pds2.path.SystemPath;
+import com.test.pds2.resume.service.Resume;
+import com.test.pds2.resume.service.ResumeFile;
 
 @Controller
 public class NoticeController {
@@ -54,4 +59,20 @@ public class NoticeController {
 		model.addAttribute("pagePerRow", pagePerRow);
 		return "/notice/noticeList";
 	}
+	
+	@RequestMapping(value = "/noticeView", method= RequestMethod.GET)
+	public String noticeView(Notice notice, Model model) {
+		logger.debug("noticeView : " + notice.toString());
+		
+		
+		Notice noticeView = noticeService.noticeView(notice);
+		List <NoticeFile> list = noticeView.getNoticeFile();
+		logger.debug("noticeView : " + noticeView.toString());
+		logger.debug("noticeFile : " + list.toString());
+		model.addAttribute("noticeView", noticeView);
+		model.addAttribute("list", list);
+				
+		return "/notice/noticeView";
+	}
+	
 }

@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds2.resume.service.Resume;
+
 
 @Service
 public class NoticeService {
@@ -20,6 +22,10 @@ public class NoticeService {
 	private NoticeDao noticeDao;
 	@Autowired
 	private NoticeFileDao noticeFileDao;
+	private String noticeFileName;
+	private String noticeFileExt;
+	private String noticeFileType;
+	private long noticeFileSize;
 	
 	private static final Logger logger = LoggerFactory.getLogger(NoticeService.class);
 	
@@ -31,6 +37,7 @@ public class NoticeService {
 		notice.setNoticeContent(noticeRequest.getNoticeContent());
 		
 		NoticeFile noticeFile = new NoticeFile();
+		int noticeId= noticeDao.insertNotice(notice); 
 		
 		//1.파일이름
 		UUID uuid = UUID.randomUUID(); // 16진수 uuid 생성
@@ -67,11 +74,12 @@ public class NoticeService {
 		}
 		
 		//셋팅
-		notice.setNoticeFile(noticeFile);
-		notice.getNoticeFile().setNoticeId(notice.getNoticeId());
-		noticeDao.insertNotice(notice);
-		noticeFileDao.insertNoticeFile(notice.getNoticeFile());
-		
+		noticeFile.setNoticeId(noticeId);
+		noticeFile.setNoticeFileName(noticeFileName);
+		noticeFile.setNoticeFileExt(noticeFileExt);
+		noticeFile.setNoticeFileType(noticeFileType);
+		noticeFile.setNoticeFileSize(noticeFileSize);
+		noticeFileDao.insertNoticeFile(noticeFile);
 	}
 	
 	public Map<String, Object> selectNoticeList(int currentPage, int pagePerRow) {
@@ -104,6 +112,14 @@ public class NoticeService {
 		returnmap.put("endPage", endPage);
 		
 		return returnmap;
+	}
+	
+	public Notice noticeView(Notice notice) {
+		logger.debug("noticeView : " + notice);
+				
+		Notice noticeView = noticeDao.noticeView(notice);
 		
+		logger.debug("noticeView : " + noticeView.toString());
+		return noticeView;
 	}
 }

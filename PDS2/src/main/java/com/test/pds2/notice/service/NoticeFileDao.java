@@ -15,7 +15,7 @@ public class NoticeFileDao {
 
 	public int insertNoticeFile(NoticeFile noticeFile) {
 		logger.debug("insertNoticeFile");
-		sqlSession.insert(NS + "insertNoticeFile", noticeFile);
-		return 0;
+		return sqlSession.insert(NS + "insertNoticeFile", noticeFile);
+		
 	}
 }
