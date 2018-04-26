@@ -1,5 +1,7 @@
 package com.test.pds2.resume.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +23,15 @@ public class ResumeFileDao {
 		return sqlSession.insert(NS+"insertResumeFile", resumeFile);  
 	}
 	
-	public int deleteFileResume(Resume resume) {
-		logger.debug("deleteFileResume - resume : "+resume.toString());
+	public int deleteResumeFile(int resumeFileId) {
+		logger.debug("deleteResumeFile - resumeFileId : "+resumeFileId);
 		 
-		return sqlSession.delete(NS+"deleteFileResume", resume);  
+		return sqlSession.delete(NS+"deleteResumeFile", resumeFileId);  
+	}
+	
+	public List<ResumeFile> selectResumeFile(Resume resume) {
+		logger.debug("selectResumeFile - resume : "+resume.toString());
+		 
+		return sqlSession.selectList(NS+"selectResumeFile", resume);  
 	}
 }

@@ -90,22 +90,40 @@ public class ResumeController {
 	public String resumeView(Resume resume, Model model) {
 		logger.debug("resumeView - resume : " + resume.toString());
 		
-		
 		Resume resumeView = resumeService.resumeView(resume);
+		logger.debug("resumeView - resumeView : " + resumeView.toString());		
+		model.addAttribute("resumeView", resumeView);		
+		
 		List <ResumeFile> list = resumeView.getResumeFile();
-		logger.debug("resumeView - resumeView : " + resumeView.toString());
 		logger.debug("resumeView - resumeFile : " + list.toString());
-		model.addAttribute("resumeView", resumeView);
 		model.addAttribute("list", list);
 				
 		return "/resume/resumeSangseView";
 	}
 	
 	@RequestMapping(value = "/deleteResume", method= RequestMethod.GET)
-	public String deleteResume(Resume resume, Model model) {
+	public String deleteResume(Resume resume
+								,Model model) {
 		logger.debug("deleteResume - resume : " + resume.toString());
-				
-		resumeService.deleteResume(resume);
+		
+		resumeService.deleteResume(resume);		
+		
+		return "redirect:/resumeList";
+	}
+	
+	@RequestMapping(value = "/deleteResumeFile", method= RequestMethod.GET)
+	public String deleteResumeFile(ResumeFile resumeFile
+									,@RequestParam("resumeFileName") String resumeFileName
+	                            	,@RequestParam("resumeFileExt") String resumeFileExt
+	                            	,RedirectAttributes redirectAttributes) {
+		
+		logger.debug("deleteResumeFile - resumeFile : " + resumeFile.toString());
+		logger.debug("deleteResumeFile - resumeFileName : " + resumeFileName.toString());
+		logger.debug("deleteResumeFile - resumeFileExt : " + resumeFileExt.toString());
+		
+		resumeService.deleteResumeFile(resumeFile, resumeFileName, resumeFileExt);
+		
+		/*redirectAttributes.addFlashAttribute("resume", resume);*/
 		
 		return "redirect:/resumeList";
 	}

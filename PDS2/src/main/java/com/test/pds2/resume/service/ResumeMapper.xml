@@ -48,7 +48,9 @@
 				<id column="resume_file_id" property="resumeFileId"/>
 				<result column="resume_file_name" property="resumeFileName"/>
 				<result column="resume_file_ext" property="resumeFileExt"/>
-				<result column="resume_file_size" property="resumeFileSize"/>			
+				<result column="resume_file_size" property="resumeFileSize"/>
+				<result column="resume_file_type" property="resumeFileType" />
+				<result column="resume_id" property="resumeId" />		
 		</collection>
 	</resultMap>
 	
@@ -98,9 +100,11 @@
 			,rsf.resume_file_id
 			,rsf.resume_file_name
 			,rsf.resume_file_ext
+			,rsf.resume_file_type
 			,rsf.resume_file_size
+			,rsf.resume_id
 			FROM resume as rs
-			join resume_file as rsf
+			left join resume_file as rsf
 				using(resume_id)
 				where resume_id = #{resumeId}
 	</select>

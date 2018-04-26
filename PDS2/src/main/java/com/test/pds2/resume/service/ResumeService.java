@@ -44,7 +44,7 @@ public class ResumeService {
 				
 		int resumeId= resumeDao.insertResume(resume); //resume insert부터 처리 후 반환되는 키값 resumeId변수에 저장
 				
-		/*for(int i= 0; i<resumeRequest.getMultipartFile().size(); i++) {
+		for(int i= 0; i<resumeRequest.getMultipartFile().size(); i++) {
 			//multipartFile을 resumeFile에 끼워맞춘다
 			MultipartFile multipartFile = resumeRequest.getMultipartFile().get(i);
 			
@@ -79,9 +79,9 @@ public class ResumeService {
 			resumeFile.setResumeFileSize(resumeFileSize);
 			
 			resumeFileDao.insertResumeFile(resumeFile);	
-		}*/
+		}
 			
-		MultipartFile multipartFile = resumeRequest.getMultipartFile();
+		/*MultipartFile multipartFile = resumeRequest.getMultipartFile();
 		
 		// 유효 이름
 		UUID uuid = UUID.randomUUID();  //16진수의 유효 아이디가 만들어진다 랜덤 유효 아이디
@@ -113,7 +113,7 @@ public class ResumeService {
 		resumeFile.setResumeFileType(resumeFileType);
 		resumeFile.setResumeFileSize(resumeFileSize);
 		
-		resumeFileDao.insertResumeFile(resumeFile);	
+		resumeFileDao.insertResumeFile(resumeFile);	*/
 		
 	}
 	
@@ -164,7 +164,6 @@ public class ResumeService {
 		logger.debug("resumeView - resume : " + resume);
 				
 		Resume resumeView = resumeDao.resumeView(resume);
-		
 		logger.debug("resumeView - resumeView : " + resumeView.toString());
 		return resumeView;
 	}
@@ -173,9 +172,37 @@ public class ResumeService {
 	public void deleteResume(Resume resume) {
 		logger.debug("deleteResume - resume : " + resume.toString());
 		
-		resumeFileDao.deleteFileResume(resume);
+		List<ResumeFile> list = resumeFileDao.selectResumeFile(resume);
+		logger.debug("deleteResume - list : " + list.toString());
 		
+		for(int i = 0; i<list.size(); i++) {
+			String resumeFileName = list.get(i).getResumeFileName();
+			String resumeFileExt = list.get(i).getResumeFileExt();
+			int resumeFileId = list.get(i).getResumeFileId();
+			String fullPath = SystemPath.SYSTEM_PATH + "\\" + resumeFileName + "." + resumeFileExt;
+			File file = new File(fullPath);
+			resumeFileDao.deleteResumeFile(resumeFileId);
+			file.delete();			
+		}
 		resumeDao.deleteResume(resume);
+	}
+	
+	@Transactional
+	public void deleteResumeFile(ResumeFile resumeFile, String resumeFileName, String resumeFileExt) {
+		logger.debug("deleteResumeFile - resumeFile : " + resumeFile.toString());
 		
+
+		String fullPath = SystemPath.SYSTEM_PATH + "\\" + resumeFileName + "." + resumeFileExt;
+		logger.debug("deleteResumeFile - fullPath : " + fullPath.toString());
+		
+		File file = new File(fullPath);
+		logger.debug("deleteResumeFile - file : " + file.toString());
+		
+				
+		int resumeFileId = resumeFile.getResumeFileId();
+		
+		resumeFileDao.deleteResumeFile(resumeFileId);
+		
+		file.delete();
 	}
 }

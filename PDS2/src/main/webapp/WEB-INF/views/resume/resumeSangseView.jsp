@@ -38,8 +38,8 @@
 							<a href="./updateBoardForm?boardNo=${board.boardNo}">
 								[수정]
 							</a>&nbsp;&nbsp;
-							<a href="./deleteResume?resumeId=${resumeView.resumeId}">
-								[삭제]
+							<a href="./deleteResume?resumeId=${resumeView.resumeId}"><!-- &resumeFile=${resumeView.resumeFile}로 Resume안의 List<ResumeFile> resumeFile변수에 바로 셋팅하려 했으나 실패 -->
+								[삭제]												
 							</a>&nbsp;&nbsp;
 							<a href="./resumeList">
 								[목록]
@@ -61,7 +61,8 @@
 								<div>
 									첨부파일 : <br/>
 									<c:forEach var="resumeFile" items="${list}">								
-										<a href="${pageContext.request.contextPath}/download?path=${path}&resumeFileName=${resumeFile.resumeFileName}&resumeFileExt=${resumeFile.resumeFileExt}">${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}</a><br/>
+										<a href="${pageContext.request.contextPath}/download?resumeFileName=${resumeFile.resumeFileName}&resumeFileExt=${resumeFile.resumeFileExt}">${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}</a>
+										<button><a href="${pageContext.request.contextPath}/deleteResumeFile?resumeFileId=${resumeFile.resumeFileId}&resumeFileName=${resumeFile.resumeFileName}&resumeFileExt=${resumeFile.resumeFileExt}">삭제</a></button><br/>
 									</c:forEach>
 								</div>
 							</div>
