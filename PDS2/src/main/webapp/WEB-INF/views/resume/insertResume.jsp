@@ -16,9 +16,9 @@
 					<!-- Begin Content -->					
 						<div class="text-center">
 							<form action="${pageContext.request.contextPath}/insertResume" method="post" enctype="multipart/form-data">
-								<div><input type="text" name="resumeTitle"></div>
-								<textarea name="resumeContent"></textarea>
-								<div><input type="file" name="multipartFile"></div>
+								<div><input type="text" name="resumeTitle"></div> <!-- ResumeRequest클래스의 String resumeTitle, db Resume테이블의 resume_title컬럼에 셋팅될 데이터 -->
+								<textarea name="resumeContent"></textarea> <!-- ResumeRequest클래스의 String resumeContent, db Resume테이블의 resume_content컬럼에 셋팅될 데이터 -->
+								<div><input type="file" name="multipartFile"></div> <!-- ResumeRequest클래스의 List<MultipartFile> multipartFile에 셋팅될 데이터 -->
 								<div><input type="file" name="multipartFile"></div>	
 								<div><input type="file" name="multipartFile"></div>		
 								<div><input type="submit"></div>

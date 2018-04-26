@@ -29,20 +29,26 @@ public class ResumeService {
 	private static final Logger logger = LoggerFactory.getLogger(ResumeService.class);
 	
 	@Transactional
-	public void insertResume(ResumeRequest resumeRequest, String path) {
+	public void insertResume(ResumeRequest resumeRequest) {
 		
 		logger.debug("insertResume - parameter - resumeRequest : " + resumeRequest.toString());
-		logger.debug("insertResume - parameter - path : " + path);
-		Resume resume = new Resume();	
+		//logger.debug("insertResume - parameter - path : " + path);
+		
+		Resume resume = new Resume();
+		//새로운 Resume클래스의 객체 resume을 생성
 		resume.setResumeTitle(resumeRequest.getResumeTitle());
 		resume.setResumeContent(resumeRequest.getResumeContent());
+		//resumeRequest에 셋팅되어있던 insertResume.jsp의 입력데이터를 resume 객체에 셋팅
 			
 		
 		ResumeFile resumeFile = new ResumeFile();		
-			
+		//새로운 ResumeFile클래스의 객체 resumeFile을 생성
+		
 		//resume.setResumeFile(resumeFile); //이게 왜들어갔지?	
 				
-		int resumeId= resumeDao.insertResume(resume); //resume insert부터 처리 후 반환되는 키값 resumeId변수에 저장
+		int resumeId= resumeDao.insertResume(resume); 
+		//미리 주입해둔 resumeDao에 접근해 셋팅된 resume객체를 입력값으로 하는 insertResume메서드를 실행한뒤 
+		//처리 후 반환되는 키값 resumeId변수에 저장
 				
 		for(int i= 0; i<resumeRequest.getMultipartFile().size(); i++) {
 			//multipartFile을 resumeFile에 끼워맞춘다

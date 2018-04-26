@@ -41,23 +41,31 @@ public class ResumeController {
 	
 	@RequestMapping(value = "/insertResume", method = RequestMethod.GET)
 	public String insertResume(){
-		logger.debug("insertResume - method = RequestMethod.GET : ");		
-		return "/resume/insertResume";
+		//insertResumeForm을 호출하기 위한 메서드
+		logger.debug("insertResume - method = RequestMethod.GET : ");
+		
+		return "/resume/insertResume"; //insertResume.jsp로 포워드한다
 	}
 	
 	@RequestMapping(value = "/insertResume", method = RequestMethod.POST)
-	public String insertResume(ResumeRequest resumeRequest, HttpSession session){
+	public String insertResume(ResumeRequest resumeRequest){
+		//insertResume.jsp에서 넘어온 input data들을 커멘더 객체 ResumeRequest에 셋팅한다
 		logger.debug("insertResume - method = RequestMethod.POST : ");	
 		logger.debug("insertResume - resumeRequest : " + resumeRequest.toString());
 		
-		String path = session.getServletContext().getRealPath("D:\\upload");  //세션이 만들어진 톰캣 자체를 가져온다  resources/upload/resume
-		logger.debug("insertResume - path : " + path);
+		/*String path = session.getServletContext().getRealPath("D:\\upload"); 
+		logger.debug("insertResume - path : " + path); 
+		세션이 만들어진 톰캣 자체를 가져온다  resources/upload/resume
+		지금은 쓰지 않는다	*/
+		
 		// MultipartHttpServletRequest 멀티파일을 기본적으로 리스트로 받을 수 있게 해주는 클래스. 이런곳도 있다
 		// service : ResumeRequest를 -> Resume로 맞춰준다 + 파일 폴더 저장  + 트랜잭션 + 알파
 		// dao : insert 
-		resumeService.insertResume(resumeRequest, path);
 		
-		return "redirect:/resumeList";   //리턴타입을 보이드로 하면 매서드 명을 따라간다
+		resumeService.insertResume(resumeRequest);
+		
+		return "redirect:/resumeList";
+		//리턴타입을 보이드로 하면 매서드 명을 따라 포워드한다고 했던것 같다
 	}
 			
 	@RequestMapping(value = "/resumeList", method = RequestMethod.GET)
@@ -178,8 +186,6 @@ public class ResumeController {
 							3. 기타문자는 %ㅁㅁ 와 같이 전달된다. 이때 %ㅁㅁ는 아스키코드를 16진수화한 결과를 나타낸 것이다.
 	            			4. 바뀌고 나면  abc+%A4%B5 뭐 이런걸로 변환되는듯*/
 	            		//URLEncoder과 반대되는 URLDecoder라는 클래스가 있는데  abc+%A4%B5로 인코딩되어있는 문자열을 다시 일반문자열로 변환하는 역할을 한다
-
-
 	        } else {
 	             
 	            fileName = new String(file.getName().getBytes("utf-8")); //MSIE가 존재하지 않을때? 익스플로어가 아닐때 
@@ -189,7 +195,6 @@ public class ResumeController {
 	            			 //즉 파일 이름을 가져와서 바이트 배열을 utf-8로 바꿔준다는 얘기인데 이것도 인코딩같다
 	            			 //인코딩, 캐릭터셋쪽은 좀더 파봐야할것 같다	            			
 	        }
-
 	        
 	        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");
 	        //응답헤더더 셋팅한다는 메서드같다. setHeader() 이미 존재하는 값을 덮어 쓰고 addHeader() 값을 하나 더 추가한다는데 정확히 무슨 값을 덮어쓰고 추가한다는건지
