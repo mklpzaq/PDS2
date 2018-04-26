@@ -57,14 +57,15 @@
         <property name="mapperLocations">
             <list>
             	<value>classpath:com/test/pds2/article/service/ArticleMapper.xml</value>
+            	<value>classpath:com/test/pds2/article/service/ArticleFileMapper.xml</value>
             	<value>classpath:com/test/pds2/board/service/BoardMapper.xml</value>
+            	<value>classpath:com/test/pds2/board/service/BoardFileMapper.xml</value>
+            	<value>classpath:com/test/pds2/gallery/service/GalleryMapper.xml</value>            
+            	<value>classpath:com/test/pds2/gallery/service/GalleryFileMapper.xml</value>
             	<value>classpath:com/test/pds2/notice/service/NoticeMapper.xml</value>
             	<value>classpath:com/test/pds2/notice/service/NoticeFileMapper.xml</value>
             	<value>classpath:com/test/pds2/resume/service/ResumeMapper.xml</value>
             	<value>classpath:com/test/pds2/resume/service/ResumeFileMapper.xml</value>
-            	<value>classpath:com/test/pds2/gallery/service/GalleryMapper.xml</value>            
-            	<value>classpath:com/test/pds2/board/service/BoardFileMapper.xml</value>
-            	<value>classpath:com/test/pds2/gallery/service/GalleryFileMapper.xml</value>
             </list>
         </property>
     </bean>

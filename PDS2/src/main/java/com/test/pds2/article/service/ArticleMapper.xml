@@ -5,8 +5,22 @@
  
 <mapper namespace="com.test.pds2.article.service.ArticleMapper">
 	
-	<insert id="insertArticle">
-	
+	<insert id="insertArticle"
+			parameterType="com.test.pds2.article.service.Article">
+		<selectKey resultType="Integer"
+					keyProperty="articleId"
+					order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		
+		INSERT INTO article(
+			article_title
+			,article_content
+		)
+		VALUES(
+			#{articleTitle}
+			,#{articleContent}
+		)
 	</insert>
 	
 </mapper>

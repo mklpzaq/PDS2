@@ -5,8 +5,22 @@
  
 <mapper namespace="com.test.pds2.article.service.ArticleFileMapper">
 	
-	<insert id="insertArticle">
-	
+	<insert id="insertArticleFile"
+			parameterType="com.test.pds2.article.service.ArticleFile">
+		INSERT INTO article_file(
+			article_id
+			,article_file_name
+			,article_file_ext
+			,article_file_type
+			,article_file_size
+		)
+		VALUES(
+			#{articleId}
+			,#{articleFileName}
+			,#{articleFileExt}
+			,#{articleFileType}
+			,#{articleFileSize}
+		)	
 	</insert>
 	
 </mapper>

@@ -11,10 +11,11 @@ public class ArticleDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	private static final Logger logger = LoggerFactory.getLogger(ArticleDao.class);
-	final String NS ="com.test.pds2.article.service.AddressMapper.";
+	final String NS ="com.test.pds2.article.service.ArticleMapper.";
 	
-	public void insertArticle() {
-		sqlSession.insert(NS+"insertArticle");
+	public void insertArticle(Article article) {
+		logger.debug("insertArticle ArticleDao");
+		sqlSession.insert(NS+"insertArticle", article);
 	}
 	
 	

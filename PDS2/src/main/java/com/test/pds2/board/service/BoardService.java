@@ -171,9 +171,6 @@ public class BoardService {
 		
 		
 		logger.debug("board : " + board);
-		
-		
-		
 		boardDao.insertBoard(board);
 		
 		for(BoardFile boardFile : board.getBoardFile()) {

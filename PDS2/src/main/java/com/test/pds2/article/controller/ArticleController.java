@@ -36,7 +36,7 @@ public class ArticleController {
 		logger.debug("path : " + path);
 		
 		articleService.insertArticle(articleRequest, path);
-		return "redirect:/home";
+		return "redirect:/";
 	}
 	
 }
