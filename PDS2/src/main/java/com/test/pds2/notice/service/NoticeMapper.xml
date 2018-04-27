@@ -22,12 +22,15 @@
 			일반 컬럼과 pk 구분 가능 pk 칼럼에게는 result 아닌 id 사용
 		-->
 	<resultMap type="com.test.pds2.notice.service.Notice" id="notice">
-		<id column="noticeId" property="noticeId" />
-		<result column="noticeTitle" property="noticeTitle" />
+		<id column="notice_id" property="noticeId" />
+		<result column="notice_title" property="noticeTitle" />
+		<result column="notice_content" property="noticeContent" />
 		<collection ofType="com.test.pds2.notice.service.NoticeFile" property="noticeFile">
-			<id column="noticeFileId" property="noticeFileId"/>
-			<result column="noticeFileName" property="noticeFileName"/>
-			<result column="noticeFileExt" property="noticeFileExt"/>
+			<id column="notice_file_id" property="noticeFileId"/>
+			<result column="notice_file_name" property="noticeFileName"/>
+			<result column="notice_file_ext" property="noticeFileExt"/>
+			<result column="notice_file_type" property="noticeFileType"/>
+			<result column="notice_file_size" property="noticeFileSize"/>
 		</collection>
 	</resultMap>
 
@@ -70,7 +73,7 @@
 			, notice_file.notice_file_ext
 			, notice_file.notice_file_type
 			, notice_file.notice_file_size
-		FROM notice JOIN notice_file
+		FROM notice LEFT JOIN notice_file
 		using(notice_id)
 		WHERE notice_id = #{noticeId}
 	</select>

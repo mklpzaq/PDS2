@@ -10,21 +10,6 @@
 		<style>
 			.none{display:none;}
 		</style>
-		<script>
-			/* $(document).ready(function(){
-				$('#insertBoardCommentFormButton').click(function(){
-					if($('#insertBoardCommentForm').hasClass('none')){
-						$('#insertBoardCommentForm').removeClass('none');
-						
-					}else{
-						$('#insertBoardCommentForm').addClass('none');
-					}
-				});
-				
-				
-			}); */	
-		
-		</script>
 	</head>
 	<body>
 		
@@ -33,23 +18,23 @@
 				<div class="row">
 					<div class="col-md-2"></div>
 					<div class="col-md-8">
-					<!-- resumeSangse -->
-						<div>
-							<a href="./updateNotice?noticeNo=${notice.noticeId}">
-								[수정]
-							</a>&nbsp;&nbsp;
-							<a href="./deleteNotice?noticeId=${noticeView.noticeId}"><!-- &resumeFile=${resumeView.resumeFile}로 Resume안의 List<ResumeFile> resumeFile변수에 바로 셋팅하려 했으나 실패 -->
-								[삭제]												
-							</a>&nbsp;&nbsp;
-							<a href="./noticeList">
-								[목록]
-							</a>
-						</div>						
+					<!-- Notice View -->			
 						<div class="panel panel-default">
 							<div class="panel-heading">
+								<div>
+									<a href="./updateNotice?noticeNo=${notice.noticeId}">
+										[수정]
+									</a>&nbsp;&nbsp;
+									<a href="./deleteNotice?noticeId=${noticeView.noticeId}">
+										[삭제]										
+									</a>&nbsp;&nbsp;
+									<a href="./noticeList">
+										[목록]
+									</a>
+								</div>		
 								<div class="row">
 									<div class="col-sm-2">
-										번호 : ${resumeView.resumeId}<br/>										
+										번호 : ${noticeView.noticeId}<br/>										
 									</div>
 									<div class="col-sm-10 text-center">
 										제목 : ${noticeView.noticeTitle}										
@@ -60,14 +45,14 @@
 								<textarea class="panel-title" style="height:90%; width:90%;">${noticeView.noticeContent}</textarea>
 								<div>
 									첨부파일 : <br/>
-									<c:forEach var="resumeFile" items="${list}">								
+									<c:forEach var="noticeFile" items="${list}">								
 										<a href="${pageContext.request.contextPath}/download?noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">${noticeFile.noticeFileName}.${noticeFile.noticeFileExt}</a>
 										<button><a href="${pageContext.request.contextPath}/deleteNoticeFile?noticeFileId=${noticeFile.noticeFileId}&noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">삭제</a></button><br/>
 									</c:forEach>
 								</div>
 							</div>
-						</div>
-					<!-- resumeSangse end -->
+						</div>	
+					<!-- Notice View -->
 					</div>
 					<div class="col-md-2"></div>
 				</div>

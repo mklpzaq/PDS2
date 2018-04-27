@@ -114,4 +114,5 @@ public class NoticeService {
 		logger.debug("noticeView - noticeView : " + noticeView.toString());
 		return noticeView;
 	}
+	
 }
