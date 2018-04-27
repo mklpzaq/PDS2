@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.test.pds2.path.SystemPath;
-
+ 
 @Service
 public class BoardService {
 	@Autowired

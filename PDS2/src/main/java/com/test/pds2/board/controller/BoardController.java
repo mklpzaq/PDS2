@@ -33,7 +33,7 @@ public class BoardController {
 									,@RequestParam(value="fileName") String boardFileName
 									,@RequestParam(value="fileExt") String boardFileExt) {
 		logger.debug("GET /deleteBoardFile deleteBoardFile");
-		
+		 
 		/* file 삭제 과정 */
 		boardService.deleteBoardFile(boardFileId, boardFileName, boardFileExt);
 		

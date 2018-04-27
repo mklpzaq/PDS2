@@ -25,7 +25,7 @@
 							boardContent : ${detailBoard.boardContent}
 							<hr/>
 							<c:forEach var="boardFile" items="${detailBoard.boardFile}">
-								<div>
+								<div> 
 									boardFileId : ${boardFile.boardFileId}<br/>
 									boardId : ${boardFile.boardId}<br/>
 									boardFileName : ${boardFile.boardFileName}<br/>
