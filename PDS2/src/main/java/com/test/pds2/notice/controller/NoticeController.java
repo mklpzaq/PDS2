@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.test.pds2.notice.service.Notice;
 import com.test.pds2.notice.service.NoticeFile;
@@ -79,6 +80,22 @@ public class NoticeController {
 		model.addAttribute("list", list);
 				
 		return "/notice/noticeView";
+	}
+	
+	@RequestMapping(value = "/deleteNoticeList", method= RequestMethod.GET)
+	public String deleteNoticeList(@RequestParam(value="deleteCheckbox") int[] deleteCheckbox) {
+		logger.debug("deleteNoticeList - notice");
+		noticeService.deleteNoticeList(deleteCheckbox);		
+		return "redirect:/selectNoticeList";
+	}
+	
+	@RequestMapping(value = "/deleteNotice", method= RequestMethod.GET)
+	public String deleteNotice(Notice notice, Model model) {
+		logger.debug("deleteNotice - notice : " + notice.toString());
+		
+		noticeService.deleteNotice(notice);		
+		
+		return "redirect:/selectNoticeList";
 	}
 
 }

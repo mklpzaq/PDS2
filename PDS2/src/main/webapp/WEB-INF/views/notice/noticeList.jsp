@@ -10,7 +10,7 @@
 		<script>
 			$(document).ready(function() {
 				$('#pagePerRow').change(function() {
-					$(location).attr('href', './noticeList?pagePerRow=' + $('#pagePerRow > option:selected').val()+'&searchOption='+$('#searchOption').val()+'&keyword='+$('#keyword').val());
+					$(location).attr('href', './selectNoticeList?pagePerRow=' + $('#pagePerRow > option:selected').val()+'&searchOption='+$('#searchOption').val()+'&keyword='+$('#keyword').val());
 				});
 			});
 			
@@ -87,7 +87,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<form id="form1" method="get" action="${pageContext.request.contextPath}/deleteNotice">
+									<form id="form1" method="get" action="${pageContext.request.contextPath}/deleteNoticeList">
 										<c:forEach var="notice" items="${list}">
 											<tbody>
 												<tr>

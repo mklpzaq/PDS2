@@ -29,4 +29,10 @@ public class NoticeFileDao {
 		 
 		return sqlSession.selectList(NS+"selectNoticeFile", notice);  
 	}
+	
+	public int deleteNoticeFile(int noticeFileId) {
+		logger.debug("deleteNoticeFile - noticeFileId : "+noticeFileId);
+		 
+		return sqlSession.delete(NS+"deleteNoticeFile", noticeFileId);  
+	}
 }
