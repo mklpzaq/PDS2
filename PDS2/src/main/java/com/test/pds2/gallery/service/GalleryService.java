@@ -66,7 +66,7 @@ public class GalleryService {
 			//4.파일 사이즈
 			long fileSize = multipartFile.getSize();
 			//5.파일 저장(매개변수 path를 이용)
-			File file = new File(path+filename+fileExt);
+			File file = new File(path+filename+"."+fileExt);
 			
 			try {
 				multipartFile.transferTo(file);

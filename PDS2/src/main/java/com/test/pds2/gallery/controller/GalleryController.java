@@ -2,10 +2,16 @@ package com.test.pds2.gallery.controller;
 
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,9 +19,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.test.pds2.gallery.service.Gallery;
 import com.test.pds2.gallery.service.GalleryFile;
@@ -46,6 +54,45 @@ public class GalleryController {
 		model.addAttribute("beginPageNumForCurrentPage", map.get("beginPageNumForCurrentPage"));		
 		return "/gallery/galleryDetailView";
 	}*/
+	
+	@RequestMapping(value = "/downloadGallery", method = RequestMethod.GET)
+	public void download(@RequestParam("galleryFileName") String galleryFileName
+						,@RequestParam("galleryFileExt") String galleryFileExt
+						,HttpServletRequest request
+                        , HttpServletResponse response) throws Exception{
+		String fullPath = SystemPath.SYSTEM_PATH + galleryFileName + "." + galleryFileExt;
+		File file = new File(fullPath);
+		
+		response.setContentType("application/download; utf-8");
+		response.setContentLength((int)file.length());
+		String userAgent = request.getHeader("User-Agent");
+		boolean ie = userAgent.indexOf("MSIE") > -1;
+		String fileName = null;
+		
+		if(ie){            
+            fileName = URLEncoder.encode(file.getName(), "utf-8");
+		} else {            
+            fileName = new String(file.getName().getBytes("utf-8"));
+		 }        
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");
+        response.setHeader("Content-Transfer-Encoding", "binary");
+        OutputStream out = response.getOutputStream();	        
+        FileInputStream fis = null;
+        
+        try {            
+            fis = new FileInputStream(file);
+            FileCopyUtils.copy(fis, out);
+        } catch(Exception e){            
+            e.printStackTrace();             
+        }finally{             
+            if(fis != null){                 
+                try{
+                    fis.close();
+                }catch(Exception e){}
+            }
+            out.flush();
+        }    
+	}
 	
 	/*
 	 * 상세보기 컨트롤러 리스트에서 제목을 눌러 galleryId값을 받아왔다.  
