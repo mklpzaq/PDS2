@@ -22,4 +22,23 @@
 			, #{noticeId}
 		)
 	</insert>
+	
+	<select id="selectNoticeFile" parameterType="com.test.pds2.notice.service.Notice" resultType="com.test.pds2.notice.service.NoticeFile">
+		SELECT 
+			notice_file_id as noticeFileId
+			, notice_file_name as noticeFileName
+			, notice_file_ext as noticeFileExt
+			, notice_file_type as noticeFileType
+			, notice_file_size as noticeFileSize
+			, notice_id as noticeId
+		FROM notice_file
+		WHERE notice_id = #{noticeId}
+	 </select>
+	
+	<delete id="deleteNoticeFile" parameterType="Integer">
+		DELETE 
+			FROM notice_file 
+			WHERE notice_file_id=#{noticeFileId}
+	</delete>
+	
 </mapper>

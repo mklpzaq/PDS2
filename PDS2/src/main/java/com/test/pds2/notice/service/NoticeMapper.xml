@@ -77,4 +77,18 @@
 		using(notice_id)
 		WHERE notice_id = #{noticeId}
 	</select>
+	
+	<delete id="deleteNoticeList" parameterType="com.test.pds2.notice.service.Notice">
+		DELETE
+		FROM notice
+		WHERE
+			notice_id = #{noticeId}		
+	</delete>
+	
+	<delete id="deleteNotice" parameterType="com.test.pds2.notice.service.Notice">
+		DELETE
+		FROM notice
+		WHERE
+			notice_id = #{noticeId}	
+	</delete>
 </mapper>

@@ -21,17 +21,6 @@
 					<!-- Notice View -->			
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<div>
-									<a href="./updateNotice?noticeNo=${notice.noticeId}">
-										[수정]
-									</a>&nbsp;&nbsp;
-									<a href="./deleteNotice?noticeId=${noticeView.noticeId}">
-										[삭제]										
-									</a>&nbsp;&nbsp;
-									<a href="./noticeList">
-										[목록]
-									</a>
-								</div>		
 								<div class="row">
 									<div class="col-sm-2">
 										번호 : ${noticeView.noticeId}<br/>										
@@ -51,7 +40,18 @@
 									</c:forEach>
 								</div>
 							</div>
-						</div>	
+						</div>
+						<div>
+							<a href="./updateNotice?noticeNo=${notice.noticeId}">
+								[수정]
+							</a>&nbsp;&nbsp;
+							<a href="./deleteNotice?noticeId=${noticeView.noticeId}">
+								[삭제]										
+							</a>&nbsp;&nbsp;
+							<a href="./noticeList">
+								[목록]
+							</a>
+						</div>		
 					<!-- Notice View -->
 					</div>
 					<div class="col-md-2"></div>

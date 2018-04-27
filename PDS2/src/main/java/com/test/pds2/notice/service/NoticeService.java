@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.test.pds2.path.SystemPath;
 import com.test.pds2.resume.service.Resume;
+import com.test.pds2.resume.service.ResumeFile;
 
 
 @Service
@@ -113,6 +114,32 @@ public class NoticeService {
 		Notice noticeView = noticeDao.noticeView(notice);
 		logger.debug("noticeView - noticeView : " + noticeView.toString());
 		return noticeView;
+	}
+	
+	public void deleteNoticeList(int[] deleteCheckbox) {	
+		logger.debug("deleteNoticeList");
+		for(int i = 0; i<deleteCheckbox.length; i++) {
+			int noticeId = deleteCheckbox[i];
+			noticeDao.deleteNoticeList(noticeId);
+		}
+	}
+	
+	public void deleteNotice(Notice notice) {
+		logger.debug("deleteNotice - notice : " + notice.toString());
+		
+		List<NoticeFile> list = noticeFileDao.selectNoticeFile(notice);
+		logger.debug("deleteResume - list : " + list.toString());
+		
+		for(int i = 0; i<list.size(); i++) {
+			String noticeFileName = list.get(i).getNoticeFileName();
+			String noticeFileExt = list.get(i).getNoticeFileExt();
+			int noticeFileId = list.get(i).getNoticeFileId();
+			String fullPath = SystemPath.SYSTEM_PATH + "\\" + noticeFileName + "." + noticeFileExt;
+			File file = new File(fullPath);
+			noticeFileDao.deleteNoticeFile(noticeFileId);
+			file.delete();			
+		}
+		noticeDao.deleteNotice(notice);
 	}
 	
 }
