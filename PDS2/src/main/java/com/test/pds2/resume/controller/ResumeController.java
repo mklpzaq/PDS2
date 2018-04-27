@@ -146,7 +146,7 @@ public class ResumeController {
 		
 		List <ResumeFile> list = updateResume.getResumeFile();
 		logger.debug("updateResume - list : " + list.toString());
-		model.addAttribute("list", list);
+		model.addAttribute("list", list); 
 		/*redirectAttributes.addFlashAttribute("resume", resume);*/
 		
 		return "/resume/updateResumeForm";
