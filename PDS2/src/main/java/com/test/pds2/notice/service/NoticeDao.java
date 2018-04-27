@@ -20,7 +20,8 @@ public class NoticeDao {
 	
 	public int insertNotice(Notice notice) {
 		logger.debug("insertNotice"); //info는 사용자에게 노출, debug는 개발자까지 노출
-		return sqlSession.insert(NS + "insertNotice", notice);
+		sqlSession.insert(NS + "insertNotice", notice);
+		return notice.getNoticeId();
 	}
 
 	public List<Notice> selectNoticeList(Map<String, Integer> map) {
