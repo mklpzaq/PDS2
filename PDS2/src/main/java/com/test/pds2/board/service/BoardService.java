@@ -35,12 +35,23 @@ public class BoardService {
 	private BoardFileDao boardFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
 	
+	@Transactional
 	public void deleteBoardFile(int boardFileId, String boardFileName, String boardFileExt) {
 		logger.debug("deleteBoardFile BoardService");
 		/* DB에서 파일 정보를 삭제하는 과정 */
 		int result = boardFileDao.deleteBoardFile(boardFileId);
 		
 		/* 하드디스크에서 파일을 삭제하는 과정 */
+		File file = new File(SystemPath.SYSTEM_PATH + boardFileName + "." + boardFileExt);
+		if(file.exists()) {
+			if(file.delete()) {
+				logger.debug("파일 삭제 성공");
+			}else {
+				logger.debug("파일 삭제 실패");
+			}
+		}else {
+			logger.debug("파일이 없음.");
+		}
 	}
 	
 	public void downloadBoardFile(String fileName

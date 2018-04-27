@@ -38,7 +38,7 @@ public class BoardController {
 		boardService.deleteBoardFile(boardFileId, boardFileName, boardFileExt);
 		
 		
-		/* boardDetailView.jsp 로 돌아가기 위한 사전 작업 */
+		/* boardDetailView.jsp 로 돌아가기 위한 작업 */
 		Board board = boardService.getDetailBoard(boardId);
 		logger.debug("board : "+ board.toString());
 		model.addAttribute("detailBoard", board);
@@ -60,6 +60,7 @@ public class BoardController {
 		logger.debug("board : "+ board.toString());
 		model.addAttribute("detailBoard", board);
 		
+		/* 파일을 다운로드 시키기 위한 작업 */
 		boardService.downloadBoardFile(fileName, fileExt, request, response);
 		
 		return "/board/boardDetailView";
