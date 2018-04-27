@@ -1,5 +1,6 @@
 package com.test.pds2.board.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.test.pds2.board.service.Board;
+import com.test.pds2.board.service.BoardFile;
 import com.test.pds2.board.service.BoardRequest;
 import com.test.pds2.board.service.BoardService;
 import com.test.pds2.path.SystemPath;
@@ -26,6 +28,23 @@ public class BoardController {
 	private BoardService boardService;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
+	@RequestMapping(value="/deleteBoard", method=RequestMethod.GET)
+	public String deleteBoard(@RequestParam(value="sendNo") int boardId) {
+		logger.debug("GET /deleteBoard deleteBoard");
+		
+		/* boardId에 해당되는 파일 이름 정보값(boardFileName, boardFileExt)들을 얻어와서(List로)
+		 * return된 List를  deleteBoard의 매개변수로 넘겨주어야
+		 * 하드드라이브에 저장되어있는 boardId에 해당되는 boardFile들을 삭제해줄 수 있다.
+		 * */
+		List<BoardFile> boardFileList = boardService.selectBoardFileListForDelete(boardId);
+		
+		/* 우선 boardId에 해당되는 파일을 모두 지우고 그 다음, boardId에 해당되는 board를 지운다. */
+		//매개변수로 boardId에 해당하는 boardFileName, boardFileExt를 가지고 있는 boardFile List를 넘겨 받아야 한다.
+		boardService.deleteBoard(boardId, boardFileList);
+		
+		return "redirect:/getBoardList";
+	}
+	
 	@RequestMapping(value="/deleteBoardFile", method=RequestMethod.GET)
 	public String deleteBoardFile(Model model
 									,@RequestParam(value="sendNo") int boardId
@@ -33,17 +52,14 @@ public class BoardController {
 									,@RequestParam(value="fileName") String boardFileName
 									,@RequestParam(value="fileExt") String boardFileExt) {
 		logger.debug("GET /deleteBoardFile deleteBoardFile");
-		 
 		/* file 삭제 과정 */
-		boardService.deleteBoardFile(boardFileId, boardFileName, boardFileExt);
-		
-		
+		boardService.deleteBoardFileOne(boardFileId, boardFileName, boardFileExt);
 		/* boardDetailView.jsp 로 돌아가기 위한 작업 */
 		Board board = boardService.getDetailBoard(boardId);
 		logger.debug("board : "+ board.toString());
 		model.addAttribute("detailBoard", board);
 		
-		return "board/boardDetailView";
+		return "/board/boardDetailView";
 	}
 	
 	@RequestMapping(value="/downloadBoardFile", method=RequestMethod.GET)

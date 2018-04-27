@@ -19,6 +19,15 @@
 		</collection>
 	</resultMap>
 	
+	<delete id="deleteBoard"
+			parameterType="Integer">
+		DELETE FROM
+			board
+		WHERE
+			board_id = #{boardId}
+			
+	</delete>
+	
 	<select id="getDetailBoard"
 			parameterType="Integer"
 			resultType="com.test.pds2.board.service.Board"

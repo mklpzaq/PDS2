@@ -5,13 +5,32 @@
   
 <mapper namespace="com.test.pds2.board.service.BoardFileMapper">
 	
+	<select id="selectBoardFileListForDelete"
+			parameterType="Integer"
+			resultType="com.test.pds2.board.service.BoardFile">
+		SELECT
+			board_file_name AS boardFileName
+			,board_file_ext AS boardFileExt
+		FROM
+			board_file
+		WHERE
+			board_id = #{boardId}
+	</select>
+	
 	<delete id="deleteBoardFile"
 			parameterType="Integer">
 		DELETE FROM
 			board_file
 		WHERE
+			board_id = #{boardId}
+	</delete>
+	
+	<delete id="deleteBoardFileOne"
+			parameterType="Integer">
+		DELETE FROM
+			board_file
+		WHERE
 			board_file_id = #{boardFileId}
-		
 	</delete>
 	
 	<insert id="insertBoardFile"

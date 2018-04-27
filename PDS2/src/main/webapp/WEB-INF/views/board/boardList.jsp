@@ -129,8 +129,8 @@
 											<%-- <td>${board.boardTitle}</td> --%>
 											<td><a href="${pageContext.request.contextPath}/getDetailBoard?sendNo=${board.boardId}">${board.boardTitle}</a></td>
 											<td>${board.boardContent}</td>
-											<td><a href="${pageContext.request.contextPath}/updateboard?sendNo=${board.boardId}">수정</a></td>
-											<td><a href="${pageContext.request.contextPath}/deleteboard?sendNo=${board.boardId}">삭제</a></td>
+											<td><a href="${pageContext.request.contextPath}/updateBoard?sendNo=${board.boardId}">수정</a></td>
+											<td><a href="${pageContext.request.contextPath}/deleteBoard?sendNo=${board.boardId}">삭제</a></td>
 										</tr>
 									</c:forEach>
 								</tbody>
