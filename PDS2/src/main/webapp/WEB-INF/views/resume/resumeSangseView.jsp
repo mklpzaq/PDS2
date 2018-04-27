@@ -61,7 +61,7 @@
 								<div>
 									첨부파일 : <br/>
 									<c:forEach var="resumeFile" items="${list}">								
-										<a href="${pageContext.request.contextPath}/download?resumeFileName=${resumeFile.resumeFileName}&resumeFileExt=${resumeFile.resumeFileExt}">${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}</a>
+										<a href="${pageContext.request.contextPath}/downloadResume?resumeFileName=${resumeFile.resumeFileName}&resumeFileExt=${resumeFile.resumeFileExt}">${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}</a>
 										<button><a href="${pageContext.request.contextPath}/deleteResumeFile?resumeFileId=${resumeFile.resumeFileId}&resumeFileName=${resumeFile.resumeFileName}&resumeFileExt=${resumeFile.resumeFileExt}">삭제</a></button><br/>
 									</c:forEach>
 								</div>
