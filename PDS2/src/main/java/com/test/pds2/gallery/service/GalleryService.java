@@ -191,4 +191,15 @@ public class GalleryService {
 		logger.debug("GalleryService.viewDetailGallery(). viewDetailGallery : " +  viewDetailGallery);
 		return viewDetailGallery;
 	}
+
+	public int updateGallery(Gallery gallery) {
+		logger.debug("GalleryService.updateGallery() gallery" + gallery);
+		
+		return galleryDao.updateGallery(gallery);
+	}
+
+	public Gallery updateGalleryForId(int galleryId) {
+		logger.debug("GalleryService.updateGallery() updateGalleryForId" + galleryId);
+		return galleryDao.selectGalleryForId(galleryId);
+	}
 }

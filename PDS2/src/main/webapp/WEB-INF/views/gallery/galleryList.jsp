@@ -63,6 +63,8 @@
  							<dr id="keyword"></dr>
  							<input type="submit" value="검색버튼"> 						
  						</form>
+ 						<br><br>
+ 					<div><a href="${pageContext.request.contextPath}/insertGallery"><strong>-자료추가-</strong></a></div>
  					<table class="table table-striped">
 						<thead>
 							<tr>
@@ -70,8 +72,7 @@
 								<td><strong>GalleryTitle</strong></td>
 								<td><strong>GalleryContent</strong></td>
 								<td><strong>수정</strong></td>
-								<td><strong>삭제</strong></td>
-								<td><strong>자료추가</strong></td>								
+								<td><strong>삭제</strong></td>														
 							</tr>						
 						</thead>
 						<tbody>
@@ -80,9 +81,8 @@
 									<td><strong>${gallery.galleryId}</strong></td>
 									<td><a href="${pageContext.request.contextPath}/viewDetailGallery?galleryId=${gallery.galleryId}">${gallery.galleryTitle}</a></td>
 									<td>${gallery.galleryContent}</td>
-									<td><a href="#">수정</a></td>
-									<td id="#"><a href="#">삭제</a></td>
-									<td><a href="#">자료추가</a></td>											
+									<td><a href="${pageContext.request.contextPath}/updateGallery?galleryId=${gallery.galleryId}">수정</a></td>
+									<td id="#"><a href="#">삭제</a></td>																				
 								</tr>
 							</c:forEach>
 						</tbody>

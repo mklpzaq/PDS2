@@ -147,6 +147,24 @@ public class GalleryController {
 		return "/gallery/galleryList";
 	}
 	
+	@RequestMapping(value = "/updateGallery", method = RequestMethod.POST)
+	public String updateGallery(Model model, Gallery gallery) {
+		logger.debug("GalleryController.updateGallery() Gallery : " + gallery);
+		int result = galleryService.updateGallery(gallery);
+		
+		return "redirect:/gallery/galleryList";
+	}
+	
+	@RequestMapping(value = "/updateGallery", method = RequestMethod.GET)
+	public String updateGallery(Model model
+								,@RequestParam(value="galleryId") int galleryId) {
+		logger.debug("GalleryController.updateGallery() Gallery : " + galleryId);
+		Gallery gallery = galleryService.updateGalleryForId(galleryId);
+		logger.debug("GalleryController.updateGallery() gallery : " + gallery);
+		model.addAttribute("galleryForId", gallery);
+		return "/gallery/updateGallery";
+	}
+	
 	@RequestMapping(value = "/insertGallery", method = RequestMethod.GET)
 	public String insertGallery() {
 		return "/gallery/insertGallery";

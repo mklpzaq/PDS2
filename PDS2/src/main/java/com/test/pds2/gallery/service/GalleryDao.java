@@ -39,5 +39,15 @@ public class GalleryDao {
 	public Gallery selectDetailList(Gallery gallery) {
 		logger.debug("====== selectDetailList : " );
 		return sqlSession.selectOne(NS+"selectGalleryDetail",gallery);		
+	}
+
+	public int updateGallery(Gallery gallery) {
+		return sqlSession.update(NS+"updateGallery", gallery);
+		
+	}
+
+	public Gallery selectGalleryForId(int galleryId) {
+		
+		return sqlSession.selectOne(NS+"selectGalleryForId", galleryId);
 	}	
 }

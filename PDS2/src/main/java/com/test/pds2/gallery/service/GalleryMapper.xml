@@ -97,4 +97,25 @@
 			,#{galleryContent})
 	</insert>
 	
+	<update id="updateGallery"
+			parameterType="com.test.pds2.gallery.service.Gallery">
+			UPDATE
+				gallery
+			SET
+			 gallery_id = #{galleryId}
+			 ,gallery_title = #{galleryTitle}
+			 ,gallery_content =#{galleryContent}
+			 WHERE gallery_id = #{galleryId}		
+	</update>
+	
+	<select id="selectGalleryForId"
+			parameterType="Integer"
+			resultType="com.test.pds2.gallery.service.Gallery">
+			SELECT
+				gallery_id as galleryId
+				,gallery_title as galleryTitle
+				,gallery_content as galleryContent
+			FROM gallery
+			WHERE gallery_id = #{galleryId}		
+	</select>
 </mapper>
