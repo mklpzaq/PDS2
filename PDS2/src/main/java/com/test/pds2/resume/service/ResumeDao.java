@@ -25,7 +25,9 @@ public class ResumeDao {
 		
 		sqlSession.insert(NS+"insertResume", resume);
 		//주입시켜두었던 sqlSession에 접근해 맵핑된 도메인과 ResumeService에서 넘어온 Resume타입 resume변수를 입력값으로 넣고 insert메서드를 호출한다
+		
 		return resume.getResumeId();
+		//ResumeMapper에서 쿼리 실행후 resume객체에 자동 셋팅된 ResumeId자동증가값을 겟팅해서 리턴
 	}	
 		
 	public List<Resume> selectResumeList(Map<String, Object> map) {
@@ -50,5 +52,11 @@ public class ResumeDao {
 		logger.debug("deleteResume - resume : "+resume.toString());
 		 
 		return sqlSession.delete(NS+"deleteResume", resume);  
+	}
+	
+	public Resume updateResume(Resume resume) {
+		logger.debug("updateResume - resume : "+resume.toString());
+		
+		return sqlSession.selectOne(NS+"selectResumeOne", resume);
 	}
 }

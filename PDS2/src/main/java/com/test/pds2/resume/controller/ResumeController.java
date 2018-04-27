@@ -136,8 +136,24 @@ public class ResumeController {
 		return "redirect:/resumeList";
 	}
 	
+	@RequestMapping(value = "/updateResume", method= RequestMethod.GET)
+	public String updateResume(Resume resume, Model model) {		
+		logger.debug("updateResume - resume : " + resume.toString());
+		
+		Resume updateResume = resumeService.updateResume(resume);
+		logger.debug("updateResume - updateResume : " + updateResume.toString());
+		model.addAttribute("updateResume", updateResume);
+		
+		List <ResumeFile> list = updateResume.getResumeFile();
+		logger.debug("updateResume - list : " + list.toString());
+		model.addAttribute("list", list);
+		/*redirectAttributes.addFlashAttribute("resume", resume);*/
+		
+		return "/resume/updateResumeForm";
+	}
 	
-	 @RequestMapping(value = "/download", method= RequestMethod.GET)
+	
+	 @RequestMapping(value = "/downloadResume", method= RequestMethod.GET)
 	    public void download(@RequestParam("resumeFileName") String resumeFileName
 	                            ,@RequestParam("resumeFileExt") String resumeFileExt
 	                            , HttpServletRequest request

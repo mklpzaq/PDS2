@@ -7,19 +7,20 @@
 	
 	<insert id="insertResume" parameterType="com.test.pds2.resume.service.Resume">
 		
-		<selectKey resultType="int" keyProperty="resumeId" order="AFTER">  <!-- order="AFTER" - insert쿼리 실행후에 자동증가 값  -->
-            SELECT LAST_INSERT_ID()
-        </selectKey>
-		
-		INSERT INTO resume
+		<selectKey resultType="int" keyProperty="resumeId" order="AFTER">  
+            SELECT LAST_INSERT_ID()				<!-- insertQuery문의 auto-increment로 만들어지는 값 resume_id을 parameter였던-->
+        </selectKey>							<!-- com.test.pds2.resume.service.Resume클래스의 resumeId에 자동으로 셋팅해준다-->
+												<!-- order="AFTER" - insert쿼리 실행후에 자동증가 값이며  -->
+		INSERT INTO resume						<!-- order="BEFORE"으로 할경우 쿼리 실행전의 자동증가값을 가져온다 -->
+												<!-- 쿼리실행전에 자동증가값이 생기긴하나;; auto increment로 생긴 값을 가져온거였는뎅;; -->
 				(resume_id
 				,resume_title
 				,resume_content
 				)
 			VALUES (
 				NULL
-				, #{resumeTitle}
-				, #{resumeContent}
+				, #{resumeTitle}		<!-- resume클래스에 셋팅되어 있던 String 타입 resumeTitle -->
+				, #{resumeContent}		<!-- resume클래스에 셋팅되어 있던 String 타입 resumeContent -->
 			)				
 	</insert>
 		
