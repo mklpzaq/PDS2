@@ -1,12 +1,22 @@
 package com.test.pds2.board.service;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.test.pds2.path.SystemPath;
 
 @Service
 public class BoardService {
@@ -23,26 +35,79 @@ public class BoardService {
 	private BoardFileDao boardFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
 	
-	public void boardFileDownload(String fileName, String fileExt) {
-		File serverFile = new File("D:"+File.separator+"upload"+File.separator+fileName+"."+fileExt);
-		logger.debug("D:"+File.separator+"upload"+File.separator+fileName+"."+fileExt);
-		if(serverFile.exists() == false) {
-			logger.debug("원본 파일이 존재하지 않습니다.");
-			return ;
-		}
+	public void boardFileDownload(String fileName
+								,String fileExt
+								,HttpServletRequest request
+								,HttpServletResponse response) {
+		FileInputStream fileInputStream = null;
+		BufferedInputStream bufferdInputStream = null;
+		ServletOutputStream ServletOutputStream = null;
+		BufferedOutputStream bufferedOutputStream = null;
 		
-		File downLoadDir = new File("D:"+File.separator+"download");
-		downLoadDir.mkdir();
-		File reFile = new File(downLoadDir, fileName+"."+fileExt);
+		String path = SystemPath.SYSTEM_PATH+fileName+"."+fileExt;
+		File file = new File(path);
+		String userAgent = request.getHeader("User-Agent");
+		boolean ie = userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("rv:11") > -1;
+		String fileNameTwo = null;
 		
-		serverFile.renameTo(reFile);
-		if(reFile.exists() == true) {
-			logger.debug("파일이동에 성공하였습니다.");
-		}else {
-			logger.debug("파일이동에 실패하였습니다.");
+		try {
+			if(ie) {
+				fileNameTwo = URLEncoder.encode(file.getName(), "utf-8");
+			}else {
+				fileNameTwo = new String(file.getName().getBytes("utf-8"), "iso-8859-1");
+			}
+			
+			response.setContentType("application/octet-stream");
+			response.setHeader("Content-Disposition", "attachment;filename=\"" + fileNameTwo + "\";");
+			
+			fileInputStream = new FileInputStream(file);
+			bufferdInputStream = new BufferedInputStream(fileInputStream);
+			ServletOutputStream = response.getOutputStream();
+			bufferedOutputStream = new BufferedOutputStream(ServletOutputStream);
+			
+			byte[] data = new byte[2048];
+			int input = 0;
+			while((input=bufferdInputStream.read(data)) != -1) {
+				bufferedOutputStream.write(data, 0, input);
+				bufferedOutputStream.flush();
+			}
+		}catch(UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(bufferedOutputStream!=null) {
+				try {
+					bufferedOutputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(bufferdInputStream!=null) {
+				try {
+					bufferdInputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(ServletOutputStream!=null) {
+				try {
+					ServletOutputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(fileInputStream!=null) {
+				try {
+					fileInputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
-	
 	
 	public Board getDetailBoard(int boardId) {
 		logger.debug("getDetailBoard BoardService");

@@ -3,6 +3,8 @@ package com.test.pds2.board.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -29,6 +31,8 @@ public class BoardController {
 	
 	@RequestMapping(value="/boardFileDownload", method=RequestMethod.GET)
 	public String download(Model model
+							,HttpServletRequest request
+							,HttpServletResponse response
 							,@RequestParam(value="sendNo") int boardId
 							,@RequestParam(value="fileName") String fileName
 							,@RequestParam(value="fileExt") String fileExt) {
@@ -40,9 +44,7 @@ public class BoardController {
 		logger.debug("board : "+ board.toString());
 		model.addAttribute("detailBoard", board);
 		
-		boardService.boardFileDownload(fileName, fileExt);
-		
-		
+		boardService.boardFileDownload(fileName, fileExt, request, response);
 		
 		//RedirectAttributes redirectAttributes
 		//redirectAttributes.addFlashAttribute("sendNo", boardId);

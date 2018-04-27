@@ -7,7 +7,7 @@ public class Board {
 	private int boardId;
 	private String boardTitle;
 	private String boardContent;
-	private List<BoardFile> boardFile;	//지금은 1:1, 나중에 1:N으로 구현해야 한다.
+	private List<BoardFile> boardFile;
 
 	public Board() {
 		this.boardFile = new ArrayList<BoardFile>();
