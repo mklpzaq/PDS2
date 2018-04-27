@@ -1,6 +1,5 @@
 package com.test.pds2.board.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.test.pds2.board.service.Board;
 import com.test.pds2.board.service.BoardRequest;
@@ -29,25 +26,42 @@ public class BoardController {
 	private BoardService boardService;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
-	@RequestMapping(value="/boardFileDownload", method=RequestMethod.GET)
-	public String download(Model model
+	@RequestMapping(value="/deleteBoardFile", method=RequestMethod.GET)
+	public String deleteBoardFile(Model model
+									,@RequestParam(value="sendNo") int boardId
+									,@RequestParam(value="sendFileNo") int boardFileId
+									,@RequestParam(value="fileName") String boardFileName
+									,@RequestParam(value="fileExt") String boardFileExt) {
+		logger.debug("GET /deleteBoardFile deleteBoardFile");
+		
+		/* file 삭제 과정 */
+		boardService.deleteBoardFile(boardFileId, boardFileName, boardFileExt);
+		
+		
+		/* boardDetailView.jsp 로 돌아가기 위한 사전 작업 */
+		Board board = boardService.getDetailBoard(boardId);
+		logger.debug("board : "+ board.toString());
+		model.addAttribute("detailBoard", board);
+		
+		return "board/boardDetailView";
+	}
+	
+	@RequestMapping(value="/downloadBoardFile", method=RequestMethod.GET)
+	public String downloadBoardFile(Model model
 							,HttpServletRequest request
 							,HttpServletResponse response
 							,@RequestParam(value="sendNo") int boardId
 							,@RequestParam(value="fileName") String fileName
 							,@RequestParam(value="fileExt") String fileExt) {
-		logger.debug("GET /boardFileDownload BoardController");
+		logger.debug("GET /downloadBoardFile BoardController");
 		
-		
-		logger.debug("★★★★★★★★★★★★★★★★★★★★★★★★★★");
+		/* boardDetailView.jsp 로 돌아가기 위한 사전 작업 */
 		Board board = boardService.getDetailBoard(boardId);
 		logger.debug("board : "+ board.toString());
 		model.addAttribute("detailBoard", board);
 		
-		boardService.boardFileDownload(fileName, fileExt, request, response);
+		boardService.downloadBoardFile(fileName, fileExt, request, response);
 		
-		//RedirectAttributes redirectAttributes
-		//redirectAttributes.addFlashAttribute("sendNo", boardId);
 		return "/board/boardDetailView";
 	}
 	

@@ -35,7 +35,15 @@ public class BoardService {
 	private BoardFileDao boardFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
 	
-	public void boardFileDownload(String fileName
+	public void deleteBoardFile(int boardFileId, String boardFileName, String boardFileExt) {
+		logger.debug("deleteBoardFile BoardService");
+		/* DB에서 파일 정보를 삭제하는 과정 */
+		int result = boardFileDao.deleteBoardFile(boardFileId);
+		
+		/* 하드디스크에서 파일을 삭제하는 과정 */
+	}
+	
+	public void downloadBoardFile(String fileName
 								,String fileExt
 								,HttpServletRequest request
 								,HttpServletResponse response) {

@@ -32,7 +32,8 @@
 									boardFileExt : ${boardFile.boardFileExt}<br/>
 									boardFileType : ${boardFile.boardFileType}<br/>
 									boardFileSize : ${boardFile.boardFileSize}<br/>
-									<a href="${pageContext.request.contextPath}/boardFileDownload?sendNo=${boardFile.boardId}&fileName=${boardFile.boardFileName}&fileExt=${boardFile.boardFileExt}">파일 다운로드</a>
+									<a href="${pageContext.request.contextPath}/downloadBoardFile?sendNo=${boardFile.boardId}&fileName=${boardFile.boardFileName}&fileExt=${boardFile.boardFileExt}">파일 다운로드</a>
+									 | <a href="${pageContext.request.contextPath}/deleteBoardFile?sendNo=${boardFile.boardId}&sendFileNo=${boardFile.boardFileId}&fileName=${boardFile.boardFileName}&fileExt=${boardFile.boardFileExt}">파일 삭제</a>
 								</div>
 								<hr/>
 							</c:forEach>

@@ -13,6 +13,10 @@ public class BoardFileDao {
 	private static final Logger logger = LoggerFactory.getLogger(BoardFileDao.class);
 	final String NS = "com.test.pds2.board.service.BoardFileMapper.";
 	
+	public int deleteBoardFile(int boardFileId) {
+		return sqlSession.delete(NS+"deleteBoardFile", boardFileId);
+	}
+	
 	public void insertBoardFile(BoardFile boardFile) {
 		sqlSession.insert(NS+"insertBoardFile", boardFile);
 	}

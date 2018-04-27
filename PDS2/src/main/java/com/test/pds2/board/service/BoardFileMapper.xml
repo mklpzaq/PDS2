@@ -5,6 +5,15 @@
  
 <mapper namespace="com.test.pds2.board.service.BoardFileMapper">
 	
+	<delete id="deleteBoardFile"
+			parameterType="Integer">
+		DELETE FROM
+			board_file
+		WHERE
+			board_file_id = #{boardFileId}
+		
+	</delete>
+	
 	<insert id="insertBoardFile"
 			parameterType="com.test.pds2.board.service.BoardFile">
 		INSERT INTO board_file(
