@@ -62,8 +62,10 @@
 							<textarea class="panel-title" style="height:90%; width:90%;">${viewGallery.galleryContent}</textarea>
 							<div>
 								첨부파일 : <br/>
-								<c:forEach var="galleryFile" items="${list}">								
-									<img data-src="holder.js/140x140" class="img-circle" alt="140x140" src="${pageContext.request.contextPath}/resources/upload/kkk.png" data-holder-rendered="true" style="width: 140px; height: 140px;"><br/>
+								<c:forEach var="galleryFile" items="${list}">
+									<%-- <img src="${pageContext.request.contextPath}/downloadGallery?galleryFileName=${galleryFile.galleryFileName}&galleryFileExt=${galleryFile.galleryFileExt}" alt="140x140" class="img-circle" ${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}/> --%>             
+									<img data-src="holder.js/140x140" class="img-circle" alt="140x140" src="${pageContext.request.contextPath}/downloadGallery?galleryFileName=${galleryFile.galleryFileName}&galleryFileExt=${galleryFile.galleryFileExt}" data-holder-rendered="true" style="width: 140px; height: 140px;">
+									<br/>
 								</c:forEach>
 							</div>
 						</div>				

@@ -12,7 +12,7 @@
 			gl.gallery_id
 			,gl.gallery_title
 			,gl.gallery_content
-			,glf.gallery_file_id
+			,glf.gallery_file_name
 			,glf.gallery_file_ext
 			,glf.gallery_file_type
 			,glf.gallery_file_size
@@ -43,7 +43,7 @@
 		<result column="gallery_title" property="galleryTitle"/>
 		<result column="gallery_content" property="galleryContent"/>
 		<collection ofType="com.test.pds2.gallery.service.GalleryFile" property="galleryFile">
-			<id column="gallery_file_id" property="galleryFileId"/>
+			<id column="gallery_file_name" property="galleryFileName"/>
 			<result column="gallery_file_ext" property="galleryFileExt"/>
 			<result column="gallery_file_type" property="galleryFileType"/>
 			<result column="gallery_file_size" property="galleryFileSize"/>
