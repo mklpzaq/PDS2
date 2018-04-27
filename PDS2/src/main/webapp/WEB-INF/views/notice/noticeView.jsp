@@ -12,13 +12,12 @@
 		</style>
 	</head>
 	<body>
-		
 		<jsp:include page="../navbar.jsp"/>
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-2"></div>
 					<div class="col-md-8">
-					<!-- Notice View -->			
+						<!-- Notice View -->			
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<div class="row">
@@ -35,28 +34,21 @@
 								<div>
 									첨부파일 : <br/>
 									<c:forEach var="noticeFile" items="${list}">								
-										<a href="${pageContext.request.contextPath}/download?noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">${noticeFile.noticeFileName}.${noticeFile.noticeFileExt}</a>
+										<a href="${pageContext.request.contextPath}/downloadNotice?noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">${noticeFile.noticeFileName}.${noticeFile.noticeFileExt}</a>
 										<button><a href="${pageContext.request.contextPath}/deleteNoticeFile?noticeFileId=${noticeFile.noticeFileId}&noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">삭제</a></button><br/>
 									</c:forEach>
 								</div>
 							</div>
 						</div>
 						<div>
-							<a href="./updateNotice?noticeNo=${notice.noticeId}">
-								[수정]
-							</a>&nbsp;&nbsp;
-							<a href="./deleteNotice?noticeId=${noticeView.noticeId}">
-								[삭제]										
-							</a>&nbsp;&nbsp;
-							<a href="./noticeList">
-								[목록]
-							</a>
+							<a href="./updateNotice?noticeNo=${notice.noticeId}">[수정]</a>&nbsp;&nbsp;
+							<a href="./deleteNotice?noticeId=${noticeView.noticeId}">[삭제]</a>&nbsp;&nbsp;
+							<a href="./selectNoticeList">[목록]	</a>
 						</div>		
-					<!-- Notice View -->
+						<!-- Notice View -->
 					</div>
 					<div class="col-md-2"></div>
 				</div>
 			</div>
-	
 	</body>
 </html>

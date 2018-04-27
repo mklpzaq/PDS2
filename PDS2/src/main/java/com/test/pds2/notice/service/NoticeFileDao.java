@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.test.pds2.resume.service.Resume;
-import com.test.pds2.resume.service.ResumeFile;
 
 @Repository
 public class NoticeFileDao {
@@ -32,7 +30,6 @@ public class NoticeFileDao {
 	
 	public int deleteNoticeFile(int noticeFileId) {
 		logger.debug("deleteNoticeFile - noticeFileId : "+noticeFileId);
-		 
 		return sqlSession.delete(NS+"deleteNoticeFile", noticeFileId);  
 	}
 }

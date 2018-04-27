@@ -78,6 +78,7 @@
 		WHERE notice_id = #{noticeId}
 	</select>
 	
+	<!-- 리스트에서 삭제 -->
 	<delete id="deleteNoticeList" parameterType="com.test.pds2.notice.service.Notice">
 		DELETE
 		FROM notice
@@ -85,10 +86,21 @@
 			notice_id = #{noticeId}		
 	</delete>
 	
+	<!-- 각 뷰 내부에서 삭제 -->
 	<delete id="deleteNotice" parameterType="com.test.pds2.notice.service.Notice">
 		DELETE
 		FROM notice
 		WHERE
 			notice_id = #{noticeId}	
 	</delete>
+	
+	<update id="updateNotice" parameterType="com.test.pds2.notice.service.Notice">
+		UPDATE notice
+		SET
+			notice_id = #{noticeId}
+			, notice_title = #{noticeTitle}
+			. notice_content = #{noticeContent}
+		WHERE notice_id = #{noticeId}
+	</update>
+
 </mapper>

@@ -29,6 +29,10 @@
 								<div class="form-group">
 									<label for="InputFile">noticeFile</label>
 									<input type="file" id="noticeFile" name="multipartFile">
+									<input type="file" id="noticeFile" name="multipartFile">
+									<input type="file" id="noticeFile" name="multipartFile">
+									<input type="file" id="noticeFile" name="multipartFile">
+									<input type="file" id="noticeFile" name="multipartFile">
 								</div>
 								<button class="btn pull-right" type="submit" class="btn btn-default">입력</button>
 							</form>
