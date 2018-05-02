@@ -155,13 +155,13 @@ public class ResumeController {
 	
 	@RequestMapping(value = "/updateResume", method= RequestMethod.POST)
 	public String updateResume(ResumeRequest resumeRequest
-								/*,@RequestParam("resumeFileId") List<ResumeFile> resumeFileId*/
-								,@RequestParam("resumeFileName") List<String> resumeFileName
-								,@RequestParam("resumeFileExt") List<String> resumeFileExt) {		
+								,@RequestParam("deleteCheckbox") List<ResumeFile> resumeFileId
+								/*,@RequestParam("resumeFileName") List<String> resumeFileName
+								,@RequestParam("resumeFileExt") List<String> resumeFileExt*/) {		
 		logger.debug("updateResume - resumeRequest : " + resumeRequest.toString());
-		//logger.debug("updateResume - resumeFileId : " + resumeFileId.toString());
-		logger.debug("updateResume - resumeFileName : " + resumeFileName.toString());
-		logger.debug("updateResume - resumeFileExt : " + resumeFileExt.toString());
+		/*logger.debug("updateResume - resumeFileId : " + resumeFileId.toString());*/
+		/*logger.debug("updateResume - resumeFileName : " + resumeFileName.toString());
+		logger.debug("updateResume - resumeFileExt : " + resumeFileExt.toString());*/
 				
 		/*Resume updateResume = resumeService.updateResume(resume);
 		logger.debug("updateResume - updateResume : " + updateResume.toString());
