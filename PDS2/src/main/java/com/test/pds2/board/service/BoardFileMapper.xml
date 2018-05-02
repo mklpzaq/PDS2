@@ -5,6 +5,18 @@
   
 <mapper namespace="com.test.pds2.board.service.BoardFileMapper">
 	
+	<select id="getCountBoardFile"
+			parameterType="Integer"
+			resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			board_file
+		WHERE
+			board_id = #{boardId}
+		
+	</select>
+	
 	<select id="selectBoardFileListForDelete"
 			parameterType="Integer"
 			resultType="com.test.pds2.board.service.BoardFile">

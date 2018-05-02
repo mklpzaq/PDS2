@@ -19,6 +19,20 @@
 		</collection>
 	</resultMap>
 	
+	<select id="getBoardOne"
+			parameterType="Integer"
+			resultType="com.test.pds2.board.service.Board">
+		SELECT
+			board_id AS boardId
+			,board_title AS boardTitle
+			,board_content AS boardContent
+		FROM
+			board
+		WHERE
+			board_id = #{boardId}
+			
+	</select>
+	
 	<update id="updateBoard"
 			parameterType="com.test.pds2.board.service.Board">
 		UPDATE

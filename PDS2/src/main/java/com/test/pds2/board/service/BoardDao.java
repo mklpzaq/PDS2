@@ -20,6 +20,10 @@ public class BoardDao {
 		return sqlSession.selectOne(NS+"selectBoardOneForUpdate", boardId);
 	}*/
 	
+	public Board getBoardOne(int boardId) {
+		return sqlSession.selectOne(NS+"getBoardOne", boardId);
+	}
+	
 	public int updateBoard(Board board) {
 		return sqlSession.update(NS+"updateBoard", board);
 	}

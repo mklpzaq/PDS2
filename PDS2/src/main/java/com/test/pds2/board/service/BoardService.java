@@ -169,7 +169,15 @@ public class BoardService {
 	
 	public Board getDetailBoard(int boardId) {
 		logger.debug("getDetailBoard BoardService");
-		return boardDao.getDetailBoard(boardId);
+		
+		int result = boardFileDao.getCountBoardFile(boardId);
+		Board board = null;
+		if(result == 0) {
+			board = boardDao.getBoardOne(boardId); 
+		}else {
+			board = boardDao.getDetailBoard(boardId);
+		}
+		return board;
 	}
 	
 	public Map<String, Object> getBoardList(int currentPage, int pagePerRow, String searchSelect, String searchWord){
@@ -332,7 +340,7 @@ public class BoardService {
 		//board.getBoardFile().setBoardId(board.getBoardId());
 		
 		//logger.debug("board.getBoardFile().getBoardId() : " + board.getBoardFile().getBoardId());
-		logger.debug("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
+		
 		//boardFileDao.insertBoardFile(board.getBoardFile());
 		
 		

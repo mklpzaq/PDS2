@@ -78,7 +78,9 @@ public class BoardController {
 		/* file 삭제 과정 */
 		boardService.deleteBoardFileOne(boardFileId, boardFileName, boardFileExt);
 		/* boardDetailView.jsp 로 돌아가기 위한 작업 */
+		
 		Board board = boardService.getDetailBoard(boardId);
+		logger.debug("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		if(board != null) {
 			logger.debug("board : "+ board.toString());
 		}
@@ -169,7 +171,6 @@ public class BoardController {
 	public String insertBoard(BoardRequest boardRequest, HttpSession session) {
 		logger.debug("POST /insertBoard BoardController");
 		logger.debug("boardRequest : " + boardRequest);
-		logger.debug("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		
 		/*
 		 * service : ArticleRequest => Article + 실제 파일을 폴더에 저장(일단 DB에 말고 ) 트랜젝션 서비스가 필요하다 트랜젝션을 쓰려면 설정파일 설정해야한다.

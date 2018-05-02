@@ -15,6 +15,10 @@ public class BoardFileDao {
 	private static final Logger logger = LoggerFactory.getLogger(BoardFileDao.class);
 	final String NS = "com.test.pds2.board.service.BoardFileMapper.";
 	
+	public int getCountBoardFile(int boardId) {
+		return sqlSession.selectOne(NS+"getCountBoardFile", boardId);
+	}
+	
 	public List<BoardFile> selectBoardFileListForDelete(int boardId){
 		return sqlSession.selectList(NS+"selectBoardFileListForDelete", boardId);
 	}
