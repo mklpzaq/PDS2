@@ -90,7 +90,9 @@ public class NoticeService {
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
 		List<Notice> list = noticeDao.selectNoticeList(map);
-		logger.debug("selectNoticeList - list.get(1).getNoticeId() : "+list.get(1).getNoticeId());
+		/*if(list.size() > 0) {
+			logger.debug("selectNoticeList - list.get(1).getNoticeId() : "+list.get(1).getNoticeId());
+		}*/
 		int total = noticeDao.totalCountNotice();
 		int lastPage =0;
 		if(total%pagePerRow ==0) {

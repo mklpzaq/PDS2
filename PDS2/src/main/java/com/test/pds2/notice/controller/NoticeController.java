@@ -113,8 +113,16 @@ public class NoticeController {
 		return "redirect:/selectNoticeList";
 		
 	}
-
-	//다운로드
+	
+	//수정
+	@RequestMapping(value = "/updateNotice", method= RequestMethod.POST)
+		public String updateNotice(Notice notice) {
+			return null;
+		
+	}
+	
+	
+	//다운로드(인호오빠꺼 참고, 읽어봐도 무슨소린지 잘 모르겠다)
 	 @RequestMapping(value = "/downloadNotice", method= RequestMethod.GET)
 	    public void download(@RequestParam("noticeFileName") String noticeFileName
 	                            ,@RequestParam("noticeFileExt") String noticeFileExt
