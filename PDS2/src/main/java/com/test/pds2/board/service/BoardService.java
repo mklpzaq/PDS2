@@ -170,8 +170,11 @@ public class BoardService {
 	public Board getDetailBoard(int boardId) {
 		logger.debug("getDetailBoard BoardService");
 		
+		//보드 아이디를 받아서 보드 아이디에 대한 보드파일 카운트를 센다.
 		int result = boardFileDao.getCountBoardFile(boardId);
 		Board board = null;
+		//아이디에 대한 보드파일 카운팅이 0이면 board정보만을 가져오고
+		//0이 아닐경우 (보드파일이 존재할 경우) 파일에 대한 정보까지 가져온다.
 		if(result == 0) {
 			board = boardDao.getBoardOne(boardId); 
 		}else {

@@ -80,13 +80,17 @@ public class BoardController {
 		/* boardDetailView.jsp 로 돌아가기 위한 작업 */
 		
 		Board board = boardService.getDetailBoard(boardId);
-		logger.debug("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
+		logger.debug("■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		if(board != null) {
 			logger.debug("board : "+ board.toString());
+		}else {
+			logger.debug("board : null");
 		}
-		model.addAttribute("detailBoard", board);
+		//model.addAttribute("detailBoard", board);
+		model.addAttribute("board", board);
 		
-		return "/board/boardDetailView";
+		//return "/board/boardDetailView";
+		return "/board/updateBoardForm";
 	}
 	
 	@RequestMapping(value="/downloadBoardFile", method=RequestMethod.GET)

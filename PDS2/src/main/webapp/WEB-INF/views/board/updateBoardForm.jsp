@@ -4,7 +4,19 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<title>Update Board</title>
+		<script>
+			$(document).ready(function(){
+				var count = 0;
+				$('#addFilebutton').click(function(){
+					$('#addFileDiv').append('파일추가 : <input type="file" name="multipartFile"><br/>');
+				});
+				
+			});
+		</script>
+		
 	</head>
 	<body>
 		<jsp:include page="../navbar.jsp"/>
@@ -16,7 +28,7 @@
 				<!-- Begin Content -->
 					
 					<h3 class="text-center">Update Board</h3>
-					<form class="form-horizontal" action="${pageContext.request.contextPath}/updateBoard" method="post">					
+					<form class="form-horizontal" action="${pageContext.request.contextPath}/updateBoard" method="post" enctype="multipart/form-data">					
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<div class="form-group">
@@ -80,12 +92,19 @@
 											</tbody>
 										</table>
 									</div>
+									<a href="${pageContext.request.contextPath}/deleteBoardFile?sendNo=${boardFile.boardId}&sendFileNo=${boardFile.boardFileId}&fileName=${boardFile.boardFileName}&fileExt=${boardFile.boardFileExt}">파일 삭제</a>
 									<!-- 파일 속성 끝 -->
 								</c:forEach>
 								
 								
+								<hr/>
+								<div id="addFileDiv">
+									
+								</div>
+								<button id="addFilebutton" type="button">파일추가</button>
 							</div>
-						</div>					
+						</div>
+						<button type="submit">수정완료</button>				
 					</form>					
 					
 					
