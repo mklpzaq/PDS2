@@ -35,6 +35,13 @@ public class BoardService {
 	private BoardFileDao boardFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
 	
+	/*public Board selectBoardOneForUpdate(int boardId) {
+		return boardDao.selectBoardOneForUpdate(boardId);
+	}*/
+	public int updateBoard(Board board) {
+		return boardDao.updateBoard(board);
+	}
+	
 	public List<BoardFile> selectBoardFileListForDelete(int boardId) {
 		return boardFileDao.selectBoardFileListForDelete(boardId);
 	}
@@ -292,7 +299,6 @@ public class BoardService {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
 			
 			/* 
 			 * boardRequest가 multipartFile을 가지고 있다.
