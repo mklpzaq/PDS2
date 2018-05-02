@@ -19,6 +19,17 @@
 		</collection>
 	</resultMap>
 	
+	<update id="updateBoard"
+			parameterType="com.test.pds2.board.service.Board">
+		UPDATE
+			board
+		SET
+			board_title = #{boardTitle}
+			,board_content = #{boardContent}
+		WHERE
+			board_id = #{boardId}
+	</update>
+	
 	<delete id="deleteBoard"
 			parameterType="Integer">
 		DELETE FROM

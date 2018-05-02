@@ -16,6 +16,14 @@ public class BoardDao {
 	private static final Logger logger = LoggerFactory.getLogger(BoardDao.class);
 	final String NS = "com.test.pds2.board.service.BoardMapper.";
 	
+/*	public Board selectBoardOneForUpdate(int boardId) {
+		return sqlSession.selectOne(NS+"selectBoardOneForUpdate", boardId);
+	}*/
+	
+	public int updateBoard(Board board) {
+		return sqlSession.update(NS+"updateBoard", board);
+	}
+	
 	public int deleteBoard(int boardId) {
 		return sqlSession.delete(NS+"deleteBoard", boardId);
 	}

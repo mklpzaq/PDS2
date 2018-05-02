@@ -28,6 +28,29 @@ public class BoardController {
 	private BoardService boardService;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
+	@RequestMapping(value="/updateBoard", method=RequestMethod.GET)
+	public String updateBoard(Model model
+							,@RequestParam(value="sendNo") int boardId) {
+		logger.debug("GET /updateBoard BoardController");
+		logger.debug("boardId : " + boardId);
+		
+		//완전히 세팅된 board가 나온다.
+		Board board = boardService.getDetailBoard(boardId);
+		logger.debug("setted board : "+ board.toString() );
+		model.addAttribute("board", board);
+		
+		return "/board/updateBoardForm";
+	}
+	
+	@RequestMapping(value="/updateBoard", method=RequestMethod.POST)
+	public String updateBoard(Board board) {
+		logger.debug("POST /updateBoard BoardController");
+		logger.debug("board : " + board);
+		int result = boardService.updateBoard(board);
+		
+		return "redirect:/getBoardList";
+	}
+	
 	@RequestMapping(value="/deleteBoard", method=RequestMethod.GET)
 	public String deleteBoard(@RequestParam(value="sendNo") int boardId) {
 		logger.debug("GET /deleteBoard deleteBoard");
