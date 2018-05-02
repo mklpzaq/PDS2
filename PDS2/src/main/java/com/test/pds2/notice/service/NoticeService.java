@@ -85,10 +85,11 @@ public class NoticeService {
 	
 	public Map<String, Object> selectNoticeList(int currentPage, int pagePerRow) {
 		logger.debug("selectNoticeList");
-		Map<String, Integer> map = new HashMap<String, Integer>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		int beginRow = (currentPage-1)*pagePerRow; //페이지의 첫번째 행을 지정해줌
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
+		
 		List<Notice> list = noticeDao.selectNoticeList(map);
 		/*if(list.size() > 0) {
 			logger.debug("selectNoticeList - list.get(1).getNoticeId() : "+list.get(1).getNoticeId());

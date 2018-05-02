@@ -1,5 +1,6 @@
 package com.test.pds2.notice.controller;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
@@ -17,9 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.test.pds2.notice.service.Notice;
@@ -34,6 +37,7 @@ public class NoticeController {
 	private NoticeService noticeService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
+	
 	
 	//새로운 notice를 추가
 	@RequestMapping(value = "/insertNotice", method = RequestMethod.GET)
@@ -57,22 +61,20 @@ public class NoticeController {
 	public String selectNoticeList(Model model
 									, HttpSession session										
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
-									,@RequestParam(value="pagePerRow", required=true, defaultValue="10") int pagePerRow
-									,@RequestParam(value="searchOption", defaultValue="all") String searchOption
-									,@RequestParam(value="keyword", defaultValue="") String keyword) {
-		logger.info("selectNoticeList");
-		Map<String, Object> map = noticeService.selectNoticeList(currentPage,pagePerRow);
+									,@RequestParam(value="pagePerRow", required=true, defaultValue="10") int pagePerRow) {
+		logger.debug("selectNoticeList");
 		
+		Map<String, Object> map = noticeService.selectNoticeList(currentPage,pagePerRow);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("startPage", map.get("startPage"));
 		model.addAttribute("endPage", map.get("endPage"));
 		model.addAttribute("pagePerRow", pagePerRow);
-		model.addAttribute("searchOption", searchOption);
-		model.addAttribute("keyword", keyword);
 		return "/notice/noticeList";
 	}
+	
+	
 	
 	//리스트에서 게시글 하나를 클릭하면 단독으로 보여줄 화면
 	@RequestMapping(value = "/noticeView", method= RequestMethod.GET)

@@ -23,7 +23,7 @@ public class NoticeDao {
 		return notice.getNoticeId();
 	}
 
-	public List<Notice> selectNoticeList(Map<String, Integer> map) {
+	public List<Notice> selectNoticeList(Map<String, Object> map) {
 		logger.debug("selectNoticeList");
 		return sqlSession.selectList(NS+"selectNoticeList", map);
 	}
