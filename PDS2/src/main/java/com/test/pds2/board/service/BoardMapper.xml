@@ -30,7 +30,6 @@
 			board
 		WHERE
 			board_id = #{boardId}
-			
 	</select>
 	
 	<update id="updateBoard"
