@@ -233,7 +233,7 @@ public class BoardService {
 	
 	@Transactional
 	public void insertBoard(BoardRequest boardRequest, String path) {
-		
+		//여기서 file_ext가 null이면 파일선택하지 않은 것으로 간주하여 insert시키지 말아야 한다.
 		//MultipartFile multipartFile = boardRequest.getMultipartFile();
 		
 		
@@ -267,7 +267,10 @@ public class BoardService {
 			int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
 			String fileExt = multipartFile.getOriginalFilename().substring(dotIndex+1);
 			logger.debug("fileExt : " + fileExt);
-			
+			//여기서 file_ext가 값이 없는 상태이면("") 파일선택하지 않은 것으로 간주하여 insert시키지 말아야 한다.
+			if(fileExt.equals("")) {
+				continue;
+			}
 			
 			/*
 			 * 3. 파일 타입
