@@ -123,7 +123,7 @@ public class ResumeController {
 	public String deleteResumeFile(ResumeFile resumeFile
 									,@RequestParam("resumeFileName") String resumeFileName
 	                            	,@RequestParam("resumeFileExt") String resumeFileExt
-	                            	,RedirectAttributes redirectAttributes) {
+	                            	) {
 		
 		logger.debug("deleteResumeFile - resumeFile : " + resumeFile.toString());
 		logger.debug("deleteResumeFile - resumeFileName : " + resumeFileName.toString());
@@ -131,7 +131,8 @@ public class ResumeController {
 		
 		resumeService.deleteResumeFile(resumeFile, resumeFileName, resumeFileExt);
 		
-		/*redirectAttributes.addFlashAttribute("resume", resume);*/
+		/* RedirectAttributes redirectAttributes redirect할때 데이터를 같이 옮기고 싶으면 사용
+		 * redirectAttributes.addFlashAttribute("resume", resume);*/
 		
 		return "redirect:/resumeList";
 	}
@@ -150,6 +151,28 @@ public class ResumeController {
 		/*redirectAttributes.addFlashAttribute("resume", resume);*/
 		
 		return "/resume/updateResumeForm";
+	}
+	
+	@RequestMapping(value = "/updateResume", method= RequestMethod.POST)
+	public String updateResume(ResumeRequest resumeRequest
+								/*,@RequestParam("resumeFileId") List<ResumeFile> resumeFileId*/
+								,@RequestParam("resumeFileName") List<String> resumeFileName
+								,@RequestParam("resumeFileExt") List<String> resumeFileExt) {		
+		logger.debug("updateResume - resumeRequest : " + resumeRequest.toString());
+		//logger.debug("updateResume - resumeFileId : " + resumeFileId.toString());
+		logger.debug("updateResume - resumeFileName : " + resumeFileName.toString());
+		logger.debug("updateResume - resumeFileExt : " + resumeFileExt.toString());
+				
+		/*Resume updateResume = resumeService.updateResume(resume);
+		logger.debug("updateResume - updateResume : " + updateResume.toString());
+		model.addAttribute("updateResume", updateResume);
+		
+		List <ResumeFile> list = updateResume.getResumeFile();
+		logger.debug("updateResume - list : " + list.toString());
+		model.addAttribute("list", list); 
+		redirectAttributes.addFlashAttribute("resume", resume);*/
+		
+		return "redirect:/resumeList";
 	}
 	
 	

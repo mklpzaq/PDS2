@@ -29,10 +29,8 @@ public class ResumeRequest {
 	}
 	@Override
 	public String toString() {
-		return "ResumeRequest [resumeTitle=" + resumeTitle + ", resumeContent=" + resumeContent + "]";
+		return "ResumeRequest [resumeTitle=" + resumeTitle + ", resumeContent=" + resumeContent + ", multipartFile="
+				+ multipartFile + "]";
 	}
-	
-	
-	
 	
 }
