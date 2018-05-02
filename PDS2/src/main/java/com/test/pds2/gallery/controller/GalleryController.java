@@ -23,6 +23,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.test.pds2.gallery.service.Gallery;
@@ -174,11 +175,31 @@ public class GalleryController {
 	 * service에 절대경로와 galleryRequest객체를 넘긴다.
 	 */	
 	@RequestMapping(value = "/insertGallery", method = RequestMethod.POST)
-	public String insertGallery(GalleryRequest galleryRequest, HttpSession session) {
-		logger.debug("GalleryController.insertGallery(galleryRequest) : " + galleryRequest);
+	public String insertGallery(GalleryRequest galleryRequest, Model model) {
+		logger.debug("GalleryController.insertGallery(galleryRequest) : " + galleryRequest);		
+		
+		List<MultipartFile> list = galleryRequest.getMultipartfile();
+		logger.debug("list : " + list);
+		
+		for(MultipartFile file : list) {
+			String fileType = file.getContentType();			
+			logger.debug("fileType : " + fileType);
+			
+			if(!fileType.equals("image/jpeg") && !fileType.equals("image/jpg") && !fileType.equals("image/png") &&
+				!fileType.equals("image/bmp") && fileType.equals("image/webp")) {
+				
+				logger.debug("fileType : " + fileType);
+				logger.info("이미지 파일이 아닙니다.");
+				model.addAttribute("error", "alert('이미지 파일이 아닙니다.')");
+				model.addAttribute("galleryTitle", galleryRequest.getGalleryTitle());
+				model.addAttribute("galleryContent", galleryRequest.getGalleryContent());
+				
+				return "/gallery/insertGallery";
+			}
+		}	
+		
 		String path = SystemPath.SYSTEM_PATH;		
 		logger.debug("path : " + path);
-		
 		galleryService.insertGallery(galleryRequest, path);
 		return "redirect:/";
 	}

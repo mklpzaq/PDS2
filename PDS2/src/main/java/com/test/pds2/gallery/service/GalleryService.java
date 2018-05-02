@@ -75,6 +75,7 @@ public class GalleryService {
 			} catch (IOException e) {			
 				e.printStackTrace();
 			}
+			
 			//
 			GalleryFile galleryFile = new GalleryFile();			
 				
