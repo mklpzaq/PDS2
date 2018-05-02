@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.test.pds2.gallery.service.Gallery;
+
 
 @Repository
 public class NoticeDao {
@@ -47,4 +49,14 @@ public class NoticeDao {
 		logger.debug("deleteNotice - notice : "+notice.toString());
 		return sqlSession.delete(NS+"deleteNotice", notice);  
 	}
+	
+	public int updateNotice(Notice notice) {
+		return sqlSession.update(NS+"updateNotice", notice);
+		
+	}
+
+	public Notice updateNoticeId(int noticeId) {
+		
+		return sqlSession.selectOne(NS+"updateNoticeId", noticeId);
+	}	
 }

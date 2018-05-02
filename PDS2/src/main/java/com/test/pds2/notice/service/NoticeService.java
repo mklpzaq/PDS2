@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds2.gallery.service.Gallery;
 import com.test.pds2.path.SystemPath;
 
 
@@ -164,5 +165,15 @@ public class NoticeService {
 		noticeFileDao.deleteNoticeFile(noticeFileId);
 		//noticeFileDao를 찾아가, deleteNoticeFile을 호출한다.
 		file.delete();
+	}
+	
+	public int updateNotice(Notice notice) {
+		logger.debug("updateNotice() notice" + notice);
+		return noticeDao.updateNotice(notice);
+	}
+
+	public Notice updateNoticeId(int noticeId) {
+		logger.debug("updateNotice() updateNoticeId" + noticeId);
+		return noticeDao.updateNoticeId(noticeId);
 	}
 }

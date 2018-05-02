@@ -81,7 +81,7 @@
 												<th><input type="checkbox" name="deleteCheckbox" value="${notice.noticeId}"></th>
 												<th scope = "row">${notice.noticeId}</th>
 												<td><a href="${pageContext.request.contextPath}/noticeView?noticeId=${notice.noticeId}">${notice.noticeTitle}</a></td>
-												<td><a href="${pageContext.request.contextPath}/updatenotice?noticeId=${notice.noticeId}&pagePerRow=${pagePerRow}">수정</a></td>																							
+												<td><a href="${pageContext.request.contextPath}/updateNotice?noticeId=${notice.noticeId}&pagePerRow=${pagePerRow}">수정</a></td>																							
 											</tr>
 										</tbody>
 									</c:forEach>

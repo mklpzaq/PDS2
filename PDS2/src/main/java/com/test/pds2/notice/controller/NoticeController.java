@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.test.pds2.gallery.service.Gallery;
 import com.test.pds2.notice.service.Notice;
 import com.test.pds2.notice.service.NoticeFile;
 import com.test.pds2.notice.service.NoticeRequest;
@@ -115,12 +116,23 @@ public class NoticeController {
 		return "redirect:/selectNoticeList";
 		
 	}
-	
-	//수정
-	@RequestMapping(value = "/updateNotice", method= RequestMethod.POST)
-		public String updateNotice(Notice notice) {
-			return null;
+	//수정하기
+	@RequestMapping(value = "/updateNotice", method = RequestMethod.POST)
+	public String updateNotice(Model model, Notice notice) {
+		logger.debug("updateNotice() notice : " + notice);
+		int result = noticeService.updateNotice(notice);
 		
+		return "redirect:/notice/selectNoticeList";
+	}
+	//수정할 하나의 게시글 불러오기
+	@RequestMapping(value = "/updateNotice", method = RequestMethod.GET)
+	public String updateNotice(Model model
+								,@RequestParam(value="noticeId") int noticeId) {
+		logger.debug("updateNotice() Notice : " + noticeId);
+		Notice notice = noticeService.updateNoticeId(noticeId);
+		logger.debug("updateNotice() notice : " + notice);
+		model.addAttribute("noticeId", notice);
+		return "/notice/updateNotice";
 	}
 	
 	
