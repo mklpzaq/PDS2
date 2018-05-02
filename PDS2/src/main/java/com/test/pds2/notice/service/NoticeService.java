@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.test.pds2.path.SystemPath;
@@ -25,21 +26,24 @@ public class NoticeService {
 	private NoticeFileDao noticeFileDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(NoticeService.class);
-	
+	@Transactional
 	public void insertNotice(NoticeRequest noticeRequest) {
 		
-		//Notice클래스를 생성하고 notice 객체참조변수를 생성하여, noticeRequest에 셋틷되어 있던 자료들을 겟팅해와 notice에 셋팅한다.
-		Notice notice = new Notice();
+		//Notice클래스를 생성하고 notice 객체참조변수를 생성
+		Notice notice = new Notice(); 
+		//NoticeRequest클래스에 셋팅된 NoticeTitle,NoticeContent를 가져와 notice에 셋팅한다.
 		notice.setNoticeTitle(noticeRequest.getNoticeTitle());
 		notice.setNoticeContent(noticeRequest.getNoticeContent());
 		
-		//NoticeFile클래스를 생성하고 noticeFile 객체참조변수를 생성하여, noticeDao에 접근해 insertNotice를 호출하여 실행한뒤, 반환되는 값을 int 타입의 noticeId에 저장한다.
+		//NoticeFile클래스를 생성하고 noticeFile 객체참조변수를 생성
 		NoticeFile noticeFile = new NoticeFile();
+		//noticeDao에 접근해 insertNotice를 호출하여 실행한뒤, 반환되는 값을 int타입의 noticeId에 저장한다.
 		int noticeId= noticeDao.insertNotice(notice); 
-		
+			
 		//for문을 통해 noticeRequest 내의 MultipartFile의 사이즈만큼 값을 돌려줌으로 인해, 다수의 파일이 올라오는 것을 처리할 수 있다.
-		for(int i=0; i<noticeRequest.getMultipartFile().getSize(); i++) {
-			MultipartFile multipartFile = noticeRequest.getMultipartFile();
+		for(int i=0; i<noticeRequest.getMultipartFile().size(); i++) {
+			MultipartFile multipartFile = noticeRequest.getMultipartFile().get(i);
+			
 			//1.파일이름
 			UUID uuid = UUID.randomUUID(); // 16진수 uuid 생성
 			//UUID(universally unique identifier)는 소프트웨어 구축에 쓰이는 식별자 표준
@@ -68,16 +72,13 @@ public class NoticeService {
 			try {
 				multipartFile.transferTo(file);
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
 			//셋팅
 			noticeFile.setNoticeId(noticeId);
-			
 			noticeFileDao.insertNoticeFile(noticeFile);
 		}
 	}

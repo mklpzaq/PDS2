@@ -114,7 +114,7 @@ public class NoticeController {
 		
 	}
 
-	
+	//다운로드
 	 @RequestMapping(value = "/downloadNotice", method= RequestMethod.GET)
 	    public void download(@RequestParam("noticeFileName") String noticeFileName
 	                            ,@RequestParam("noticeFileExt") String noticeFileExt
@@ -122,10 +122,7 @@ public class NoticeController {
 	                            , HttpServletResponse response) throws Exception {	  
 		 
 	        String Path = SystemPath.SYSTEM_PATH + "\\" + noticeFileName + "." + noticeFileExt;	
-	        //저장된 SystemPath.SYSTEM_PATH에 파일 이름 +.+ 파일 확장자를 붙여서 경로 완성 
-	         
-	        File file = new File(Path); //새로운 파일 생성? 요청하는 파일과 동일한 파일 객체 생성?
-	      
+	        File file = new File(Path); //새로운 파일 생성? 요청하는 파일과 동일한 파일 객체 생성
 	        response.setContentType("application/download; utf-8");  
 	        //response 객체는 JSP의 실행 결과를 웹브라우저로 전송하고자 할때 사용하며 
 	        //setContentType 메소드는 html의 표준 MIME 타입인 "text/html" 의 변경이나 캐릭터의 인코딩을 재지정하고자 할때 사용합니다.

@@ -31,10 +31,8 @@
 									<input type="file" id="noticeFile" name="multipartFile">
 									<input type="file" id="noticeFile" name="multipartFile">
 									<input type="file" id="noticeFile" name="multipartFile">
-									<input type="file" id="noticeFile" name="multipartFile">
-									<input type="file" id="noticeFile" name="multipartFile">
 								</div>
-								<button class="btn pull-right" type="submit" class="btn btn-default">입력</button>
+								<button class="btn pull-right" type="submit" class="btn btn-default">작성하기</button>
 							</form>
 						</div>
 					</div>
