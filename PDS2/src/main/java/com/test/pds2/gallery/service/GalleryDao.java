@@ -49,5 +49,11 @@ public class GalleryDao {
 	public Gallery selectGalleryForId(int galleryId) {
 		
 		return sqlSession.selectOne(NS+"selectGalleryForId", galleryId);
+	}
+
+	public int deleteGallery(int galleryId) {
+		
+		return sqlSession.delete(NS+"deleteGallery", galleryId);
+		
 	}	
 }

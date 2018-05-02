@@ -55,7 +55,7 @@ public class GalleryController {
 		model.addAttribute("beginPageNumForCurrentPage", map.get("beginPageNumForCurrentPage"));		
 		return "/gallery/galleryDetailView";
 	}*/
-	
+			
 	@RequestMapping(value = "/downloadGallery", method = RequestMethod.GET)
 	public void download(@RequestParam("galleryFileName") String galleryFileName
 						,@RequestParam("galleryFileExt") String galleryFileExt
@@ -166,6 +166,17 @@ public class GalleryController {
 		return "/gallery/updateGallery";
 	}
 	
+	@RequestMapping(value = "/deleteGallery", method = RequestMethod.GET)
+	public String deleteGallery(@RequestParam(value="galleryId") int galleryId) {
+		logger.debug("GalleryController.deleteGallery(galleryId) : " + galleryId);	
+		
+		String path = SystemPath.SYSTEM_PATH;
+		galleryService.deleteGallery(galleryId, path);
+		
+		return "redirect:/gallery/galleryList";
+		
+	}
+	
 	@RequestMapping(value = "/insertGallery", method = RequestMethod.GET)
 	public String insertGallery() {
 		return "/gallery/insertGallery";
@@ -181,6 +192,7 @@ public class GalleryController {
 		List<MultipartFile> list = galleryRequest.getMultipartfile();
 		logger.debug("list : " + list);
 		
+		// 서버에서 이미지파일만 올릴수 있게 file 명을 받아온다. 
 		for(MultipartFile file : list) {
 			String fileType = file.getContentType();			
 			logger.debug("fileType : " + fileType);

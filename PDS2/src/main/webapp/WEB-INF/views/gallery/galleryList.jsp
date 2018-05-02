@@ -82,7 +82,7 @@
 									<td><a href="${pageContext.request.contextPath}/viewDetailGallery?galleryId=${gallery.galleryId}">${gallery.galleryTitle}</a></td>
 									<td>${gallery.galleryContent}</td>
 									<td><a href="${pageContext.request.contextPath}/updateGallery?galleryId=${gallery.galleryId}">수정</a></td>
-									<td id="#"><a href="#">삭제</a></td>																				
+									<td><a href="${pageContext.request.contextPath}/deleteGallery?galleryId=${gallery.galleryId}">삭제</a></td>																				
 								</tr>
 							</c:forEach>
 						</tbody>

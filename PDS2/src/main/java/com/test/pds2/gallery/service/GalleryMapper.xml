@@ -5,6 +5,15 @@
   
 <mapper namespace="com.test.pds2.gallery.service.GalleryMapper">
 	
+	<delete id="deleteGallery"
+			parameterType="Integer">
+			DELECT
+			FROM 
+				gallery 
+			WHERE gallery_id = #{galleryId}
+	
+	</delete>
+	
 	<select id="selectGalleryDetail" 
 			parameterType="com.test.pds2.gallery.service.Gallery"
 			resultMap="gallery">

@@ -4,32 +4,49 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>Insert Gallery</title>
 
 	<script>
 		$(document).ready(function(){
 			${error};
-			
-			$('input[type="file"]').each(function(){
-				if($(this).val()==''){
-					alert('이미지 파일을 올려주세요.');
-					insert = false;
-				}
-				if($(this).val != ''){
-					var extension = $(this).val().split('.').pop().toLowerCase();
-					console.log('extension : ' + extension);
-					
-					if($.inArray(extension,['xwd','xpm','xbm','rgb','ppm','pgm','pbm','pnm','ras','tif','tiff','ief','gif','jpg','jpeg','png'] == -1)){
-						alert('이미지 파일이 아닙니다.');
+						
+			$('button#insert').click(function(){
+					var insert = true;
+					if($('input[name="galleryTitle"]').val() == ''){
+						alert('galleryTitle를 작성해주세요');
 						insert = false;
+						return;
+					}
+					
+					if($('input[name="galleryContent"]').val() == ''){
+						alert('galleryContent를 작성해주세요');
+						insert = false;
+						return;
 					}					
-				}
+					
+			
+					$('input[type="file"]').each(function(i,e){
+						if($(this).val()==''){
+							alert('이미지 파일을 올려주세요.');
+							insert = false;
+						}
+						if($(this).val != ''){
+							var extension = $(this).val().split('.').pop().toLowerCase();
+							console.log('extension : ' + extension);
+							
+							if($.inArray(extension,['xwd','xpm','xbm','rgb','ppm','pgm','pbm','pnm','ras','tif','tiff','ief','gif','jpg','jpeg','png']) == -1){
+								alert('이미지 파일이 아닙니다.');
+								insert = false;
+							}					
+						}
+					});		
 				
-				if(insert){
-					$('form').submit();
-				}
+					if(insert){
+						$('form').submit();
+					}
 				
-			});			
+			});	
 		});
 	</script>
 </head>

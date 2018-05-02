@@ -1,5 +1,7 @@
 package com.test.pds2.gallery.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +16,18 @@ public class GalleryFileDao {
 	final String NS ="com.test.pds2.gallery.service.GalleryFileMapper.";
 	
 	public int insertGalleryFile(GalleryFile galleryFile) {
-		logger.info("====== insertGalleryFile : ");
+		logger.debug("====== insertGalleryFile : ");
 		int row = sqlSession.insert(NS+"insertgalleryFile",galleryFile);
 		return row;
+	}
+
+	public List<GalleryFile> selectFileList(int galleryId) {
+		logger.debug("selectFileList() galleryId " + galleryId);
+		return sqlSession.selectList(NS+"selectGalleryFileList", galleryId);
+	}
+
+	public int deleteGalleryFile(int galleryId) {
+		logger.debug("deleteGalleryFile() galleryId " + galleryId);
+		return sqlSession.delete(NS + "deleteGalleryFile", galleryId);
 	}
 }

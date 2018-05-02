@@ -203,4 +203,27 @@ public class GalleryService {
 		logger.debug("GalleryService.updateGallery() updateGalleryForId" + galleryId);
 		return galleryDao.selectGalleryForId(galleryId);
 	}
+
+	public void deleteGallery(int galleryId, String path) {
+		logger.debug("GalleryService.deleteGallery() galleryId" + galleryId);
+		logger.debug("GalleryService.deleteGallery() path" + path);
+		String fileName = null;
+		String fileExt = null;
+		
+		List<GalleryFile> list = galleryFileDao.selectFileList(galleryId);
+		logger.debug("list : " + list);
+		for(GalleryFile galleryFile : list) {
+			fileName = galleryFile.getGalleryFileName();
+			fileExt = galleryFile.getGalleryFileExt();
+			logger.debug("fileName : " + fileName + fileExt);
+			
+			File file = new File(path+fileName+"."+fileExt);
+			logger.debug("삭제 전 파일 존재여부 확인"+file.exists());
+			file.delete();
+			logger.debug("삭제 후 파일 존재여부 확인"+file.exists());
+		}
+		galleryFileDao.deleteGalleryFile(galleryId);
+		galleryDao.deleteGallery(galleryId);
+		
+	}
 }
