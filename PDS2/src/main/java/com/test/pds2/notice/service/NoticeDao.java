@@ -35,20 +35,18 @@ public class NoticeDao {
 		return sqlSession.selectOne(NS+"totalCountNotice"); // 결과값이 하나 이므로 selectOne 사용
 	}
 	
-	public Notice noticeView(Notice notice) {
-		logger.debug("noticeView - notice : "+notice.toString());
-		
-		return sqlSession.selectOne(NS+"selectNoticeOne", notice);
+	public Notice noticeView(Notice noticeId) {		
+		return sqlSession.selectOne(NS+"selectNoticeOne", noticeId);
 	}	
-	
+	//리스트에서 게시글 삭제
 	public void deleteNoticeList(int noticeId) {
 		sqlSession.delete(NS+"deleteNoticeList", noticeId);
 	}
-	
+	//뷰에서 게시물 삭제
 	public int deleteNotice(Notice notice) {
 		logger.debug("deleteNotice - notice : "+notice.toString());
 		return sqlSession.delete(NS+"deleteNotice", notice);  
-	}
+	}	
 	
 	public int updateNotice(Notice notice) {
 		return sqlSession.update(NS+"updateNotice", notice);

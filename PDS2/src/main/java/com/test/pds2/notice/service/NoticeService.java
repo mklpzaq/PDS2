@@ -123,13 +123,13 @@ public class NoticeService {
 		return returnmap;
 	}
 	
-	public Notice noticeView(Notice notice) {
-		logger.debug("noticeView - notice : " + notice);
-		Notice noticeView = noticeDao.noticeView(notice);
+	public Notice noticeView(Notice noticeId) {
+		logger.debug("noticeView - notice : " + noticeId);
+		Notice noticeView = noticeDao.noticeView(noticeId);
 		logger.debug("noticeView - noticeView : " + noticeView.toString());
 		return noticeView;
 	}
-	
+	//리스트에서 게시글 삭제
 	public void deleteNoticeList(int[] deleteCheckbox) {	
 		logger.debug("deleteNoticeList");
 		for(int i = 0; i<deleteCheckbox.length; i++) {
@@ -137,7 +137,7 @@ public class NoticeService {
 			noticeDao.deleteNoticeList(noticeId);
 		}
 	}
-	
+	//뷰화면에서 게시글 삭제
 	public void deleteNotice(Notice notice) {
 		logger.debug("deleteNotice - notice : " + notice.toString());
 		
@@ -155,7 +155,7 @@ public class NoticeService {
 		}
 		noticeDao.deleteNotice(notice);
 	}
-	
+	//뷰화면에서 첨부파일 삭제
 	public void deleteNoticeFile(NoticeFile noticeFile, String noticeFileName, String noticeFileExt) {
 		logger.debug("deleteNoticeFile - noticeFile : " + noticeFile.toString());
 		String Path = SystemPath.SYSTEM_PATH+"\\" + noticeFileName + "." + noticeFileExt;
@@ -170,6 +170,17 @@ public class NoticeService {
 		//noticeFileDao를 찾아가, deleteNoticeFile을 호출한다.
 		file.delete();
 	}
+	
+	/*public void deleteNoticeFileOne(NoticeFile noticeFile, String noticeFileName, String noticeFileExt) {
+		logger.debug("deleteNoticeFileOne - noticeFile");
+		//path에 FileNaem과 FileExt를 담는다.
+		String Path = SystemPath.SYSTEM_PATH+"\\" + noticeFileName + "." + noticeFileExt;
+		File file = new File(Path);
+		int noticeFileId = noticeFile.getNoticeFileId();
+		noticeFileDao.deleteNoticeFileOne(noticeFileId);
+		file.delete();
+		
+	}*/
 	
 	public int updateNotice(Notice notice) {
 		logger.debug("updateNotice() notice" + notice);

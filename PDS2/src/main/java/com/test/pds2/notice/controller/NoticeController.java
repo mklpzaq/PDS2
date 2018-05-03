@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.test.pds2.board.service.BoardService;
 import com.test.pds2.gallery.service.Gallery;
 import com.test.pds2.notice.service.Notice;
 import com.test.pds2.notice.service.NoticeFile;
@@ -99,7 +100,7 @@ public class NoticeController {
 		return "redirect:/selectNoticeList";
 	}
 	
-	//단독으로 보여진 뷰 내부에서 삭제
+	//단독으로 보여진 뷰 내부에서 게시글 삭제
 	@RequestMapping(value = "/deleteNotice", method= RequestMethod.GET)
 	public String deleteNotice(Notice notice, Model model) {
 		logger.debug("deleteNotice - notice : " + notice.toString());		
@@ -107,26 +108,29 @@ public class NoticeController {
 		return "redirect:/selectNoticeList";
 	}
 
-	//업로드한 파일 삭제하기
+	//뷰 내부에서 업로드한 파일 삭제하기
 	@RequestMapping(value = "/deleteNoticeFile", method= RequestMethod.GET)
 	public String deleteNoticeFile(NoticeFile noticeFile
 									, @RequestParam("noticeFileName") String noticeFileName
-	                            	, @RequestParam("noticeFileExt") String noticeFileExt
-	                            	, RedirectAttributes redirectAttributes) {
+	                            	, @RequestParam("noticeFileExt") String noticeFileExt) {
 		noticeService.deleteNoticeFile(noticeFile, noticeFileName, noticeFileExt);
 		return "redirect:/selectNoticeList";
 		
 	}
-	//수정화면에서 파일 삭제
+/*	//수정화면에서 파일 삭제하기
 	@RequestMapping(value = "/deleteNoticeFileOne", method= RequestMethod.GET)
-	public String deleteNoticeFileOne(NoticeFile noticeFile, Model model
+	public String deleteNoticeFileOne(Model model
+									, @RequestParam("noticeId") int noticeId
+									, @RequestParam("noticeFileId") int noticeFileId
 									, @RequestParam("noticeFileName") String noticeFileName
-	                            	, @RequestParam("noticeFileExt") String noticeFileExt
-	                            	, RedirectAttributes redirectAttributes) {
-		noticeService.deleteNoticeFile(noticeFile, noticeFileName, noticeFileExt);
-		return "/notice/updateNotice";
-		
-	}
+	                            	, @RequestParam("noticeFileExt") String noticeFileExt) {
+	logger.debug("deleteNoticeFileOne");
+	noticeService.deleteNoticeFileOne(noticeFileId, noticeFileName, noticeFileExt);
+	Notice notice = noticeService.noticeView(noticeId);
+	model.addAttribute("notice", notice);
+	return "/notice/updateNotice";
+	
+	}*/
 	
 	//수정하기
 	@RequestMapping(value = "/updateNotice", method = RequestMethod.POST)
