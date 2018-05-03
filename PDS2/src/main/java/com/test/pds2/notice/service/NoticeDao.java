@@ -55,8 +55,8 @@ public class NoticeDao {
 		
 	}
 
-	public Notice updateNoticeId(int noticeId) {
+	public Notice selectNoticeview(int notice) {
 		
-		return sqlSession.selectOne(NS+"updateNoticeId", noticeId);
+		return sqlSession.selectOne(NS+"selectNoticeOne", notice);
 	}	
 }

@@ -41,7 +41,7 @@
 							</div>
 						</div>
 						<div>
-							<a href="./updateNotice?noticeNo=${notice.noticeId}">[수정]</a>&nbsp;&nbsp;
+							<a href="./updateNotice?noticeId=${notice.noticeId}">[수정]</a>&nbsp;&nbsp;
 							<a href="./deleteNotice?noticeId=${noticeView.noticeId}">[삭제]</a>&nbsp;&nbsp;
 							<a href="./selectNoticeList">[목록]	</a>
 						</div>		

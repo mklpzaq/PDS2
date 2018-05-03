@@ -57,6 +57,10 @@ public class NoticeService {
 			int doIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
 			String fileExt = multipartFile.getOriginalFilename().substring(doIndex + 1);
 			noticeFile.setNoticeFileExt(fileExt);
+			//파일을 추가하지 않을 경우, 빈 값으로 처리되어 업로드 되는 것이 없게 된다. 
+			if(fileExt.equals("")) {
+				continue;
+			}
 			
 			//3.파일컨텐트 타입
 			String fileType = multipartFile.getContentType();
@@ -172,8 +176,8 @@ public class NoticeService {
 		return noticeDao.updateNotice(notice);
 	}
 
-	public Notice updateNoticeId(int noticeId) {
-		logger.debug("updateNotice() updateNoticeId" + noticeId);
-		return noticeDao.updateNoticeId(noticeId);
+	public Notice selectNoticeview(int notice) {
+		logger.debug("updateNotice() selectNoticeview" + notice);
+		return noticeDao.selectNoticeview(notice);
 	}
 }

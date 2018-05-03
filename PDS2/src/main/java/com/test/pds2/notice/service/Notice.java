@@ -6,7 +6,7 @@ public class Notice {
 	private int noticeId; // notice_id
 	private String noticeTitle; //notice_title
 	private String noticeContent; //notice_content
-	private List<NoticeFile> noticeFile; //현재 1:1로 구성, 나중에 1:N으로 바꿔야함, command객체
+	private List<NoticeFile> noticeFile; //1:N 구현해야함
 	
 	public int getNoticeId() {
 		return noticeId;

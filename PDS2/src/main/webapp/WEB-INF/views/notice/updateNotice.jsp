@@ -19,15 +19,27 @@
 						<div class="panel-body">
 							<form action="${pageContext.request.contextPath}/updateNotice" method="post" enctype="multipart/form-data">
 								<div class="form-group">
+									<label for="InputId">noticeId</label>
+									<input type="text" class="form-control" name="noticeId" value="${notice.noticeId}" readonly>
+								</div>
+								<div class="form-group">
 									<label for="InputTitle">noticeTitle</label>
-									<input type="text" class="form-control" name="noticeTitle" value="${noticeId.noticeTitle}">
+									<input type="text" class="form-control" name="noticeTitle" value="${notice.noticeTitle}">
 								</div>
 								<div class="form-group">
 									<label for="InputContent">noticeContent</label>
-									<textarea type="text" class="form-control" name="noticeContent" value="${noticeId.noticeContent}"></textarea>
+									<textarea type="text" class="form-control" name="noticeContent">${notice.noticeContent}</textarea>
+								</div>
+								<div>
+									noticeFile : <br/>
+									<c:forEach var="noticeFile" items="${list}">								
+										<a>${noticeFile.noticeFileName}.${noticeFile.noticeFileExt}</a>
+										<button><a href="${pageContext.request.contextPath}/deleteNoticeFileOne?noticeFileId=${noticeFile.noticeFileId}&noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">삭제</a></button><br/>
+									</c:forEach>
+									
 								</div>
 								<div class="form-group">
-									<label for="InputFile">noticeFile</label>
+									<label for="InputFile">uploadFile</label>
 									<input type="file" id="noticeFile" name="multipartFile">
 									<input type="file" id="noticeFile" name="multipartFile">
 									<input type="file" id="noticeFile" name="multipartFile">

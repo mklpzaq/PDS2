@@ -84,6 +84,7 @@ public class NoticeController {
 		Notice noticeView = noticeService.noticeView(notice);
 		logger.debug("noticeView - noticeView : " + noticeView.toString());		
 		model.addAttribute("noticeView", noticeView);		
+		
 		List <NoticeFile> list = noticeView.getNoticeFile();
 		logger.debug("noticeView - noticeFile : " + list.toString());
 		model.addAttribute("list", list);
@@ -112,26 +113,42 @@ public class NoticeController {
 									, @RequestParam("noticeFileName") String noticeFileName
 	                            	, @RequestParam("noticeFileExt") String noticeFileExt
 	                            	, RedirectAttributes redirectAttributes) {
-	noticeService.deleteNoticeFile(noticeFile, noticeFileName, noticeFileExt);
+		noticeService.deleteNoticeFile(noticeFile, noticeFileName, noticeFileExt);
 		return "redirect:/selectNoticeList";
 		
 	}
+	//수정화면에서 파일 삭제
+	@RequestMapping(value = "/deleteNoticeFileOne", method= RequestMethod.GET)
+	public String deleteNoticeFileOne(NoticeFile noticeFile, Model model
+									, @RequestParam("noticeFileName") String noticeFileName
+	                            	, @RequestParam("noticeFileExt") String noticeFileExt
+	                            	, RedirectAttributes redirectAttributes) {
+		noticeService.deleteNoticeFile(noticeFile, noticeFileName, noticeFileExt);
+		return "/notice/updateNotice";
+		
+	}
+	
 	//수정하기
 	@RequestMapping(value = "/updateNotice", method = RequestMethod.POST)
 	public String updateNotice(Model model, Notice notice) {
 		logger.debug("updateNotice() notice : " + notice);
 		int result = noticeService.updateNotice(notice);
 		
-		return "redirect:/notice/selectNoticeList";
+		return "redirect:/selectNoticeList";
 	}
 	//수정할 하나의 게시글 불러오기
 	@RequestMapping(value = "/updateNotice", method = RequestMethod.GET)
 	public String updateNotice(Model model
 								,@RequestParam(value="noticeId") int noticeId) {
 		logger.debug("updateNotice() Notice : " + noticeId);
-		Notice notice = noticeService.updateNoticeId(noticeId);
+		Notice notice = noticeService.selectNoticeview(noticeId);
 		logger.debug("updateNotice() notice : " + notice);
-		model.addAttribute("noticeId", notice);
+		model.addAttribute("notice", notice);
+		
+		List <NoticeFile> list = notice.getNoticeFile();
+		logger.debug("updateNotice - list : " + list.toString());
+		model.addAttribute("list", list);
+		
 		return "/notice/updateNotice";
 	}
 	
