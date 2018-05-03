@@ -36,7 +36,6 @@ public class ArticleController {
 		 * */
 		
 		List<ArticleFile> articleFileList = articleService.selectArticleFileListForDelete(articleId);
-		logger.debug("★★★★★★★★★★★★★★★★★★★★");
 		logger.debug("articleFileList : " + articleFileList.toString());
 		/* 우선 articleId에 해당되는 파일을 모두 지우고 그 다음, articleId에 해당되는 article를 지운다. */
 		//매개변수로 articleId에 해당하는 aritlceFileName, articleFileExt를 가지고 있는 articleFile List를 넘겨 받아야 한다.
