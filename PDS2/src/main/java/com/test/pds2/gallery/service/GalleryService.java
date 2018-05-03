@@ -226,4 +226,88 @@ public class GalleryService {
 		galleryDao.deleteGallery(galleryId);
 		
 	}
+
+	public void updateGallery(int galleryId, GalleryRequest galleryRequest, String path, List<String> deleteImg) {
+		logger.debug("GalleryService.updateGallery() update post 호출");
+		Gallery gallery = new Gallery();
+		gallery.setGalleryTitle(galleryRequest.getGalleryTitle());
+		gallery.setGalleryContent(galleryRequest.getGalleryContent());
+		gallery.setGalleryId(galleryId);
+		galleryDao.updateGallery(gallery);
+		
+		List<MultipartFile> multipartFileList = galleryRequest.getMultipartfile();
+		logger.debug("GalleryService.updateGallery() update post multipartFileList : " + multipartFileList);
+		
+		if(multipartFileList.size() != 0) {
+			logger.debug("GalleryService.updateGallery() update post 호출 multipartFileList.size() : " + multipartFileList.size());
+			for(MultipartFile multipartFile : multipartFileList) {
+				
+				//16진수 유효아이디가 만들어진다?
+				UUID uuid = UUID.randomUUID();
+				String filename = uuid.toString();
+				logger.debug("String filename : " + filename);
+				//-문자를 찾아 없에고 문자열을 반환한다. 
+				filename = filename.replace("-", "");
+				//2.파일 확장자
+				//lastIndexOf()문자열에서 마지막 문자열을 반환한다.
+				//getOriginalFilename() 올린 파일의 전체 이름
+				int doIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
+				logger.info("int doIndex : " + doIndex);
+				String fileExt = multipartFile.getOriginalFilename().substring(doIndex+1);
+				logger.info("String fileExt : " + fileExt);
+				
+				//3.파일 컨텐트 타입
+				String fileType = multipartFile.getContentType();
+				logger.info("String fileType : " + fileType);		
+				
+				//4.파일 사이즈
+				long fileSize = multipartFile.getSize();
+				//5.파일 저장(매개변수 path를 이용)
+				File file = new File(path+filename+"."+fileExt);
+				
+				try {
+					multipartFile.transferTo(file);
+				} catch (IllegalStateException e) {			
+					e.printStackTrace();
+				} catch (IOException e) {			
+					e.printStackTrace();
+				}
+				
+				//
+				GalleryFile galleryFile = new GalleryFile();			
+					
+				galleryFile.setGalleryFileName(filename);
+				galleryFile.setGalleryFileExt(fileExt);
+				galleryFile.setGalleryFileType(fileType);
+				galleryFile.setGalleryFileSize(doIndex);
+				logger.debug("galleryFile : " + galleryFile);
+				gallery.getGalleryFile().add(galleryFile);			
+				
+			}
+				logger.debug("gallery : " + gallery);
+				galleryDao.insertGallery(gallery);
+				
+				for(GalleryFile galleryFile : gallery.getGalleryFile()) {
+					galleryFile.setGalleryId(gallery.getGalleryId());
+					galleryFileDao.insertGalleryFile(galleryFile);
+				}
+		}
+		
+		if(deleteImg != null) {// 삭제되는 이미지 파일이 있다면 삭제하는 부분
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("galleryId", galleryId);
+			for(String fileNameExt : deleteImg) {
+				logger.debug("파일풀네임: "+fileNameExt);
+				File file = new File(path+"\\"+fileNameExt);
+				logger.debug("삭제 전 파일 존재여부 확인: "+file.exists());
+				file.delete();
+				logger.debug("삭제 후 파일 존재여부 확인: "+file.exists());
+				int fileNameSize = fileNameExt.indexOf(".");
+				String fileName = fileNameExt.substring(0,fileNameSize);
+				map.put("galleryFileName", fileName);
+				logger.debug("galleryFileMap(작성자&삭제하고자하는 파일명): "+map.toString());
+				galleryFileDao.deleteImgFile(map);
+			}
+		}
+	}
 }

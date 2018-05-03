@@ -1,6 +1,7 @@
 package com.test.pds2.gallery.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -29,5 +30,11 @@ public class GalleryFileDao {
 	public int deleteGalleryFile(int galleryId) {
 		logger.debug("deleteGalleryFile() galleryId " + galleryId);
 		return sqlSession.delete(NS + "deleteGalleryFile", galleryId);
+	}
+
+	public int deleteImgFile(Map<String, Object> map) {
+		logger.debug("deleteImgFile map : " + map);
+		return sqlSession.update(NS+"deleteImgFile", map);
+		
 	}
 }

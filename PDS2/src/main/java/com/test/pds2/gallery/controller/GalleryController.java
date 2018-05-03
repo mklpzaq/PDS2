@@ -152,9 +152,19 @@ public class GalleryController {
 	public String updateGallery(@RequestParam(value="galleryId", required=true) int galleryId
 								,@RequestParam(value="galleryTitle") String galleryTitle
 								,@RequestParam(value="galleryContent") String galleryContent
-								,@RequestParam(value="multipartFile") List<MultipartFile> multipartFile) {
-		logger.debug("GalleryController.updateGallery() post 호출 " );
+								,@RequestParam(value="multipartFile", required=false) List<MultipartFile> multipartFile
+								,@RequestParam(value="deleteImg",required=false)List<String> deleteImg) {
+		logger.debug("GalleryController.updateGallery() post 호출 ");
 		
+		GalleryRequest galleryRequest = new GalleryRequest();
+		galleryRequest.setGalleryTitle(galleryTitle);
+		logger.debug("GalleryController.galleryRequest.setGalleryTitle() post galleryTitle : "+ galleryTitle);
+		galleryRequest.setGalleryContent(galleryContent);
+		logger.debug("GalleryController.galleryRequest.setGalleryContent() post galleryContent : "+ galleryContent);
+		galleryRequest.setMultipartfile(multipartFile);
+		logger.debug("GalleryController.galleryRequest.setMultipartfile() post galleryContent : "+ multipartFile);
+		String path = SystemPath.SYSTEM_PATH;
+		galleryService.updateGallery(galleryId, galleryRequest, path, deleteImg);
 		
 		return "redirect:/gallery/galleryList";
 	}

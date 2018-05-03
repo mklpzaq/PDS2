@@ -5,46 +5,51 @@
   
 <mapper namespace="com.test.pds2.gallery.service.GalleryFileMapper">
  
- <delete id="deleteGalleryFile"
- 			parameterType="Integer">
- 			delete From gallery_file WHERE gallery_id = #{galleryId}; 
- </delete>
- 
- <select id="selectGalleryFileList"
- 			parameterType="Integer"
- 			resultType="com.test.pds2.gallery.service.GalleryFile">
- 			
- 			SELECT 
- 				gallery_file_id as galleryFileId
- 				,gallery_file_name as galleryFileName
- 				,gallery_file_ext as galleryFileExt
- 				,gallery_file_type as galleryFileType
- 				,gallery_file_size as galleryFileSize
- 			FROM gallery_file
- 			WHERE gallery_file.gallery_id = #{galleryId} 	
- </select>
- 
- <insert id="insertgalleryFile" 
-			parameterType="com.test.pds2.gallery.service.GalleryFile">
-		INSERT INTO gallery_file
-			(gallery_id
-			,gallery_file_name
-			,gallery_file_ext
-			,gallery_file_type
-			,gallery_file_size)
-		VALUES
-			(#{galleryId}
-			,#{galleryFileName}
-			,#{galleryFileExt}
-			,#{galleryFileType}
-			,#{galleryFileSize})
-	</insert>	
-	
-	<delete id="">
-		USE master;  
-			GO  
-		ALTER DATABASE AdventureWorks2012  
-		REMOVE FILE test1dat4;  
-			GO  	
-	</delete>
+	 <delete id="deleteImgFile"
+	 			parameterType="java.util.Map">
+	 		DELETE From gallery_file WHERE gallery_id = #{galleryId} AND gallery_file_name = #{galleryFileName}
+	 </delete>
+	 
+	 <delete id="deleteGalleryFile"
+	 			parameterType="Integer">
+	 			delete From gallery_file WHERE gallery_id = #{galleryId} 
+	 </delete>
+	 
+	 <select id="selectGalleryFileList"
+	 			parameterType="Integer"
+	 			resultType="com.test.pds2.gallery.service.GalleryFile">
+	 			
+	 			SELECT 
+	 				gallery_file_id as galleryFileId
+	 				,gallery_file_name as galleryFileName
+	 				,gallery_file_ext as galleryFileExt
+	 				,gallery_file_type as galleryFileType
+	 				,gallery_file_size as galleryFileSize
+	 			FROM gallery_file
+	 			WHERE gallery_file.gallery_id = #{galleryId} 	
+	 </select>
+	 
+	 <insert id="insertgalleryFile" 
+				parameterType="com.test.pds2.gallery.service.GalleryFile">
+			INSERT INTO gallery_file
+				(gallery_id
+				,gallery_file_name
+				,gallery_file_ext
+				,gallery_file_type
+				,gallery_file_size)
+			VALUES
+				(#{galleryId}
+				,#{galleryFileName}
+				,#{galleryFileExt}
+				,#{galleryFileType}
+				,#{galleryFileSize})
+		</insert>	
+		
+		<delete id="">
+			USE master;  
+				GO  
+			ALTER DATABASE AdventureWorks2012  
+			REMOVE FILE test1dat4;  
+				GO  	
+		</delete>
 </mapper>

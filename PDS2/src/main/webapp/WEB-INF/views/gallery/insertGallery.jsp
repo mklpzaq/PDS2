@@ -10,7 +10,11 @@
 	<script>
 		$(document).ready(function(){
 			${error};
-						
+			
+			$('#add').click(function(){
+				$('#upload').append('<div><label for="multipartfile">파일 업로드</label><input type="file" name="multipartfile"></div>');
+			});
+			
 			$('button#insert').click(function(){
 					var insert = true;
 					if($('input[name="galleryTitle"]').val() == ''){
@@ -25,6 +29,11 @@
 						return;
 					}					
 					
+					if($(document).find('input[type="file"]').length >= 4){
+						alert('이미지파일을 최대 3개까지 등록가능합니다.');
+						insert = false;
+						return;
+					}
 			
 					$('input[type="file"]').each(function(i,e){
 						if($(this).val()==''){
@@ -60,24 +69,16 @@
 			<label for="galleryContent">사진관 내용</label>
 			<input type="text" class="form-control" name="galleryContent" placeholder="사진관 내용을 입력하세요">
 		</div>
-		<div class="form-group">
+		<div class="form-group" id="upload">
 			<label for="multipartfile">파일 업로드</label>
 			<input type="file" name="multipartfile">			
-		</div>
-		<div class="form-group">
-			<label for="multipartfile">파일 업로드</label>
-			<input type="file" name="multipartfile">			
-		</div>
-		<div class="form-group">
-			<label for="multipartfile">파일 업로드</label>
-			<input type="file" name="multipartfile">			
-		</div>
-		<h3>이미지 파일은 3개 이상 올릴 수 없습니다.</h3>			
+		</div>					
 		<!-- <div class="checkbox">
 			<label>
 				<input type="checkbox"> 입력을 기억합니다
 			</label>
-		</div> -->					
+		</div> -->
+		<button id="add" type="button">파일추가</button><br><br>					
 		<button id="insert" type="button" class="btn btn-default">제출</button>
 	</form>	
 </body>
