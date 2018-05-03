@@ -39,7 +39,7 @@ public class BoardController {
 		logger.debug("setted board : "+ board.toString() );
 		model.addAttribute("board", board);
 		
-		return "/board/updateBoardForm";
+		return "/board/updateBoardForm";  
 	}
 	
 	@RequestMapping(value="/updateBoard", method=RequestMethod.POST)
