@@ -5,6 +5,45 @@
  
 <mapper namespace="com.test.pds2.article.service.ArticleMapper">
 	
+	<resultMap id="baseArticle" type="com.test.pds2.article.service.Article">
+		<id column="article_id" property="articleId"/>
+		<result column="article_title" property="articleTitle"/>
+		<result column="article_content" property="articleContent"/>
+		<collection property="articleFile" ofType="com.test.pds2.article.service.ArticleFile">
+			<id property="articleFileId" column="article_file_id"/>
+			<id property="articleId" column="article_id"/>
+			<result property="articleFileName" column="article_file_name"/>
+			<result property="articleFileExt" column="article_file_ext"/>
+			<result property="articleFileType" column="article_file_type"/>
+			<result property="articleFileSize" column="article_file_size"/>
+		</collection>
+	</resultMap>
+	
+	<select id="getDetailArticle"
+			parameterType="Integer"
+			resultType="com.test.pds2.article.service.Article"
+			resultMap="baseArticle">
+		SELECT
+			article.article_id AS article_id
+			,article.article_title AS article_title
+			,article.article_content AS article_content
+			,article_file.article_file_id AS article_file_id
+			,article_file.article_file_name AS article_file_name
+			,article_file.article_file_ext AS article_file_ext
+			,article_file.article_file_type AS article_file_type
+			,article_file.article_file_size AS article_file_size
+		FROM
+			article
+			INNER JOIN
+			article_file
+		ON
+			article.article_id = article_file.article_id
+		WHERE
+			article.article_id = #{articleId}
+	</select>
+	
+	
+	
 	<select id="totalCountArticle"
 			parameterType="java.util.Map"
 			resultType="Integer">

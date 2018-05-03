@@ -24,6 +24,9 @@ public class ArticleService {
 	private ArticleFileDao articleFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(ArticleService.class);
 	
+	public Article getDetailArticle(int articleId) {
+		return articleDao.getDetailArticle(articleId);
+	}
 	
 	public Map<String, Object> getArticleList(int currentPage, int pagePerRow, String searchSelect, String searchWord){
 		logger.debug("getArticleList ArticleService");

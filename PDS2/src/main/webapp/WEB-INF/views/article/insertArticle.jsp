@@ -7,6 +7,13 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<title>Insert Article</title>
+		<script>
+			$(document).ready(function(){
+				$('#addFileButton').click(function(){
+					$('#addDiv').append('<div class="form-group"><label for="multipartFile" class="col-sm-3 control-label">파일 업로드</label><div class="col-sm-9"><input type="file" name="multipartFile"><p class="help-block">업로드할 파일을 선택하세요</p></div></div>');
+				});
+			});
+		</script>
 	</head>
 	<body>
 		<jsp:include page="../navbar.jsp"/>
@@ -34,21 +41,11 @@
 										<input type="text" class="form-control" name="articleContent" id="articleContent" placeholder="articleContent">
 									</div>
 								</div>
+								<div id="addDiv">
+									<!-- 파일추가 버튼을 누르면 여기에 파일추가할수 있는 부분이 만들어진다. -->
+								</div>
+								<button id="addFileButton" type="button">파일추가</button>
 								
-								<div class="form-group">
-									<label for="multipartFile" class="col-sm-3 control-label">파일 업로드</label>
-									<div class="col-sm-9">
-										<input type="file" name="multipartFile">
-										<p class="help-block">업로드할 파일을 선택하세요</p>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="multipartFile" class="col-sm-3 control-label">파일 업로드</label>
-									<div class="col-sm-9">
-										<input type="file" name="multipartFile">
-										<p class="help-block">업로드할 파일을 선택하세요</p>
-									</div>
-								</div>
 								<div class="text-center">
 									<button type="submit" class="btn btn-default">입력 완료</button>
 								</div>
