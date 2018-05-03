@@ -25,6 +25,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds2.article.service.Article;
+import com.test.pds2.article.service.ArticleFile;
 import com.test.pds2.path.SystemPath;
  
 @Service
@@ -38,8 +40,103 @@ public class BoardService {
 	/*public Board selectBoardOneForUpdate(int boardId) {
 		return boardDao.selectBoardOneForUpdate(boardId);
 	}*/
-	public int updateBoard(Board board) {
-		return boardDao.updateBoard(board);
+	public void updateBoard(BoardRequest boardRequest, String path) {
+		logger.debug("updateBoard BoardService");
+		/* 이곳에서 추가된 파일은 insert가 되어야 하고, 수정된 boardTitle, boardContent 는 update가 되어야 한다. */
+		/* 수정된 정보들을  board에 세팅 */
+		Board board = new Board();
+		board.setBoardId(boardRequest.getBoardId());
+		board.setBoardTitle(boardRequest.getBoardTitle());
+		board.setBoardContent(boardRequest.getBoardContent());
+		
+		/* updateForm에서 넘겨받은 multipartFile 정보를 해석하기 위해 List에 저장한 후 forEach문을 돌리면서 해석한다. */
+		List<MultipartFile> multipartFileList = boardRequest.getMultipartFile();
+		for(MultipartFile multipartFile : multipartFileList) {
+			/*
+			 * 1. 파일 이름
+			 * */
+			UUID uuid = UUID.randomUUID();
+			logger.debug("uuid : " + uuid);
+			String filename = uuid.toString();
+			logger.debug("filename : " + filename);
+			filename = filename.replace("-", "");
+			logger.debug("replaced filename : " + filename);
+			
+			/*
+			 * 2. 파일 확장자
+			 * */
+			logger.debug("originaFileName : " + multipartFile.getOriginalFilename());
+			int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
+			String fileExt = multipartFile.getOriginalFilename().substring(dotIndex+1);
+			logger.debug("fileExt : " + fileExt);
+			//여기서 file_ext가 값이 없는 상태이면("") 파일선택하지 않은 것으로 간주하여 insert시키지 말아야 한다.
+			if(fileExt.equals("")) {
+				continue;
+			}
+			
+			
+			/*
+			 * 3. 파일 타일
+			 * */
+			String fileType = multipartFile.getContentType();
+			logger.debug("fileType : " + fileType);
+			
+			/*
+			 * 4. 파일 사이즈
+			 * */
+			long longFileSize = multipartFile.getSize();
+			logger.debug("longFileSize : " + longFileSize);
+			int fileSize = (int)longFileSize;
+			logger.debug("fileSize : " + fileSize);
+			
+			/*
+			 * 5. 파일 저장(매개변수 path를 사용)
+			 * File file = new File(path+"/"+filename+"."+fileExt);
+			 * */
+			logger.debug("파일 저장 경로 : " + path+filename+"."+fileExt);
+			File file = new File(path+filename+"."+fileExt);
+			
+			try {
+				multipartFile.transferTo(file);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			BoardFile boardFile = new BoardFile();
+			
+			boardFile.setBoardFileName(filename);
+			boardFile.setBoardFileExt(fileExt);
+			boardFile.setBoardFileType(fileType);
+			boardFile.setBoardFileSize(fileSize);
+			logger.debug("boardFile : " + boardFile.toString());
+			
+			board.getBoardFile().add(boardFile);
+		}
+		/* forEach문 종료 */
+		/* 이곳까지 도달하면  multipartFile에 대한 해석이 끝나며  해석된 정보들은 boardFile객체에 담기며,
+		 * 파일의 정보가 담겨진 boardFile은 board객체의 맴버객체참조변수인 
+		 * List<BoardFile> boardFile에 add()메서드를 통해 담기게 된다.
+		 * 그렇게 되면 board객체의 맴버변수인 boardId, boardTitle, boardContent를 통해 
+		 * board 테이블을 업데이트 시킬수 잇으며,
+		 * board의 맴버변수인 boardFile에 담긴 맴버변수들을 통해 boardFile을 업데이트 시킬 수 있다. 
+		 * */
+		boardDao.updateBoard(board);
+		int boardId = board.getBoardId();
+		logger.debug("boardId : " + boardId);
+		for(BoardFile boardFile : board.getBoardFile()) {
+			boardFile.setBoardId(boardId);
+			logger.debug("boardFile.getBoardId() : " + boardFile.getBoardId());
+			boardFileDao.insertBoardFile(boardFile);
+		}
+		
+		
+		
+		
+		//return boardDao.updateBoard(board);
 	}
 	
 	public List<BoardFile> selectBoardFileListForDelete(int boardId) {

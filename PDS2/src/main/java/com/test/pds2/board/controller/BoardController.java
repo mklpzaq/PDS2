@@ -43,10 +43,12 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/updateBoard", method=RequestMethod.POST)
-	public String updateBoard(Board board) {
+	public String updateBoard(BoardRequest boardRequest) {
 		logger.debug("POST /updateBoard BoardController");
-		logger.debug("board : " + board);
-		int result = boardService.updateBoard(board);
+		logger.debug("boardRequest : " + boardRequest.toString());
+		String path = SystemPath.SYSTEM_PATH;
+		/* 파일추가를 늘려놓은후 아무것도 파일추가하지 않은 후 업데이트 시도할 경우 널포인트 익셉션 발생하는 것을 해결해야 한다. */
+		boardService.updateBoard(boardRequest, path);
 		
 		return "redirect:/getBoardList";
 	}
@@ -70,6 +72,7 @@ public class BoardController {
 	
 	@RequestMapping(value="/deleteBoardFile", method=RequestMethod.GET)
 	public String deleteBoardFile(Model model
+									,@RequestParam(value="pageCode") String pageCode
 									,@RequestParam(value="sendNo") int boardId
 									,@RequestParam(value="sendFileNo") int boardFileId
 									,@RequestParam(value="fileName") String boardFileName
@@ -80,7 +83,7 @@ public class BoardController {
 		/* boardDetailView.jsp 로 돌아가기 위한 작업 */
 		
 		Board board = boardService.getDetailBoard(boardId);
-		logger.debug("■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		
 		if(board != null) {
 			logger.debug("board : "+ board.toString());
 		}else {
@@ -89,8 +92,18 @@ public class BoardController {
 		//model.addAttribute("detailBoard", board);
 		model.addAttribute("board", board);
 		
+		String returnValue = null;
+		if(pageCode.equals("update")) {
+			returnValue = "/board/updateBoardForm";
+		}else if(pageCode.equals("detail")) {
+			returnValue = "/board/boardDetailView";
+		}else {
+			returnValue = "/board/boardDetailView";
+		}
+		
+		
 		//return "/board/boardDetailView";
-		return "/board/updateBoardForm";
+		return returnValue;
 	}
 	
 	@RequestMapping(value="/downloadBoardFile", method=RequestMethod.GET)
@@ -105,7 +118,7 @@ public class BoardController {
 		/* boardDetailView.jsp 로 돌아가기 위한 사전 작업 */
 		Board board = boardService.getDetailBoard(boardId);
 		logger.debug("board : "+ board.toString());
-		model.addAttribute("detailBoard", board);
+		model.addAttribute("board", board);
 		
 		/* 파일을 다운로드 시키기 위한 작업 */
 		boardService.downloadBoardFile(fileName, fileExt, request, response);
@@ -122,7 +135,7 @@ public class BoardController {
 		if(board != null) {
 			logger.debug("board : "+ board.toString());
 		}
-		model.addAttribute("detailBoard", board);
+		model.addAttribute("board", board);
 		
 		return "/board/boardDetailView";
 	}

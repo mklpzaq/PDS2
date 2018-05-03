@@ -117,7 +117,7 @@ public class ArticleService {
 		
 		/* articleFile테이블에 Insert */
 		int articleId = article.getArticleId();
-		logger.debug("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		
 		logger.debug("articleId : " + articleId);
 		for(ArticleFile articleFile : article.getArticleFile()) {
 			articleFile.setArticleId(articleId);

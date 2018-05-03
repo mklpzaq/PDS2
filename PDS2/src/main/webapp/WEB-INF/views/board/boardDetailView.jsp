@@ -20,11 +20,11 @@
 					<!-- detailBoard를 쓰자 -->
 					<h3 class="text-center">Board Detail</h3>
 					<div class="panel panel-default">
-						<div class="panel-heading">boardId : ${detailBoard.boardId}, boardTitle : ${detailBoard.boardTitle}</div>
+						<div class="panel-heading">boardId : ${board.boardId}, boardTitle : ${board.boardTitle}</div>
 						<div class="panel-body">
-							boardContent : ${detailBoard.boardContent}
+							boardContent : ${board.boardContent}
 							<hr/>
-							<c:forEach var="boardFile" items="${detailBoard.boardFile}">
+							<c:forEach var="boardFile" items="${board.boardFile}">
 								<div> 
 									boardFileId : ${boardFile.boardFileId}<br/>
 									boardId : ${boardFile.boardId}<br/>
@@ -33,7 +33,7 @@
 									boardFileType : ${boardFile.boardFileType}<br/>
 									boardFileSize : ${boardFile.boardFileSize}<br/>
 									<a href="${pageContext.request.contextPath}/downloadBoardFile?sendNo=${boardFile.boardId}&fileName=${boardFile.boardFileName}&fileExt=${boardFile.boardFileExt}">파일 다운로드</a>
-									 | <a href="${pageContext.request.contextPath}/deleteBoardFile?sendNo=${boardFile.boardId}&sendFileNo=${boardFile.boardFileId}&fileName=${boardFile.boardFileName}&fileExt=${boardFile.boardFileExt}">파일 삭제</a>
+									 | <a href="${pageContext.request.contextPath}/deleteBoardFile?pageCode=detail&sendNo=${boardFile.boardId}&sendFileNo=${boardFile.boardFileId}&fileName=${boardFile.boardFileName}&fileExt=${boardFile.boardFileExt}">파일 삭제</a>
 								</div>
 								<hr/>
 							</c:forEach>

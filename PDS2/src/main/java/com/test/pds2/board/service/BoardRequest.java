@@ -9,12 +9,19 @@ import org.springframework.web.multipart.MultipartFile;
  * 이러한 불일치를 서비스에서 해결하자.
  * */
 public class BoardRequest {
+	private int boardId;
 	private String boardTitle;
 	private String boardContent;
 	private List<MultipartFile> multipartFile;
 	/*private File file; 스프링에서 파일로 바로 받지 말고 Spring에서 쓰는 멀티파트를 쓰자
 	 * 
 	 * */
+	public int getBoardId() {
+		return boardId;
+	}
+	public void setBoardId(int boardId) {
+		this.boardId = boardId;
+	}
 	public String getBoardTitle() {
 		return boardTitle;
 	}
@@ -35,8 +42,9 @@ public class BoardRequest {
 	}
 	@Override
 	public String toString() {
-		return "BoardRequest [boardTitle=" + boardTitle + ", boardContent=" + boardContent + ", multipartFile="
-				+ multipartFile + "]";
+		return "BoardRequest [boardId=" + boardId + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
+				+ ", multipartFile=" + multipartFile + "]";
 	}
+	
 	
 }

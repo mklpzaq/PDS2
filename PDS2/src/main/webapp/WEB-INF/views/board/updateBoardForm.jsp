@@ -92,7 +92,7 @@
 											</tbody>
 										</table>
 									</div>
-									<a href="${pageContext.request.contextPath}/deleteBoardFile?sendNo=${boardFile.boardId}&sendFileNo=${boardFile.boardFileId}&fileName=${boardFile.boardFileName}&fileExt=${boardFile.boardFileExt}">파일 삭제</a>
+									<a href="${pageContext.request.contextPath}/deleteBoardFile?pageCode=update&sendNo=${boardFile.boardId}&sendFileNo=${boardFile.boardFileId}&fileName=${boardFile.boardFileName}&fileExt=${boardFile.boardFileExt}">파일 삭제</a>
 									<!-- 파일 속성 끝 -->
 								</c:forEach>
 								
