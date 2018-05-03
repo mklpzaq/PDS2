@@ -23,10 +23,10 @@
 				,#{resumeId})				
 	</insert>
 
-	<delete id="deleteResumeFile" parameterType="Integer">
+	<delete id="deleteResumeFile" parameterType="String">
 		DELETE 
 			FROM resume_file 
-			WHERE resume_file_id=#{resumeFileId}
+			WHERE resume_file_name=#{resumeFileName}
 	</delete>
 	
 	<select id="selectResumeFile" parameterType="com.test.pds2.resume.service.Resume" resultType="com.test.pds2.resume.service.ResumeFile">

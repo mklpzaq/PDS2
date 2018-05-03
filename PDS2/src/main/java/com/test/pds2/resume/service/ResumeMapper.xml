@@ -116,4 +116,12 @@
 			WHERE resume_id=#{resumeId}
 	</delete>
 	
+	<update id="updateResume" parameterType="com.test.pds2.resume.service.Resume">
+		UPDATE resume
+				SET
+			resume_title=#{resumeTitle},
+			resume_content=#{resumeContent}
+		WHERE resume_id=#{resumeId}	
+	</update>
+	
 </mapper>

@@ -23,10 +23,10 @@ public class ResumeFileDao {
 		return sqlSession.insert(NS+"insertResumeFile", resumeFile);  
 	}
 	
-	public int deleteResumeFile(int resumeFileId) {
-		logger.debug("deleteResumeFile - resumeFileId : "+resumeFileId);
+	public int deleteResumeFile(String resumeFileName) {
+		logger.debug("deleteResumeFile - resumeFileName : "+resumeFileName);
 		 
-		return sqlSession.delete(NS+"deleteResumeFile", resumeFileId);  
+		return sqlSession.delete(NS+"deleteResumeFile", resumeFileName);  
 	}
 	
 	public List<ResumeFile> selectResumeFile(Resume resume) {

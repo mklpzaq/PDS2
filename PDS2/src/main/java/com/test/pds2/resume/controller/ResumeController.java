@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
 import com.test.pds2.path.SystemPath;
 import com.test.pds2.resume.service.Resume;
 import com.test.pds2.resume.service.ResumeFile;
@@ -120,16 +121,14 @@ public class ResumeController {
 	}
 	
 	@RequestMapping(value = "/deleteResumeFile", method= RequestMethod.GET)
-	public String deleteResumeFile(ResumeFile resumeFile
-									,@RequestParam("resumeFileName") String resumeFileName
+	public String deleteResumeFile(@RequestParam("resumeFileName") String resumeFileName
 	                            	,@RequestParam("resumeFileExt") String resumeFileExt
 	                            	) {
 		
-		logger.debug("deleteResumeFile - resumeFile : " + resumeFile.toString());
 		logger.debug("deleteResumeFile - resumeFileName : " + resumeFileName.toString());
 		logger.debug("deleteResumeFile - resumeFileExt : " + resumeFileExt.toString());
 		
-		resumeService.deleteResumeFile(resumeFile, resumeFileName, resumeFileExt);
+		resumeService.deleteResumeFile(resumeFileName, resumeFileExt);
 		
 		/* RedirectAttributes redirectAttributes redirect할때 데이터를 같이 옮기고 싶으면 사용
 		 * redirectAttributes.addFlashAttribute("resume", resume);*/
@@ -137,16 +136,16 @@ public class ResumeController {
 		return "redirect:/resumeList";
 	}
 	
-	@RequestMapping(value = "/updateResume", method= RequestMethod.GET)
-	public String updateResume(Resume resume, Model model) {		
-		logger.debug("updateResume - resume : " + resume.toString());
+	@RequestMapping(value = "/updateResumeView", method= RequestMethod.GET)
+	public String updateResumeView(Resume resume, Model model) {		
+		logger.debug("updateResumeView - resume : " + resume.toString());
 		
-		Resume updateResume = resumeService.updateResume(resume);
-		logger.debug("updateResume - updateResume : " + updateResume.toString());
-		model.addAttribute("updateResume", updateResume);
+		Resume updateResumeView = resumeService.updateResumeView(resume);
+		logger.debug("updateResumeView - updateResumeView : " + updateResumeView.toString());
+		model.addAttribute("updateResume", updateResumeView);
 		
-		List <ResumeFile> list = updateResume.getResumeFile();
-		logger.debug("updateResume - list : " + list.toString());
+		List <ResumeFile> list = updateResumeView.getResumeFile();
+		logger.debug("updateResumeView - list : " + list.toString());
 		model.addAttribute("list", list); 
 		/*redirectAttributes.addFlashAttribute("resume", resume);*/
 		
@@ -154,12 +153,15 @@ public class ResumeController {
 	}
 	
 	@RequestMapping(value = "/updateResume", method= RequestMethod.POST)
-	public String updateResume(ResumeRequest resumeRequest
-								,@RequestParam("deleteCheckbox") List<ResumeFile> resumeFileId
+	public String updateResume(Resume resume
+								,ResumeRequest resumeRequest
+								,@RequestParam(value="deleteFile", defaultValue="") List<String> deleteFile
 								/*,@RequestParam("resumeFileName") List<String> resumeFileName
 								,@RequestParam("resumeFileExt") List<String> resumeFileExt*/) {		
-		logger.debug("updateResume - resumeRequest : " + resumeRequest.toString());
-		/*logger.debug("updateResume - resumeFileId : " + resumeFileId.toString());*/
+		logger.debug("updateResume - resumeRequest : " + resumeRequest.toString());		
+		logger.debug("updateResume - deleteFile : " + deleteFile.toString());
+		
+		resumeService.updateResume(resume, resumeRequest, deleteFile);
 		/*logger.debug("updateResume - resumeFileName : " + resumeFileName.toString());
 		logger.debug("updateResume - resumeFileExt : " + resumeFileExt.toString());*/
 				

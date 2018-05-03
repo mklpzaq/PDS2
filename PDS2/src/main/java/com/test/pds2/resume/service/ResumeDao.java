@@ -54,9 +54,15 @@ public class ResumeDao {
 		return sqlSession.delete(NS+"deleteResume", resume);  
 	}
 	
-	public Resume updateResume(Resume resume) {
-		logger.debug("updateResume - resume : "+resume.toString());
+	public Resume updateResumeView(Resume resume) {
+		logger.debug("updateResumeView - resume : "+resume.toString());
 		
 		return sqlSession.selectOne(NS+"selectResumeOne", resume);
+	}
+	
+	public int updateResume(Resume resume) {
+		logger.debug("updateResume - resume : "+resume.toString());
+		
+		return sqlSession.update(NS+"updateResume", resume);
 	}
 }

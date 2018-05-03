@@ -17,26 +17,37 @@
 	        });				
 		}); */
 		
-		$(document).ready(function(){
-			$("#update").click(function(){
-				$("input").submit();							
-			});			
-		});
-		
 		/* $("[id^=btn]").click(function(){
 			$("#div").hide();
 			$("body").on("click", "[id^=btn]", function(){ 	
 		}) */
-		
+					
 		$(document).ready(function(){
-			$("#button").click(function(){
-				$('input[name="deleteCheckbox"]:checked').each(function(){							
-					var text = $(this).val();				
-					$("#form1").submit();	
-				});
-			})	
+			$('#fileAdd').click(function(){
+				$('#addFile').append('<div><input name="multipartFile" type="file"><button id="del" type="button">삭제</button></div>');
+			});	
+			
+			$(document).on('click','#del',function(){
+				$(this).closest('div').remove();
+			});
+			
+			//파일 삭제하는 부분
+			$(".removeFile").click(function(){				
+				var deleteFile = "<input type='hidden' name='deleteFile' value='"+$(this).attr("value")+"'>";
+				$("#submitButton").before(deleteFile);
+				$(this).closest("div").remove();
+			});
+			
+		
+			$("#update").click(function(){
+				$("#form1").submit();							
+			});			
+		
+			
 		});
 		
+		//prompt(''); alter같이 팝업창을 뜨게해주는 메서드인데 단지 팝업창에 입력창이 같이 들어가 있음
+			
 		</script>
 	</head>
 	
@@ -55,31 +66,31 @@
 							<form id="form1" action="${pageContext.request.contextPath}/updateResume" method="post" enctype="multipart/form-data">
 								<fieldset>
 									<legend>텍스트수정 공간</legend>
+									<input type="hidden" name="resumeId" value="${updateResume.resumeId}">
 									<div><input type="text" value="${updateResume.resumeTitle}" name="resumeTitle"></div> 
 									<textarea name="resumeContent">${updateResume.resumeContent}</textarea><br/>
-								</fieldset>	
-							</form>							
-										
-							<form id="form1" action="${pageContext.request.contextPath}/updateResume" method="post" enctype="multipart/form-data">
-							<fieldset><br/>
-							<legend>파일 수정 공간</legend>	
-							<c:forEach var="resumeFile" items="${list}" varStatus="status">									
-									<div id="div${status.count}">${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}
-									<input type="checkbox" name="deleteCheckbox" value="${resumeFile.resumeFileId}">
-									<input type="hidden" name="resumeFileName" value="${resumeFile.resumeFileName}">
-									<input type="hidden" name="resumeFileExt" value="${resumeFile.resumeFileExt}">
-									<%-- <button id="btn${status.count}" type="button" name="resumeFileId" value="${resumeFile.resumeFileName}/${resumeFile.resumeFileExt}">삭제</button><br/> --%>
-									</div>
-							</c:forEach>							
-							<div><input type="file" name="multipartFile"></div><br/>
-							</fieldset>
+								</fieldset><br/>						
+															
+								<div id="addFile"></div>							
+								<div><button id="fileAdd" type="button">파일추가</button></div><br/>
+								
+								<div id="submitButton"><input id="update" type="button" value="수정">&emsp;<input type="reset" value="다시 입력"></div>	
 							</form>	
 							
-							<div><input id="button" type="button" value="수정"></div>	
-							<div><input type="reset" value="다시 입력"></div>											
+							
+																
 					<!-- 여러개의 form을 한번에 보낼수 있는지 없는지 궁금하다  -->
 					</div>
 					
+					<fieldset>
+						<legend>파일 수정 공간</legend>	
+						<c:forEach var="resumeFile" items="${list}">	<!-- varStatus="status" foreach문에서 한번 돌때마다 숫자를 카운트 할 수 있게 해주는 함수? id="div${status.count}" 이런식으로 사용한다 -->							
+								<div id="div">${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}
+								<button class="removeFile" type="button" name="resumeFile" value="${resumeFile.resumeFileName}.${resumeFile.resumeFileExt}">삭제</button><br/>
+								</div>
+						</c:forEach>
+					</fieldset>
+			
 				<!-- End Content -->
 				</div>
 				<div class="col-sm-3"></div>

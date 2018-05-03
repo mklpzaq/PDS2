@@ -35,7 +35,7 @@
 					<div class="col-md-8">
 					<!-- resumeSangse -->
 						<div>
-							<a href="./updateResume?resumeId=${resumeView.resumeId}">
+							<a href="./updateResumeView?resumeId=${resumeView.resumeId}">
 								[수정]
 							</a>&nbsp;&nbsp;
 							<a href="./deleteResume?resumeId=${resumeView.resumeId}"><!-- &resumeFile=${resumeView.resumeFile}로 Resume안의 List<ResumeFile> resumeFile변수에 바로 셋팅하려 했으나 실패 -->
