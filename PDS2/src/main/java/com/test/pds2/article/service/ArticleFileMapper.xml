@@ -5,6 +5,32 @@
  
 <mapper namespace="com.test.pds2.article.service.ArticleFileMapper">
 	
+	<delete id="deleteArticleFile"
+			parameterType="Integer">
+		DELETE
+		FROM
+			article_file	
+		WHERE
+			article_id = #{articleId}
+	
+	</delete>
+	
+	<select id="selectArticleFileListForDelete"
+			parameterType="Integer"
+			resultType="com.test.pds2.article.service.ArticleFile">
+		SELECT
+			article_file_id AS articleFileId
+			,article_id AS articleId
+			,article_file_name AS articleFileName
+			,article_file_ext AS articleFileExt
+			,article_file_type AS articleFileType
+			,article_file_size AS articleFileSize
+		FROM
+			article_file
+		WHERE
+			article_id = #{articleId}
+	</select>
+	
 	<select id="getCountArticleFile"
 			parameterType="Integer"
 			resultType="Integer">

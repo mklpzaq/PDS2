@@ -16,12 +16,16 @@ public class ArticleDao {
 	private static final Logger logger = LoggerFactory.getLogger(ArticleDao.class);
 	final String NS ="com.test.pds2.article.service.ArticleMapper.";
 	
-	public Article getArticleOne(int ArticleId) {
-		return sqlSession.selectOne(NS+"getArticleOne", ArticleId);
+	public int deleteArticle(int articleId) {
+		return sqlSession.delete(NS+"deleteArticle", articleId);
 	}
 	
-	public Article getDetailArticle(int ArticleId) {
-		return sqlSession.selectOne(NS+"getDetailArticle", ArticleId);
+	public Article getArticleOne(int articleId) {
+		return sqlSession.selectOne(NS+"getArticleOne", articleId);
+	}
+	
+	public Article getDetailArticle(int articleId) {
+		return sqlSession.selectOne(NS+"getDetailArticle", articleId);
 	}
 	
 	public int totalCountArticle(Map<String, Object> map) {

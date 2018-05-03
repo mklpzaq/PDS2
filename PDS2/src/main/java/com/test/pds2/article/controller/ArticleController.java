@@ -1,5 +1,6 @@
 package com.test.pds2.article.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.test.pds2.article.service.Article;
+import com.test.pds2.article.service.ArticleFile;
 import com.test.pds2.article.service.ArticleRequest;
 import com.test.pds2.article.service.ArticleService;
 import com.test.pds2.board.service.BoardRequest;
@@ -24,6 +26,25 @@ public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
 	private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
+	
+	@RequestMapping(value="/deleteArticle", method=RequestMethod.GET)
+	public String deleteArticle(@RequestParam(value="sendNo") int articleId) {
+		logger.debug("GET /deleteArticle ArticleController");
+		/* articleId에 해당되는 파일 이름 정보값(articleFileName, aritlceFileExt)들을 얻어와서(List로)
+		 * return된 List를  deleteArticle의 매개변수로 넘겨주어야
+		 * 하드드라이브에 저장되어있는 articleId에 해당되는 articleFile들을 삭제해줄 수 있다.
+		 * */
+		
+		List<ArticleFile> articleFileList = articleService.selectArticleFileListForDelete(articleId);
+		logger.debug("★★★★★★★★★★★★★★★★★★★★");
+		logger.debug("articleFileList : " + articleFileList.toString());
+		/* 우선 articleId에 해당되는 파일을 모두 지우고 그 다음, articleId에 해당되는 article를 지운다. */
+		//매개변수로 articleId에 해당하는 aritlceFileName, articleFileExt를 가지고 있는 articleFile List를 넘겨 받아야 한다.
+		articleService.deleteArticle(articleId, articleFileList);
+		
+		return "redirect:/getArticleList";
+	}
+	
 	
 	@RequestMapping(value="/deleteArticleFile", method=RequestMethod.GET)
 	public String deleteArticleFile(Model model

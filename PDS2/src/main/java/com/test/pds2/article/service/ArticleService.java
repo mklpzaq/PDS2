@@ -25,6 +25,40 @@ public class ArticleService {
 	private ArticleFileDao articleFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(ArticleService.class);
 	
+	public List<ArticleFile> selectArticleFileListForDelete(int articleId){
+		return articleFileDao.selectArticleFileListForDelete(articleId);
+	}
+	
+	@Transactional
+	public void deleteArticle(int ArticleId, List<ArticleFile> articleFileList) {
+		logger.debug("deleteArticle ArticleService");
+		/* 1. 하드디스크에서 articleId에 관련된 articleFile삭제
+		 * articleFileList를 활용하여 하드디스크에 있는 articleId에 관련된 articleFile삭제
+		 **/
+		File file = null;
+		for(ArticleFile articleFile : articleFileList) {
+			file = new File(SystemPath.SYSTEM_PATH + articleFile.getArticleFileName() + "." + articleFile.getArticleFileExt());
+			if(file.exists()) {
+				if(file.delete()) {
+					logger.debug("파일삭제 성공");
+				}else {
+					logger.debug("파일 삭제 실패");
+				}
+			}else {
+				logger.debug("파일이 없음.");
+			}
+		}
+		
+		
+		/* 2. DB에서 articleId에 관련된 articleFile삭제
+		 **/
+		int resultArticleBoardFile = articleFileDao.deleteArticleFile(ArticleId);
+		
+		/* 3. DB에서 articleId에 관련된 article 삭제
+		 **/ 
+		int resultDeleteArticle = articleDao.deleteArticle(ArticleId);
+	}
+	
 	@Transactional
 	public void deleteArticleFileOne(int articleFileId, String articleFileName, String articleFileExt) {
 		logger.debug("deleteArticleFileOne ArticleService");

@@ -19,6 +19,15 @@
 		</collection>
 	</resultMap>
 	
+	<delete id="deleteArticle"
+			parameterType="Integer">
+		DELETE
+		FROM
+			article
+		WHERE
+			article_id = #{articleId}
+	</delete>
+	
 	<select id="getArticleOne"
 			parameterType="Integer"
 			resultType="com.test.pds2.article.service.Article">
