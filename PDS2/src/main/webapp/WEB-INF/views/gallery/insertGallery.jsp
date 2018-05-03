@@ -63,12 +63,21 @@
 		<div class="form-group">
 			<label for="multipartfile">파일 업로드</label>
 			<input type="file" name="multipartfile">			
-		</div>		
+		</div>
+		<div class="form-group">
+			<label for="multipartfile">파일 업로드</label>
+			<input type="file" name="multipartfile">			
+		</div>
+		<div class="form-group">
+			<label for="multipartfile">파일 업로드</label>
+			<input type="file" name="multipartfile">			
+		</div>
+		<h3>이미지 파일은 3개 이상 올릴 수 없습니다.</h3>			
 		<!-- <div class="checkbox">
 			<label>
 				<input type="checkbox"> 입력을 기억합니다
 			</label>
-		</div> -->			
+		</div> -->					
 		<button id="insert" type="button" class="btn btn-default">제출</button>
 	</form>	
 </body>

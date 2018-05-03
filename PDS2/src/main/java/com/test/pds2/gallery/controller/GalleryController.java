@@ -148,22 +148,30 @@ public class GalleryController {
 		return "/gallery/galleryList";
 	}
 	
-	@RequestMapping(value = "/updateGallery", method = RequestMethod.POST)
-	public String updateGallery(Model model, Gallery gallery) {
-		logger.debug("GalleryController.updateGallery() Gallery : " + gallery);
-		int result = galleryService.updateGallery(gallery);
+	@RequestMapping(value = "/updateAndDeleteGallery", method = RequestMethod.POST)
+	public String updateGallery(@RequestParam(value="galleryId", required=true) int galleryId
+								,@RequestParam(value="galleryTitle") String galleryTitle
+								,@RequestParam(value="galleryContent") String galleryContent
+								,@RequestParam(value="multipartFile") List<MultipartFile> multipartFile) {
+		logger.debug("GalleryController.updateGallery() post 호출 " );
+		
 		
 		return "redirect:/gallery/galleryList";
 	}
 	
-	@RequestMapping(value = "/updateGallery", method = RequestMethod.GET)
+	@RequestMapping(value = "/updateAndDeleteGallery", method = RequestMethod.GET)
 	public String updateGallery(Model model
-								,@RequestParam(value="galleryId") int galleryId) {
-		logger.debug("GalleryController.updateGallery() Gallery : " + galleryId);
-		Gallery gallery = galleryService.updateGalleryForId(galleryId);
-		logger.debug("GalleryController.updateGallery() gallery : " + gallery);
-		model.addAttribute("galleryForId", gallery);
-		return "/gallery/updateGallery";
+								,Gallery gallery) {
+		logger.debug("GalleryController.updateGallery() Gallery : " + gallery);
+		Gallery updateGallery = galleryService.updateGallery(gallery);		
+		logger.debug("GalleryController.updateGallery() updateGallery : " + updateGallery.toString());
+		
+		model.addAttribute("updateGallery", updateGallery);
+		List<GalleryFile> list = updateGallery.getGalleryFile();
+		logger.debug("GalleryController.List<GalleryFile> list : " + list.toString());
+		model.addAttribute("list", list);
+		
+		return "/gallery/updateAndDeleteGallery";
 	}
 	
 	@RequestMapping(value = "/deleteGallery", method = RequestMethod.GET)
@@ -173,8 +181,7 @@ public class GalleryController {
 		String path = SystemPath.SYSTEM_PATH;
 		galleryService.deleteGallery(galleryId, path);
 		
-		return "redirect:/gallery/galleryList";
-		
+		return "redirect:/gallery/galleryList";		
 	}
 	
 	@RequestMapping(value = "/insertGallery", method = RequestMethod.GET)
@@ -192,7 +199,7 @@ public class GalleryController {
 		List<MultipartFile> list = galleryRequest.getMultipartfile();
 		logger.debug("list : " + list);
 		
-		// 서버에서 이미지파일만 올릴수 있게 file 명을 받아온다. 
+		// 서버에서 이미지파일만 올릴수 있게 file 명을 받아온다.
 		for(MultipartFile file : list) {
 			String fileType = file.getContentType();			
 			logger.debug("fileType : " + fileType);

@@ -193,7 +193,7 @@ public class GalleryService {
 		return viewDetailGallery;
 	}
 
-	public int updateGallery(Gallery gallery) {
+	public Gallery updateGallery(Gallery gallery) {
 		logger.debug("GalleryService.updateGallery() gallery" + gallery);
 		
 		return galleryDao.updateGallery(gallery);

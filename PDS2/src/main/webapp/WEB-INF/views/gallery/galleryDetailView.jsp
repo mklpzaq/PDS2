@@ -68,6 +68,9 @@
 									<br/>
 								</c:forEach>
 							</div>
+						</div>
+						<div>
+							<button><a href="${pageContext.request.contextPath}/updateAndDeleteGallery?galleryId=${gallery.galleryId}">수정/삭제</a></button>
 						</div>				
  					</div>
 					

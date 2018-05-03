@@ -41,9 +41,8 @@ public class GalleryDao {
 		return sqlSession.selectOne(NS+"selectGalleryDetail",gallery);		
 	}
 
-	public int updateGallery(Gallery gallery) {
-		return sqlSession.update(NS+"updateGallery", gallery);
-		
+	public Gallery updateGallery(Gallery gallery) {
+		return sqlSession.selectOne(NS+"selectGalleryDetail", gallery);		
 	}
 
 	public Gallery selectGalleryForId(int galleryId) {
