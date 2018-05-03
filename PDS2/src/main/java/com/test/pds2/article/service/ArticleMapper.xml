@@ -19,6 +19,20 @@
 		</collection>
 	</resultMap>
 	
+	<select id="getArticleOne"
+			parameterType="Integer"
+			resultType="com.test.pds2.article.service.Article">
+		SELECT
+			article_id AS articleId
+			,article_title AS articleTitle
+			,article_content As articleContent
+		FROM
+			article
+		WHERE
+			article_id = #{articleId}
+	
+	</select>
+	
 	<select id="getDetailArticle"
 			parameterType="Integer"
 			resultType="com.test.pds2.article.service.Article"

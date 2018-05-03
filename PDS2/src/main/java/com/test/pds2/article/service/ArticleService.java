@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.test.pds2.board.service.Board;
+import com.test.pds2.path.SystemPath;
 
 @Service
 public class ArticleService {
@@ -24,8 +25,43 @@ public class ArticleService {
 	private ArticleFileDao articleFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(ArticleService.class);
 	
+	@Transactional
+	public void deleteArticleFileOne(int articleFileId, String articleFileName, String articleFileExt) {
+		logger.debug("deleteArticleFileOne ArticleService");
+		/* DB에서 파일 정보를 삭제하는 과정 */
+		int result = articleFileDao.deleteArticleFileOne(articleFileId);
+		
+		/* 하드디스크에서 파일을 삭제하는 과정 */
+		File file = new File(SystemPath.SYSTEM_PATH + articleFileName + "." + articleFileExt);
+		if(file.exists()) {
+			if(file.delete()) {
+				logger.debug("파일 삭제 성공");
+			}else{
+				logger.debug("파일삭제 실패");
+			}
+		}else {
+			logger.debug("파일이 없음.");
+		}
+	}
+	
 	public Article getDetailArticle(int articleId) {
-		return articleDao.getDetailArticle(articleId);
+		logger.debug("getDetailArticle ArticleService");
+		
+		//아티클 아이디를 받아서 아티클 아이디에 대한 아티클 파일 카운트를 센다.
+		int result = articleFileDao.getCountArticleFile(articleId);
+		
+		/*
+		 * 아이디에 대한 아티클 파일 카운팅이 0이면 Article 정보만을 가져오고
+		 * 0이 아닐 경우 (아티클 파일이 존재할 경우) 파일에 대한 정보까지 가져온다.
+		 * */
+		Article article = null;
+		if(result == 0) {
+			article = articleDao.getArticleOne(articleId);
+		}else {
+			article = articleDao.getDetailArticle(articleId);
+		}
+		
+		return article;
 	}
 	
 	public Map<String, Object> getArticleList(int currentPage, int pagePerRow, String searchSelect, String searchWord){
@@ -117,6 +153,11 @@ public class ArticleService {
 			int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
 			String fileExt = multipartFile.getOriginalFilename().substring(dotIndex+1);
 			logger.debug("fileExt : " + fileExt);
+			//여기서 file_ext가 값이 없는 상태이면("") 파일선택하지 않은 것으로 간주하여 insert시키지 말아야 한다.
+			if(fileExt.equals("")) {
+				continue;
+			}
+			
 			
 			/*
 			 * 3. 파일 타일

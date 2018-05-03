@@ -5,6 +5,27 @@
  
 <mapper namespace="com.test.pds2.article.service.ArticleFileMapper">
 	
+	<select id="getCountArticleFile"
+			parameterType="Integer"
+			resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			article_file
+		WHERE
+			article_id = #{articleId}
+	</select>
+	
+	<delete id="deleteArticleFileOne"
+			parameterType="Integer">
+		DELETE
+		FROM
+			article_file
+		WHERE
+			article_file_id = #{articleFileId}
+	
+	</delete>
+	
 	<insert id="insertArticleFile"
 			parameterType="com.test.pds2.article.service.ArticleFile">
 		INSERT INTO article_file(

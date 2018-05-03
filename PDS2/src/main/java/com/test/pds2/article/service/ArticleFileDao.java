@@ -13,6 +13,14 @@ public class ArticleFileDao {
 	private static final Logger logger = LoggerFactory.getLogger(ArticleFileDao.class);
 	final String NS ="com.test.pds2.article.service.ArticleFileMapper.";
 	
+	public int getCountArticleFile(int articleId) {
+		return sqlSession.selectOne(NS+"getCountArticleFile", articleId);
+	}
+	
+	public int deleteArticleFileOne(int articleFileId) {
+		return sqlSession.delete(NS+"deleteArticleFileOne", articleFileId);
+	}
+	
 	public void insertArticleFile(ArticleFile articleFile) {
 		sqlSession.insert(NS+"insertArticleFile", articleFile);
 	}

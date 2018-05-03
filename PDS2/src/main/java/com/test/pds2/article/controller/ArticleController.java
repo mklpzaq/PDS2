@@ -25,20 +25,38 @@ public class ArticleController {
 	private ArticleService articleService;
 	private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
 	
-	///getDetailArticle
+	@RequestMapping(value="/deleteArticleFile", method=RequestMethod.GET)
+	public String deleteArticleFile(Model model
+									,@RequestParam(value="sendNo") int articleId
+									,@RequestParam(value="sendFileNo") int articleFileId
+									,@RequestParam(value="fileName") String articleFileName
+									,@RequestParam(value="fileExt") String articleFileExt) {
+		logger.debug("GET /deleteArticleFile deleteArticleFile");
+		/* 파일 삭제 과정 */
+		articleService.deleteArticleFileOne(articleFileId, articleFileName, articleFileExt);
+		/* articleDetailView.jsp 로 돌아가기 위한 작업 */
+		Article article = articleService.getDetailArticle(articleId);
+		if(article != null) {
+			logger.debug("Article : " + article.toString());
+		}else {
+			logger.debug("Article : null");
+		}
+		model.addAttribute("detailArticle", article);
+		logger.debug("■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		return "/article/articleDetailView";
+	}
+	
+	
 	@RequestMapping(value="/getDetailArticle", method=RequestMethod.GET)
 	public String getDetailArticle(Model model
 									,@RequestParam(value="sendNo") int articleId) {
 		
 		Article article = articleService.getDetailArticle(articleId);
-		logger.debug("■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		logger.debug("article : " + article);
 		model.addAttribute("detailArticle", article);
 		
 		return "/article/articleDetailView";
 	}
-	
-	
 	
 	@RequestMapping(value="/getArticleList", method=RequestMethod.GET)
 	public String getArticleList(Model model
