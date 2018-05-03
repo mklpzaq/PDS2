@@ -20,11 +20,11 @@
 					<!-- detailBoard를 쓰자 -->
 					<h3 class="text-center">Article Detail</h3>
 					<div class="panel panel-default">
-						<div class="panel-heading">articleId : ${detailArticle.articleId}, articleTitle : ${detailArticle.articleTitle}</div>
+						<div class="panel-heading">articleId : ${article.articleId}, articleTitle : ${article.articleTitle}</div>
 						<div class="panel-body">
-							articleContent : ${detailArticle.articleContent}
+							articleContent : ${article.articleContent}
 							<hr/>
-							<c:forEach var="articleFile" items="${detailArticle.articleFile}">
+							<c:forEach var="articleFile" items="${article.articleFile}">
 								<div> 
 									articleFileId : ${articleFile.articleFileId}<br/>
 									articleId : ${articleFile.articleId}<br/>
@@ -33,7 +33,7 @@
 									articleFileType : ${articleFile.articleFileType}<br/>
 									articleFileSize : ${articleFile.articleFileSize}<br/>
 									<a href="${pageContext.request.contextPath}/downloadArticleFile?sendNo=${articleFile.articleId}&fileName=${articleFile.articleFileName}&fileExt=${articleFile.articleFileExt}">파일 다운로드</a>
-									 | <a href="${pageContext.request.contextPath}/deleteArticleFile?sendNo=${articleFile.articleId}&sendFileNo=${articleFile.articleFileId}&fileName=${articleFile.articleFileName}&fileExt=${articleFile.articleFileExt}">파일 삭제</a>
+									 | <a href="${pageContext.request.contextPath}/deleteArticleFile?pageCode=detail&sendNo=${articleFile.articleId}&sendFileNo=${articleFile.articleFileId}&fileName=${articleFile.articleFileName}&fileExt=${articleFile.articleFileExt}">파일 삭제</a>
 								</div>
 								<hr/>
 							</c:forEach>

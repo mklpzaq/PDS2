@@ -27,6 +27,17 @@ public class ArticleController {
 	private ArticleService articleService;
 	private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
 	
+	@RequestMapping(value="/updateArticle", method=RequestMethod.GET)
+	public String updateArticle(Model model
+								,@RequestParam(value="sendNo") int articleId) {
+		
+		/* updateArticleForm을 보여주기 위해  모든 정보가 포함된 Article객체가 있어야 한다.*/
+		Article article = articleService.getDetailArticle(articleId);
+		
+		model.addAttribute("article", article);
+		return "/article/updateArticleForm";
+	}
+	
 	@RequestMapping(value="/deleteArticle", method=RequestMethod.GET)
 	public String deleteArticle(@RequestParam(value="sendNo") int articleId) {
 		logger.debug("GET /deleteArticle ArticleController");
@@ -44,9 +55,10 @@ public class ArticleController {
 		return "redirect:/getArticleList";
 	}
 	
-	
+
 	@RequestMapping(value="/deleteArticleFile", method=RequestMethod.GET)
 	public String deleteArticleFile(Model model
+									,@RequestParam(value="pageCode", defaultValue="detail") String pageCode
 									,@RequestParam(value="sendNo") int articleId
 									,@RequestParam(value="sendFileNo") int articleFileId
 									,@RequestParam(value="fileName") String articleFileName
@@ -61,9 +73,21 @@ public class ArticleController {
 		}else {
 			logger.debug("Article : null");
 		}
-		model.addAttribute("detailArticle", article);
-		logger.debug("■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-		return "/article/articleDetailView";
+		model.addAttribute("article", article);
+		
+		String returnValue = null;
+		if(pageCode.equals("update")) {
+			logger.debug("★★★★★★★업데이트★★★★★★★★★★★");
+			returnValue="/article/updateArticleForm";
+		}else if(pageCode.equals("detail")) {
+			logger.debug("★★★★★★★디테일★★★★★★★★★★★");
+			returnValue="/article/articleDetailView";
+		}else {
+			logger.debug("★★★★★★★else★★★★★★★★★★★");
+			returnValue="/article/articleDetailView";
+		}
+		logger.debug("★★★★★★★리턴전★★★★★★★★★★★");
+		return returnValue;
 	}
 	
 	
@@ -73,7 +97,7 @@ public class ArticleController {
 		
 		Article article = articleService.getDetailArticle(articleId);
 		logger.debug("article : " + article);
-		model.addAttribute("detailArticle", article);
+		model.addAttribute("article", article);
 		
 		return "/article/articleDetailView";
 	}
