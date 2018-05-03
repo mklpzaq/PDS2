@@ -16,6 +16,16 @@
 			$(document).on('click','#del',function(){
 				$(this).closest('div').remove();
 			});
+			
+			$('#submit').click(function(){
+				if($("#resumeTitle").val().length < 1){
+					alert('제목을 작성하세요');
+				}else if($("#resumeContent").val().length < 1){
+					alert('내용을 입력하세요')
+				}else{
+					$("#form2").submit();
+				}	
+			});
 		});
 		
 		</script>
@@ -30,14 +40,13 @@
 						<div class="col-sm-6">
 						<!-- Begin Content -->					
 							<div class="text-center">
-								<form action="${pageContext.request.contextPath}/insertResume" method="post" enctype="multipart/form-data">
-									<div><input type="text" name="resumeTitle"></div> <!-- ResumeRequest클래스의 String resumeTitle, db Resume테이블의 resume_title컬럼에 셋팅될 데이터 -->
-									<textarea name="resumeContent"></textarea> <!-- ResumeRequest클래스의 String resumeContent, db Resume테이블의 resume_content컬럼에 셋팅될 데이터 -->
-									<div><input type="file" name="multipartFile"></div> <!-- ResumeRequest클래스의 List<MultipartFile> multipartFile에 셋팅될 데이터 -->
-									<div id="addFile"></div>							
-									<div><button id="fileAdd" type="button">파일추가</button></div><br/>
-									<div><input type="submit"></div>
+								<form id="form2" action="${pageContext.request.contextPath}/insertResume" method="post" enctype="multipart/form-data">
+									<div><input type="text" id="resumeTitle" name="resumeTitle"></div> <!-- ResumeRequest클래스의 String resumeTitle, db Resume테이블의 resume_title컬럼에 셋팅될 데이터 -->
+									<textarea id="resumeContent" name="resumeContent"></textarea> <!-- ResumeRequest클래스의 String resumeContent, db Resume테이블의 resume_content컬럼에 셋팅될 데이터 -->
+									<div id="addFile"></div>		<!-- ResumeRequest클래스의 List<MultipartFile> multipartFile에 셋팅될 데이터 -->					
+									<div><button id="fileAdd" type="button">파일추가</button></div><br/>									
 								</form>
+									<div><button id="submit" type="button">작성</button></div>
 							</div>
 						<!-- End Content -->
 						</div>

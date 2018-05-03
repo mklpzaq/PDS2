@@ -226,7 +226,7 @@ public class ResumeController {
 							2. 공백은 '+'로 전달된다.									
 							3. 기타문자는 %ㅁㅁ 와 같이 전달된다. 이때 %ㅁㅁ는 아스키코드를 16진수화한 결과를 나타낸 것이다.
 	            			4. 바뀌고 나면  abc+%A4%B5 뭐 이런걸로 변환되는듯*/
-	            		//URLEncoder과 반대되는 URLDecoder라는 클래스가 있는데  abc+%A4%B5로 인코딩되어있는 문자열을 다시 일반문자열로 변환하는 역할을 한다
+	            		//URLEncoder과 반대되는 URLDecoder라는 클래스가 있는데 예를 들어 abc+%A4%B5이런식으로 인코딩되어있는 문자열을 다시 일반문자열로 변환하는 역할을 한다
 	        } else {
 	             
 	            fileName = new String(file.getName().getBytes("utf-8")); //MSIE가 존재하지 않을때? 익스플로어가 아닐때 
@@ -252,7 +252,7 @@ public class ResumeController {
 	        //다시 말해서 파일 다운로드 대화상자가 뜰때 대화상자에 지금 다운로드 하는 파일의 이름이나 확장자 같은걸 정해주는 코드인듯
 
 	        response.setHeader("Content-Transfer-Encoding", "binary");
-	        //Content-Transfer-Encoding 이새끼는 또 뭐하는 해더정보일까
+	        //Content-Transfer-Encoding 또 뭐하는 해더정보일까
 	        //검색해보니 Content-Transfer-Encoding : 전송 데이타의 body를 인코딩한 방법[인코딩 방식]을 표시함. 
 	        //즉 이제까지는 주소를 인코딩했고 이제는 전송데이터의 인코딩을 또 해줘야한다는 말이다. 헤헤 인코딩은 참 많이 하는것 같다 ^^
 			/* 5) MIME에서의 Content-Transfer-Encoding 방식
@@ -269,7 +269,7 @@ public class ResumeController {
 				8bit는 이를 준수합니다.
 	        2) 그러나, [binary] 방식은 길이에 제약이 없고, 역시 실제 이진 데이터에 대한 인코딩은 하지 않
 				습니다.*/
-	        //빡치니까 다른 방식들은 알아서 찾아보도록 하자
+	        //다른 방식들은 알아서 찾아보도록 하자
 	         
 	        OutputStream out = response.getOutputStream();	        
 	        FileInputStream fis = null;
