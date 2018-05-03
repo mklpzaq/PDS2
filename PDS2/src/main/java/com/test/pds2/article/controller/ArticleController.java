@@ -30,12 +30,22 @@ public class ArticleController {
 	@RequestMapping(value="/updateArticle", method=RequestMethod.GET)
 	public String updateArticle(Model model
 								,@RequestParam(value="sendNo") int articleId) {
-		
 		/* updateArticleForm을 보여주기 위해  모든 정보가 포함된 Article객체가 있어야 한다.*/
 		Article article = articleService.getDetailArticle(articleId);
-		
 		model.addAttribute("article", article);
 		return "/article/updateArticleForm";
+	}
+	
+	@RequestMapping(value="/updateArticle", method=RequestMethod.POST)
+	public String updateArticle(ArticleRequest articleRequest) {
+		logger.debug("POST /updateArticle ArticleController");
+		/* 이곳에서 추가된 파일은 insert가 되어야 하고, 수정된 articleTitle, articleContent 는 update가 되어야 한다. */
+		
+		logger.debug("articleRequest : " + articleRequest.toString());
+		String path = SystemPath.SYSTEM_PATH;
+		articleService.updateArticle(articleRequest, path);
+		
+		return "redirect:/getArticleList";
 	}
 	
 	@RequestMapping(value="/deleteArticle", method=RequestMethod.GET)

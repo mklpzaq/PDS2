@@ -25,6 +25,108 @@ public class ArticleService {
 	private ArticleFileDao articleFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(ArticleService.class);
 	
+	
+	public void updateArticle(ArticleRequest articleRequest, String path) {
+		logger.debug("updateArticle ArticleService");
+		/* 이곳에서 추가된 파일은 insert가 되어야 하고, 수정된 articleTitle, articleContent 는 update가 되어야 한다. */
+		/* 수정된 정보들을  article에 세팅 */
+		Article article = new Article();
+		article.setArticleId(articleRequest.getArticleId());
+		article.setArticleTitle(articleRequest.getArticleTitle());
+		article.setArticleContent(articleRequest.getArticleContent());
+		
+		/* updateForm에서 넘겨받은 multipartFile 정보를 해석하기 위해 List에 저장한 후 forEach문을 돌리면서 해석한다. */
+		List<MultipartFile> multipartFileList = articleRequest.getMultipartFile();
+		for(MultipartFile multipartFile : multipartFileList) {
+			/*
+			 * 1. 파일 이름
+			 * */
+			UUID uuid = UUID.randomUUID();
+			logger.debug("uuid : " + uuid);
+			String filename = uuid.toString();
+			logger.debug("filename : " + filename);
+			filename = filename.replace("-", "");
+			logger.debug("replaced filename : " + filename);
+			
+			/*
+			 * 2. 파일 확장자
+			 * */
+			logger.debug("originaFileName : " + multipartFile.getOriginalFilename());
+			int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
+			String fileExt = multipartFile.getOriginalFilename().substring(dotIndex+1);
+			logger.debug("fileExt : " + fileExt);
+			//여기서 file_ext가 값이 없는 상태이면("") 파일선택하지 않은 것으로 간주하여 insert시키지 말아야 한다.
+			if(fileExt.equals("")) {
+				continue;
+			}
+			
+			
+			/*
+			 * 3. 파일 타일
+			 * */
+			String fileType = multipartFile.getContentType();
+			logger.debug("fileType : " + fileType);
+			
+			/*
+			 * 4. 파일 사이즈
+			 * */
+			long longFileSize = multipartFile.getSize();
+			logger.debug("longFileSize : " + longFileSize);
+			int fileSize = (int)longFileSize;
+			logger.debug("fileSize : " + fileSize);
+			
+			/*
+			 * 5. 파일 저장(매개변수 path를 사용)
+			 * File file = new File(path+"/"+filename+"."+fileExt);
+			 * */
+			logger.debug("파일 저장 경로 : " + path+filename+"."+fileExt);
+			File file = new File(path+filename+"."+fileExt);
+			
+			try {
+				multipartFile.transferTo(file);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			ArticleFile articleFile = new ArticleFile();
+			
+			articleFile.setArticleFileName(filename);
+			articleFile.setArticleFileExt(fileExt);
+			articleFile.setArticleFileType(fileType);
+			articleFile.setArticleFileSize(fileSize);
+			logger.debug("articleFile : " + articleFile);
+			
+			article.getArticleFile().add(articleFile);
+		}
+		/* forEach문 종료 */
+		/* 이곳까지 도달하면  multipartFile에 대한 해석이 끝나며  해석된 정보들은 articleFile객체에 담기며,
+		 * 파일의 정보가 담겨진 articleFile은 article객체의 맴버객체참조변수인 
+		 * List<ArticleFile> articleFile에 add()메서드를 통해 담기게 된다.
+		 * 그렇게 되면 article객체의 맴버변수인 articleId, articleTitle, articleContent를 통해 
+		 * article 테이블을 업데이트 시킬수 잇으며,
+		 * article의 맴버변수인 articleFile에 담긴 맴버변수들을 통해 articleFile을 업데이트 시킬 수 있다. 
+		 * */
+		
+		/* article테이블 Update 및 articleFile테이블에 Insert */
+		/* article테이블 Update */
+		articleDao.updateArticle(article);
+		
+		/* articleFile테이블에 Insert */
+		int articleId = article.getArticleId();
+		logger.debug("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		logger.debug("articleId : " + articleId);
+		for(ArticleFile articleFile : article.getArticleFile()) {
+			articleFile.setArticleId(articleId);
+			logger.debug("articleFile.getArticleId() : " + articleFile.getArticleId());
+			articleFileDao.insertArticleFile(articleFile);
+		}
+		
+	}
+	
 	public List<ArticleFile> selectArticleFileListForDelete(int articleId){
 		return articleFileDao.selectArticleFileListForDelete(articleId);
 	}

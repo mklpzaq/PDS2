@@ -19,6 +19,17 @@
 		</collection>
 	</resultMap>
 	
+	<update id="updateArticle"
+			parameterType="com.test.pds2.article.service.Article">
+		UPDATE
+			article
+		SET
+			article_title  = #{articleTitle}
+			,article_content = #{articleContent}
+		WHERE
+			article_id = #{articleId}		
+	</update>
+	
 	<delete id="deleteArticle"
 			parameterType="Integer">
 		DELETE
