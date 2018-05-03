@@ -41,4 +41,5 @@
 			WHERE notice_file_id=#{noticeFileId}
 	</delete>
 	
+	
 </mapper>

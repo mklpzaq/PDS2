@@ -33,8 +33,8 @@
 								<div>
 									noticeFile : <br/>
 									<c:forEach var="noticeFile" items="${list}">								
-										<a>${noticeFile.noticeFileName}.${noticeFile.noticeFileExt}</a>
-										<button><a href="${pageContext.request.contextPath}/deleteNoticeFileOne?noticeFileId=${noticeFile.noticeFileId}&noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">삭제</a></button><br/>
+										${noticeFile.noticeFileName}.${noticeFile.noticeFileExt}
+										<button><a href="${pageContext.request.contextPath}/deleteNoticeFile?noticeId=${noticeFile.noticeId}&noticeFileId=${noticeFile.noticeFileId}&noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">삭제</a></button><br/>
 									</c:forEach>
 									
 								</div>
