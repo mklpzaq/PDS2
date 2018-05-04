@@ -171,17 +171,7 @@ public class NoticeService {
 		file.delete();
 	}
 	
-	/*public void deleteNoticeFileOne(NoticeFile noticeFile, String noticeFileName, String noticeFileExt) {
-		logger.debug("deleteNoticeFileOne - noticeFile");
-		//path에 FileNaem과 FileExt를 담는다.
-		String Path = SystemPath.SYSTEM_PATH+"\\" + noticeFileName + "." + noticeFileExt;
-		File file = new File(Path);
-		int noticeFileId = noticeFile.getNoticeFileId();
-		noticeFileDao.deleteNoticeFileOne(noticeFileId);
-		file.delete();
-		
-	}*/
-	
+
 	public int updateNotice(Notice notice) {
 		logger.debug("updateNotice() notice" + notice);
 		return noticeDao.updateNotice(notice);

@@ -92,7 +92,7 @@ public class NoticeController {
 		return "/notice/noticeView";
 	}
 	
-	//게시글 목록에서 삭제
+	//목록에서 게시글 삭제(파일이 있으면 삭제 안됨)
 	@RequestMapping(value = "/deleteNoticeList", method= RequestMethod.GET)
 	public String deleteNoticeList(@RequestParam(value="deleteCheckbox") int[] deleteCheckbox) {
 		logger.debug("deleteNoticeList - notice");
@@ -100,7 +100,7 @@ public class NoticeController {
 		return "redirect:/selectNoticeList";
 	}
 	
-	//단독으로 보여진 뷰 내부에서 게시글 삭제
+	//뷰에서 게시글 삭제(파일이 있어도 삭제됨)
 	@RequestMapping(value = "/deleteNotice", method= RequestMethod.GET)
 	public String deleteNotice(Notice notice, Model model) {
 		logger.debug("deleteNotice - notice : " + notice.toString());		
@@ -108,7 +108,7 @@ public class NoticeController {
 		return "redirect:/selectNoticeList";
 	}
 
-	//뷰 내부에서 업로드한 파일 삭제하기
+	//뷰에서 업로드파일 삭제
 	@RequestMapping(value = "/deleteNoticeFile", method= RequestMethod.GET)
 	public String deleteNoticeFile(NoticeFile noticeFile
 									, @RequestParam("noticeFileName") String noticeFileName
@@ -117,21 +117,7 @@ public class NoticeController {
 		return "redirect:/selectNoticeList";
 		
 	}
-/*	//수정화면에서 파일 삭제하기
-	@RequestMapping(value = "/deleteNoticeFileOne", method= RequestMethod.GET)
-	public String deleteNoticeFileOne(Model model
-									, @RequestParam("noticeId") int noticeId
-									, @RequestParam("noticeFileId") int noticeFileId
-									, @RequestParam("noticeFileName") String noticeFileName
-	                            	, @RequestParam("noticeFileExt") String noticeFileExt) {
-	logger.debug("deleteNoticeFileOne");
-	noticeService.deleteNoticeFileOne(noticeFileId, noticeFileName, noticeFileExt);
-	Notice notice = noticeService.noticeView(noticeId);
-	model.addAttribute("notice", notice);
-	return "/notice/updateNotice";
-	
-	}*/
-	
+
 	//수정하기
 	@RequestMapping(value = "/updateNotice", method = RequestMethod.POST)
 	public String updateNotice(Model model, Notice notice) {

@@ -5,7 +5,17 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<title>updateNotice</title>
+	<script>
+		$(documet).ready(function(){
+			$("button").click(function(){
+				$("a").remove(".file");		
+			});
+		});
+		</script>
+		
+		
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -33,10 +43,10 @@
 								<div>
 									noticeFile : <br/>
 									<c:forEach var="noticeFile" items="${list}">								
-										${noticeFile.noticeFileName}.${noticeFile.noticeFileExt}
-										<button><a href="${pageContext.request.contextPath}/deleteNoticeFile?noticeId=${noticeFile.noticeId}&noticeFileId=${noticeFile.noticeFileId}&noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">삭제</a></button><br/>
+										<a class="file">${noticeFile.noticeFileName}.${noticeFile.noticeFileExt}</a>
+										<button><a href="${pageContext.request.contextPath}/deleteNoticeFile?noticeFileId=${noticeFile.noticeFileId}&noticeFileName=${noticeFile.noticeFileName}&noticeFileExt=${noticeFile.noticeFileExt}">삭제</a></button><br/>
+										
 									</c:forEach>
-									
 								</div>
 								<div class="form-group">
 									<label for="InputFile">uploadFile</label>
