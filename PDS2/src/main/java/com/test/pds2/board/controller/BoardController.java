@@ -47,7 +47,7 @@ public class BoardController {
 		logger.debug("POST /updateBoard BoardController");
 		logger.debug("boardRequest : " + boardRequest.toString());
 		String path = SystemPath.SYSTEM_PATH;
-		/* 파일추가를 늘려놓은후 아무것도 파일추가하지 않은 후 업데이트 시도할 경우 널포인트 익셉션 발생하는 것을 해결해야 한다. */
+		
 		boardService.updateBoard(boardRequest, path);
 		
 		return "redirect:/getBoardList";

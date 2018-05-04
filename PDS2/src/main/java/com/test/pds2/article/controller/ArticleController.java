@@ -3,6 +3,8 @@ package com.test.pds2.article.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -18,6 +20,7 @@ import com.test.pds2.article.service.Article;
 import com.test.pds2.article.service.ArticleFile;
 import com.test.pds2.article.service.ArticleRequest;
 import com.test.pds2.article.service.ArticleService;
+import com.test.pds2.board.service.Board;
 import com.test.pds2.board.service.BoardRequest;
 import com.test.pds2.path.SystemPath;
 
@@ -26,6 +29,27 @@ public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
 	private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
+	
+	@RequestMapping(value="/downloadArticleFile", method=RequestMethod.GET)
+	public String downloadArticleFile(Model model
+									,HttpServletRequest request
+									,HttpServletResponse response
+									,@RequestParam(value="sendNo") int articleId
+									,@RequestParam(value="fileName") String fileName
+									,@RequestParam(value="fileExt") String fileExt) {
+		logger.debug("GET /downloadArticleFile ArticleController");
+		
+		/* articleDetailView.jsp 로 돌아가기 위한 사전 작업 */
+		Article article = articleService.getDetailArticle(articleId);
+		logger.debug("article : "+ article.toString());
+		model.addAttribute("article", article);
+		
+		/* 파일을 다운로드 시키기 위한 작업 */
+		articleService.downloadArticleFile(fileName, fileExt, request, response);
+		
+		return "/article/articleDetailView";
+	}
+	
 	
 	@RequestMapping(value="/updateArticle", method=RequestMethod.GET)
 	public String updateArticle(Model model
