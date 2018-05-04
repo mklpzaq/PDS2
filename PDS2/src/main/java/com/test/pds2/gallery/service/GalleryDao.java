@@ -38,6 +38,7 @@ public class GalleryDao {
 
 	public Gallery selectDetailList(Gallery gallery) {
 		logger.debug("====== selectDetailList : " );
+			
 		return sqlSession.selectOne(NS+"selectGalleryDetail",gallery);		
 	}
 

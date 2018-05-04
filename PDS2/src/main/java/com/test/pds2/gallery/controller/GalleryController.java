@@ -102,15 +102,22 @@ public class GalleryController {
 	public String viewDetailGallery(Gallery gallery
 									,Model model) {
 		logger.debug("GalleryController.viewDetailGallery()");
-		// join문 쿼리를 받아서 Gallery viewGallery에 대입했다.
+				
 		Gallery viewGallery = galleryService.viewDetailGallery(gallery);
+		
+		
+		logger.debug("viewGallery Id: " + viewGallery.getGalleryId());
+		logger.debug("viewGallery title: " + viewGallery.getGalleryTitle());
+		logger.debug("viewGallery content: " + viewGallery.getGalleryContent());
+		
+		/*
 		// Gallery 에 List<GalleryFile>를 getting하고 list에 담는다.
 		// 화면에 보여줄 준비를 한다.
 		List<GalleryFile> list = viewGallery.getGalleryFile();
 		logger.debug("Gallery viewGallery : " + viewGallery);
-		logger.debug("List<GalleryFile> list : " + list);
+		logger.debug("List<GalleryFile> list : " + list);*/
 		model.addAttribute("viewGallery", viewGallery);
-		model.addAttribute("list", list);
+		//model.addAttribute("list", list);
 		
 		return "/gallery/galleryDetailView";
 	}
@@ -122,7 +129,7 @@ public class GalleryController {
 		
 		List<Gallery> list = galleryService.listAll(searchOption, keyword);
 		
-		return "redirect:/gallery/galleryList";
+		return "redirect:/galleryList";
 	}
 	
 	/*
@@ -152,7 +159,7 @@ public class GalleryController {
 	public String updateGallery(@RequestParam(value="galleryId", required=true) int galleryId
 								,@RequestParam(value="galleryTitle") String galleryTitle
 								,@RequestParam(value="galleryContent") String galleryContent
-								,@RequestParam(value="multipartFile", required=false) List<MultipartFile> multipartFile
+								,@RequestParam(value="multipartFile") List<MultipartFile> multipartFile
 								,@RequestParam(value="deleteImg",required=false)List<String> deleteImg) {
 		logger.debug("GalleryController.updateGallery() post 호출 ");
 		
@@ -162,11 +169,11 @@ public class GalleryController {
 		galleryRequest.setGalleryContent(galleryContent);
 		logger.debug("GalleryController.galleryRequest.setGalleryContent() post galleryContent : "+ galleryContent);
 		galleryRequest.setMultipartfile(multipartFile);
-		logger.debug("GalleryController.galleryRequest.setMultipartfile() post galleryContent : "+ multipartFile);
+		logger.debug("GalleryController.galleryRequest.setMultipartfile() post multipartFile : "+ multipartFile);
 		String path = SystemPath.SYSTEM_PATH;
 		galleryService.updateGallery(galleryId, galleryRequest, path, deleteImg);
 		
-		return "redirect:/gallery/galleryList";
+		return "redirect:/galleryList";
 	}
 	
 	@RequestMapping(value = "/updateAndDeleteGallery", method = RequestMethod.GET)
@@ -191,7 +198,7 @@ public class GalleryController {
 		String path = SystemPath.SYSTEM_PATH;
 		galleryService.deleteGallery(galleryId, path);
 		
-		return "redirect:/gallery/galleryList";		
+		return "redirect:/galleryList";		
 	}
 	
 	@RequestMapping(value = "/insertGallery", method = RequestMethod.GET)

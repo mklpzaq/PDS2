@@ -7,7 +7,7 @@
 	
 	<delete id="deleteGallery"
 			parameterType="Integer">
-			DELECT
+			DELETE
 			FROM 
 				gallery 
 			WHERE gallery_id = #{galleryId}

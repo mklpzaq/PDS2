@@ -10,7 +10,7 @@
 	<script type="text/javascript">
 	$(document).ready(function(){		
 		$('#add').click(function(){
-			$('#upload').append('<div><label for="multipartfile">파일 업로드</label><input type="file" name="multipartfile"><button id="del" type="button">삭제</button></div>');
+			$('#upload').append('<div><label for="multipartfile">파일 업로드</label><input type="file" name="multipartFile"><button id="del" type="button">삭제</button></div>');
 		});
 		
 		$(document).on('click','#del',function(){
@@ -90,17 +90,17 @@
 									<textarea name="galleryContent" class="panel-title" style="height:90%; width:90%;">${updateGallery.galleryContent}</textarea>
 								<div>
 									첨부파일 : <br/>
-									<c:forEach var="galleryFile" items="${updateGallery.galleryFile}">
+									<c:forEach var="galleryFile" items="${list}">
 										<%-- <img src="${pageContext.request.contextPath}/downloadGallery?galleryFileName=${galleryFile.galleryFileName}&galleryFileExt=${galleryFile.galleryFileExt}" alt="140x140" class="img-circle" ${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}/> --%>             
 										<div>
 											<img data-src="holder.js/140x140" class="img-circle" alt="${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}" src="${pageContext.request.contextPath}/downloadGallery?galleryFileName=${galleryFile.galleryFileName}&galleryFileExt=${galleryFile.galleryFileExt}" data-holder-rendered="true" style="width: 140px; height: 140px;">
 											<button id="delImg" type="button">이미지 파일 삭제</button>
 										</div>										
 									</c:forEach>
-								</div>
-								<div id="upload">
-								</div>
+									<div id="upload">
+									</div>
 								<button id="add" type="button">이미지추가</button><br><br>
+								</div>								
 							</div>								
 						</div>							
 							<button id="updateAndDelete" type="button" class="btn btn-default">수정/삭제 완료</button>

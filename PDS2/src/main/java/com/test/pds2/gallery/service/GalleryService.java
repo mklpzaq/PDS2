@@ -187,6 +187,8 @@ public class GalleryService {
 	public Gallery viewDetailGallery(Gallery gallery) {
 		logger.debug("GalleryService.viewDetailGallery()");
 		// DAO에서 join문 쿼리를 불러 온다.
+		
+
 		Gallery viewDetailGallery = galleryDao.selectDetailList(gallery);
 		
 		logger.debug("GalleryService.viewDetailGallery(). viewDetailGallery : " +  viewDetailGallery);
@@ -283,10 +285,7 @@ public class GalleryService {
 				logger.debug("galleryFile : " + galleryFile);
 				gallery.getGalleryFile().add(galleryFile);			
 				
-			}
-				logger.debug("gallery : " + gallery);
-				galleryDao.insertGallery(gallery);
-				
+			}				
 				for(GalleryFile galleryFile : gallery.getGalleryFile()) {
 					galleryFile.setGalleryId(gallery.getGalleryId());
 					galleryFileDao.insertGalleryFile(galleryFile);
