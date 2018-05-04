@@ -15,6 +15,45 @@
 					$('#addFileDiv').append('<div class="form-group"><label for="multipartFile" class="col-sm-3 control-label">파일 업로드</label><div class="col-sm-9"><input type="file" name="multipartFile"><p class="help-block">업로드할 파일을 선택하세요</p></div></div>');
 				});
 				
+				/*
+				// ==== 선택한 파일의 확장자 확인하기
+				if($('#addFileDiv input').length > 0){
+					for(int i = 0; i < $('#addFileDiv input').length; ++i){
+						if()
+					}
+					
+					
+				}
+				
+				var str = $('#addFileDiv input').eq(1).val();
+				var start = $('#addFileDiv input').eq(1).val().lastIndexOf(".") + 1;
+				var length = $('#addFileDiv input').eq(1).val().length;
+				var mimeType = str.substring(start, length);
+				alert(mimeType);
+				
+				//포이치문 
+				$('#addFileDiv input').each(function(index) {
+
+		            alert($(this).val());
+				});
+				
+				
+				//이벤트 
+				//change select
+				//윈도우 이벤트
+				//load 문서객체를 불러들일때 발생한다.
+				//unload 문서 객체를 닫을 때 발생한다.
+				//글자자르기
+				//substring( 0, 40 )
+				//마지막 문자 위치
+				//lastIndexOf(".") 찾는 검색어가 없으면 -1을 리턴한다.
+				//subString([시작위치], [종료위치]);
+				//subString(9, 16)
+				$('#addFileDiv input').eq(0).change(function(){
+					alert('바뀌었다.')
+				});
+				*/
+				
 			});
 		</script>
 		
