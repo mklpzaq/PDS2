@@ -214,14 +214,15 @@ public class ArticleService {
 	}
 	
 	@Transactional
-	public void deleteArticle(int ArticleId, List<ArticleFile> articleFileList) {
+	public void deleteArticle(int ArticleId, List<ArticleFile> articleFileList, String path) {
 		logger.debug("deleteArticle ArticleService");
 		/* 1. 하드디스크에서 articleId에 관련된 articleFile삭제
 		 * articleFileList를 활용하여 하드디스크에 있는 articleId에 관련된 articleFile삭제
 		 **/
 		File file = null;
 		for(ArticleFile articleFile : articleFileList) {
-			file = new File(SystemPath.SYSTEM_PATH + articleFile.getArticleFileName() + "." + articleFile.getArticleFileExt());
+			//file = new File(SystemPath.SYSTEM_PATH + articleFile.getArticleFileName() + "." + articleFile.getArticleFileExt());
+			file = new File(path + articleFile.getArticleFileName() + "." + articleFile.getArticleFileExt());
 			if(file.exists()) {
 				if(file.delete()) {
 					logger.debug("파일삭제 성공");
@@ -244,13 +245,14 @@ public class ArticleService {
 	}
 	
 	@Transactional
-	public void deleteArticleFileOne(int articleFileId, String articleFileName, String articleFileExt) {
+	public void deleteArticleFileOne(int articleFileId, String articleFileName, String articleFileExt, String path) {
 		logger.debug("deleteArticleFileOne ArticleService");
 		/* DB에서 파일 정보를 삭제하는 과정 */
 		int result = articleFileDao.deleteArticleFileOne(articleFileId);
 		
 		/* 하드디스크에서 파일을 삭제하는 과정 */
-		File file = new File(SystemPath.SYSTEM_PATH + articleFileName + "." + articleFileExt);
+		//File file = new File(SystemPath.SYSTEM_PATH + articleFileName + "." + articleFileExt);
+		File file = new File(path + articleFileName + "." + articleFileExt);
 		if(file.exists()) {
 			if(file.delete()) {
 				logger.debug("파일 삭제 성공");

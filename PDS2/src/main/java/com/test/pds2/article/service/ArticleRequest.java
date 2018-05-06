@@ -1,5 +1,6 @@
 package com.test.pds2.article.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -9,6 +10,10 @@ public class ArticleRequest {
 	private String articleTitle;
 	private String articleContent;
 	private List<MultipartFile> multipartFile;
+	
+	public ArticleRequest() {
+		this.multipartFile = new ArrayList<MultipartFile>();
+	}
 	public int getArticleId() {
 		return articleId;
 	}

@@ -61,19 +61,22 @@ public class ArticleController {
 	}
 	
 	@RequestMapping(value="/updateArticle", method=RequestMethod.POST)
-	public String updateArticle(ArticleRequest articleRequest) {
+	public String updateArticle(ArticleRequest articleRequest
+								,HttpSession session) {
 		logger.debug("POST /updateArticle ArticleController");
 		/* 이곳에서 추가된 파일은 insert가 되어야 하고, 수정된 articleTitle, articleContent 는 update가 되어야 한다. */
 		
 		logger.debug("articleRequest : " + articleRequest.toString());
-		String path = SystemPath.SYSTEM_PATH;
+		//String path = SystemPath.SYSTEM_PATH;
+		String path = session.getServletContext().getRealPath("/resources/upload/");
 		articleService.updateArticle(articleRequest, path);
 		
 		return "redirect:/getArticleList";
 	}
 	
 	@RequestMapping(value="/deleteArticle", method=RequestMethod.GET)
-	public String deleteArticle(@RequestParam(value="sendNo") int articleId) {
+	public String deleteArticle(HttpSession session
+								,@RequestParam(value="sendNo") int articleId) {
 		logger.debug("GET /deleteArticle ArticleController");
 		/* articleId에 해당되는 파일 이름 정보값(articleFileName, aritlceFileExt)들을 얻어와서(List로)
 		 * return된 List를  deleteArticle의 매개변수로 넘겨주어야
@@ -84,7 +87,8 @@ public class ArticleController {
 		logger.debug("articleFileList : " + articleFileList.toString());
 		/* 우선 articleId에 해당되는 파일을 모두 지우고 그 다음, articleId에 해당되는 article를 지운다. */
 		//매개변수로 articleId에 해당하는 aritlceFileName, articleFileExt를 가지고 있는 articleFile List를 넘겨 받아야 한다.
-		articleService.deleteArticle(articleId, articleFileList);
+		String path = session.getServletContext().getRealPath("/resources/upload/");
+		articleService.deleteArticle(articleId, articleFileList, path);
 		
 		return "redirect:/getArticleList";
 	}
@@ -92,6 +96,7 @@ public class ArticleController {
 
 	@RequestMapping(value="/deleteArticleFile", method=RequestMethod.GET)
 	public String deleteArticleFile(Model model
+									,HttpSession session
 									,@RequestParam(value="pageCode", defaultValue="detail") String pageCode
 									,@RequestParam(value="sendNo") int articleId
 									,@RequestParam(value="sendFileNo") int articleFileId
@@ -99,7 +104,8 @@ public class ArticleController {
 									,@RequestParam(value="fileExt") String articleFileExt) {
 		logger.debug("GET /deleteArticleFile deleteArticleFile");
 		/* 파일 삭제 과정 */
-		articleService.deleteArticleFileOne(articleFileId, articleFileName, articleFileExt);
+		String path = session.getServletContext().getRealPath("/resources/upload/");
+		articleService.deleteArticleFileOne(articleFileId, articleFileName, articleFileExt, path);
 		/* articleDetailView.jsp 로 돌아가기 위한 작업 */
 		Article article = articleService.getDetailArticle(articleId);
 		if(article != null) {
@@ -138,6 +144,7 @@ public class ArticleController {
 	
 	@RequestMapping(value="/getArticleList", method=RequestMethod.GET)
 	public String getArticleList(Model model
+									,HttpSession session
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 									,@RequestParam(value="pagePerRow", defaultValue="10", required=true) int pagePerRow
 									,@RequestParam(value="searchSelect", defaultValue="articleId") String searchSelect
@@ -162,6 +169,11 @@ public class ArticleController {
 		logger.debug("pagePerRow : "+ pagePerRow);
 		logger.debug("searchSelect : " + searchSelect);
 		logger.debug("searchWord : " + searchWord);
+		
+		/* 파일 저장루트 확인용 */
+		String path = session.getServletContext().getRealPath("/resources/upload/");
+		model.addAttribute("path", path);
+		
 		return "/article/articleList";
 	}
 	
@@ -176,11 +188,14 @@ public class ArticleController {
 		logger.debug("POST /insertArticle ArticleController");
 		logger.debug("ArticleRequest : " + articleRequest);
 		
-		//String path = session.getServletContext().getRealPath("/resources/upload");
-		String path = SystemPath.SYSTEM_PATH;
+		
+		String path = session.getServletContext().getRealPath("/resources/upload/");
+		//String path = SystemPath.SYSTEM_PATH;
+		logger.debug("★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		logger.debug("path : " + path);
 		
 		articleService.insertArticle(articleRequest, path);
+		
 		return "redirect:/getArticleList";
 	}
 	
