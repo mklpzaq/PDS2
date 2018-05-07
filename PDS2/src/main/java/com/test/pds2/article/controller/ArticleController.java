@@ -34,6 +34,7 @@ public class ArticleController {
 	public String downloadArticleFile(Model model
 									,HttpServletRequest request
 									,HttpServletResponse response
+									,HttpSession session
 									,@RequestParam(value="sendNo") int articleId
 									,@RequestParam(value="fileName") String fileName
 									,@RequestParam(value="fileExt") String fileExt) {
@@ -45,7 +46,8 @@ public class ArticleController {
 		model.addAttribute("article", article);
 		
 		/* 파일을 다운로드 시키기 위한 작업 */
-		articleService.downloadArticleFile(fileName, fileExt, request, response);
+		String path = session.getServletContext().getRealPath("/resources/upload/");
+		articleService.downloadArticleFile(fileName, fileExt, request, response, path);
 		
 		return "/article/articleDetailView";
 	}

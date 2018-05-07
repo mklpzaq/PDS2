@@ -124,19 +124,20 @@ public class BoardService {
 		 * board 테이블을 업데이트 시킬수 잇으며,
 		 * board의 맴버변수인 boardFile에 담긴 맴버변수들을 통해 boardFile을 업데이트 시킬 수 있다. 
 		 * */
+		
+		/* board테이블 Update및 boardFile테이블에 Insert */
+		/* board테이블 Update */
 		boardDao.updateBoard(board);
+		
+		/* boardFile테이블에 Insert */
 		int boardId = board.getBoardId();
+		
 		logger.debug("boardId : " + boardId);
 		for(BoardFile boardFile : board.getBoardFile()) {
 			boardFile.setBoardId(boardId);
 			logger.debug("boardFile.getBoardId() : " + boardFile.getBoardId());
 			boardFileDao.insertBoardFile(boardFile);
 		}
-		
-		
-		
-		
-		//return boardDao.updateBoard(board);
 	}
 	
 	public List<BoardFile> selectBoardFileListForDelete(int boardId) {
@@ -144,13 +145,13 @@ public class BoardService {
 	}
 	
 	@Transactional
-	public void deleteBoard(int boardId, List<BoardFile> boardFileList) {
+	public void deleteBoard(int boardId, List<BoardFile> boardFileList, String path) {
 		logger.debug("deleteBoard BoardService");
 		/* 1. 하드디스크에서 boardId에 관련된 boardFile삭제
 		 * boardFileList를 활용하여 하드디스크에 있는 boardId에 관련된 boardFile삭제
 		 **/
 		for(BoardFile boardFile : boardFileList) {
-			File file = new File(SystemPath.SYSTEM_PATH + boardFile.getBoardFileName() + "." + boardFile.getBoardFileExt());
+			File file = new File(path + boardFile.getBoardFileName() + "." + boardFile.getBoardFileExt());
 			if(file.exists()) {
 				if(file.delete()) {
 					logger.debug("파일 삭제 성공");
@@ -172,13 +173,13 @@ public class BoardService {
 	}
 	
 	@Transactional
-	public void deleteBoardFileOne(int boardFileId, String boardFileName, String boardFileExt) {
+	public void deleteBoardFileOne(int boardFileId, String boardFileName, String boardFileExt, String path) {
 		logger.debug("deleteBoardFile BoardService");
 		/* DB에서 파일 정보를 삭제하는 과정 */
 		int result = boardFileDao.deleteBoardFileOne(boardFileId);
 		
 		/* 하드디스크에서 파일을 삭제하는 과정 */
-		File file = new File(SystemPath.SYSTEM_PATH + boardFileName + "." + boardFileExt);
+		File file = new File(path + boardFileName + "." + boardFileExt);
 		if(file.exists()) {
 			if(file.delete()) {
 				logger.debug("파일 삭제 성공");
@@ -193,14 +194,15 @@ public class BoardService {
 	public void downloadBoardFile(String fileName
 								,String fileExt
 								,HttpServletRequest request
-								,HttpServletResponse response) {
+								,HttpServletResponse response
+								,String path) {
 		FileInputStream fileInputStream = null;
 		BufferedInputStream bufferdInputStream = null;
 		ServletOutputStream ServletOutputStream = null;
 		BufferedOutputStream bufferedOutputStream = null;
 		
-		String path = SystemPath.SYSTEM_PATH+fileName+"."+fileExt;
-		File file = new File(path);
+		String fullPath = path+fileName+"."+fileExt;
+		File file = new File(fullPath);
 		String userAgent = request.getHeader("User-Agent");
 		boolean ie = userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("rv:11") > -1;
 		String fileNameTwo = null;

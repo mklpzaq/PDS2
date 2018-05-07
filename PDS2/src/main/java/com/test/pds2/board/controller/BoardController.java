@@ -43,18 +43,20 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/updateBoard", method=RequestMethod.POST)
-	public String updateBoard(BoardRequest boardRequest) {
+	public String updateBoard(BoardRequest boardRequest
+								,HttpSession session) {
 		logger.debug("POST /updateBoard BoardController");
 		logger.debug("boardRequest : " + boardRequest.toString());
-		String path = SystemPath.SYSTEM_PATH;
-		
+		//String path = SystemPath.SYSTEM_PATH;
+		String path = session.getServletContext().getRealPath("/resources/upload/");
 		boardService.updateBoard(boardRequest, path);
 		
 		return "redirect:/getBoardList";
 	}
 	
 	@RequestMapping(value="/deleteBoard", method=RequestMethod.GET)
-	public String deleteBoard(@RequestParam(value="sendNo") int boardId) {
+	public String deleteBoard(HttpSession session
+								,@RequestParam(value="sendNo") int boardId) {
 		logger.debug("GET /deleteBoard deleteBoard");
 		
 		/* boardId에 해당되는 파일 이름 정보값(boardFileName, boardFileExt)들을 얻어와서(List로)
@@ -65,13 +67,15 @@ public class BoardController {
 		
 		/* 우선 boardId에 해당되는 파일을 모두 지우고 그 다음, boardId에 해당되는 board를 지운다. */
 		//매개변수로 boardId에 해당하는 boardFileName, boardFileExt를 가지고 있는 boardFile List를 넘겨 받아야 한다.
-		boardService.deleteBoard(boardId, boardFileList);
+		String path = session.getServletContext().getRealPath("/resources/upload/");
+		boardService.deleteBoard(boardId, boardFileList, path);
 		
 		return "redirect:/getBoardList";
 	}
 	
 	@RequestMapping(value="/deleteBoardFile", method=RequestMethod.GET)
 	public String deleteBoardFile(Model model
+									,HttpSession session
 									,@RequestParam(value="pageCode") String pageCode
 									,@RequestParam(value="sendNo") int boardId
 									,@RequestParam(value="sendFileNo") int boardFileId
@@ -79,7 +83,8 @@ public class BoardController {
 									,@RequestParam(value="fileExt") String boardFileExt) {
 		logger.debug("GET /deleteBoardFile deleteBoardFile");
 		/* file 삭제 과정 */
-		boardService.deleteBoardFileOne(boardFileId, boardFileName, boardFileExt);
+		String path = session.getServletContext().getRealPath("/resources/upload/");
+		boardService.deleteBoardFileOne(boardFileId, boardFileName, boardFileExt, path);
 		/* boardDetailView.jsp 로 돌아가기 위한 작업 */
 		
 		Board board = boardService.getDetailBoard(boardId);
@@ -110,6 +115,7 @@ public class BoardController {
 	public String downloadBoardFile(Model model
 							,HttpServletRequest request
 							,HttpServletResponse response
+							,HttpSession session
 							,@RequestParam(value="sendNo") int boardId
 							,@RequestParam(value="fileName") String fileName
 							,@RequestParam(value="fileExt") String fileExt) {
@@ -121,7 +127,8 @@ public class BoardController {
 		model.addAttribute("board", board);
 		
 		/* 파일을 다운로드 시키기 위한 작업 */
-		boardService.downloadBoardFile(fileName, fileExt, request, response);
+		String path = session.getServletContext().getRealPath("/resources/upload/");
+		boardService.downloadBoardFile(fileName, fileExt, request, response, path);
 		
 		return "/board/boardDetailView";
 	}
@@ -150,6 +157,7 @@ public class BoardController {
 	 *  */
 	@RequestMapping(value="/getBoardList", method=RequestMethod.GET)
 	public String getBoardList(Model model
+								,HttpSession session
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 								,@RequestParam(value="pagePerRow", defaultValue="10", required=true) int pagePerRow
 								,@RequestParam(value="searchSelect", defaultValue="boardId") String searchSelect
@@ -174,6 +182,10 @@ public class BoardController {
 		logger.debug("pagePerRow : "+ pagePerRow);
 		logger.debug("searchSelect : " + searchSelect);
 		logger.debug("searchWord : " + searchWord);
+		/* 파일 저장 루트 확인용 */
+		String path = session.getServletContext().getRealPath("/resources/upload/");
+		//String path = SystemPath.SYSTEM_PATH;
+		model.addAttribute("path", path);
 		
 		return "/board/boardList";
 	}
@@ -196,8 +208,8 @@ public class BoardController {
 		 * 내 안에 만들어져 있는 upload의 주소가 
 		 * '/resources'/upload
 		 * */
-		//String path = session.getServletContext().getRealPath("/resources/upload");
-		String path = SystemPath.SYSTEM_PATH;
+		String path = session.getServletContext().getRealPath("/resources/upload/");
+		//String path = SystemPath.SYSTEM_PATH;
 		logger.debug("path : " + path);
 		
 		boardService.insertBoard(boardRequest, path);

@@ -1,5 +1,6 @@
 package com.test.pds2.board.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +17,10 @@ public class BoardRequest {
 	/*private File file; 스프링에서 파일로 바로 받지 말고 Spring에서 쓰는 멀티파트를 쓰자
 	 * 
 	 * */
+	public BoardRequest(){
+		this.multipartFile = new ArrayList<MultipartFile>();
+	}
+	
 	public int getBoardId() {
 		return boardId;
 	}

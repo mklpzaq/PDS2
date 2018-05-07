@@ -37,14 +37,15 @@ public class ArticleService {
 	public void downloadArticleFile(String fileName
 									,String fileExt
 									,HttpServletRequest request
-									,HttpServletResponse response) {
+									,HttpServletResponse response
+									,String path) {
 		FileInputStream fileInputStream = null;
 		BufferedInputStream bufferdInputStream = null;
 		ServletOutputStream ServletOutputStream = null;
 		BufferedOutputStream bufferedOutputStream = null;
 		
-		String path = SystemPath.SYSTEM_PATH+fileName+"."+fileExt;
-		File file = new File(path);
+		String fullPath = path+fileName+"."+fileExt;
+		File file = new File(fullPath);
 		String userAgent = request.getHeader("User-Agent");
 		boolean ie = userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("rv:11") > -1;
 		String fileNameTwo = null;
