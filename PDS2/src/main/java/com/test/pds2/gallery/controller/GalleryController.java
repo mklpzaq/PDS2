@@ -59,9 +59,12 @@ public class GalleryController {
 	@RequestMapping(value = "/downloadGallery", method = RequestMethod.GET)
 	public void download(@RequestParam("galleryFileName") String galleryFileName
 						,@RequestParam("galleryFileExt") String galleryFileExt
+						,HttpSession session
 						,HttpServletRequest request
                         , HttpServletResponse response) throws Exception{
-		String fullPath = SystemPath.SYSTEM_PATH + galleryFileName + "." + galleryFileExt;
+		//String fullPath = SystemPath.SYSTEM_PATH + galleryFileName + "." + galleryFileExt;
+		String path = session.getServletContext().getRealPath("/resources/upload/");
+		String fullPath = path + galleryFileName + "." + galleryFileExt;
 		File file = new File(fullPath);
 		
 		response.setContentType("application/download; utf-8");
@@ -156,7 +159,8 @@ public class GalleryController {
 	}
 	
 	@RequestMapping(value = "/updateAndDeleteGallery", method = RequestMethod.POST)
-	public String updateGallery(@RequestParam(value="galleryId", required=true) int galleryId
+	public String updateGallery(HttpSession session
+								,@RequestParam(value="galleryId", required=true) int galleryId
 								,@RequestParam(value="galleryTitle") String galleryTitle
 								,@RequestParam(value="galleryContent") String galleryContent
 								,@RequestParam(value="multipartFile") List<MultipartFile> multipartFile
@@ -170,7 +174,8 @@ public class GalleryController {
 		logger.debug("GalleryController.galleryRequest.setGalleryContent() post galleryContent : "+ galleryContent);
 		galleryRequest.setMultipartfile(multipartFile);
 		logger.debug("GalleryController.galleryRequest.setMultipartfile() post multipartFile : "+ multipartFile);
-		String path = SystemPath.SYSTEM_PATH;
+		//String path = SystemPath.SYSTEM_PATH;
+		String path = session.getServletContext().getRealPath("/resources/upload/");
 		galleryService.updateGallery(galleryId, galleryRequest, path, deleteImg);
 		
 		return "redirect:/galleryList";
@@ -192,10 +197,12 @@ public class GalleryController {
 	}
 	
 	@RequestMapping(value = "/deleteGallery", method = RequestMethod.GET)
-	public String deleteGallery(@RequestParam(value="galleryId") int galleryId) {
+	public String deleteGallery(HttpSession session
+								,@RequestParam(value="galleryId") int galleryId) {
 		logger.debug("GalleryController.deleteGallery(galleryId) : " + galleryId);	
 		
-		String path = SystemPath.SYSTEM_PATH;
+		//String path = SystemPath.SYSTEM_PATH;
+		String path = session.getServletContext().getRealPath("/resources/upload/");
 		galleryService.deleteGallery(galleryId, path);
 		
 		return "redirect:/galleryList";		
@@ -210,7 +217,9 @@ public class GalleryController {
 	 * service에 절대경로와 galleryRequest객체를 넘긴다.
 	 */	
 	@RequestMapping(value = "/insertGallery", method = RequestMethod.POST)
-	public String insertGallery(GalleryRequest galleryRequest, Model model) {
+	public String insertGallery(HttpSession session
+								,GalleryRequest galleryRequest
+								,Model model) {
 		logger.debug("GalleryController.insertGallery(galleryRequest) : " + galleryRequest);		
 		
 		List<MultipartFile> list = galleryRequest.getMultipartfile();
@@ -234,7 +243,8 @@ public class GalleryController {
 			}
 		}	
 		
-		String path = SystemPath.SYSTEM_PATH;		
+		//String path = SystemPath.SYSTEM_PATH;
+		String path = session.getServletContext().getRealPath("/resources/upload/");
 		logger.debug("path : " + path);
 		galleryService.insertGallery(galleryRequest, path);
 		return "redirect:/";
