@@ -19,7 +19,7 @@
 				
 				
 					<div class="text-center">
-						<h1>Welcome Teme2 Page!</h1>
+						<h1>Welcome Team2 Page!</h1>
 						<P>The time on the server is ${serverTime}.</P>
 					</div>
 					
