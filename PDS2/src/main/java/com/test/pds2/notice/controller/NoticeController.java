@@ -41,13 +41,20 @@ public class NoticeController {
 	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 	
 	
-	//새로운 notice를 추가
+	//새로운 notice를 추가하는 폼을 보여준다.
+	//insertNotice.jsp를 포워드방식으로 호출한다.
 	@RequestMapping(value = "/insertNotice", method = RequestMethod.GET)
 	public String insertNotice() {
 		logger.debug("insertNotice-GET");
 		return "/notice/insertNotice";
 	}
 	
+	//insertNotice.jsp에서 반환된 데이터를 커맨드 객체 NoticeRequest에 셋팅한다.
+	/*
+	 * 커맨드 객체란 클라이언트가 보내주는 파라미터가 자동으로 담겨서 반환되는 객체를 말한다.
+	 * 이는 자동 객체 변환이라는 말로도 이해할 수 있는데 MVC에서 가장 큰 핵심 기술 중에 하나라고도 이야기 할 수 있다.
+	 * 
+	 */
 	@RequestMapping(value = "/insertNotice", method = RequestMethod.POST)
 	public String insertNotice(NoticeRequest noticeRequest, HttpSession session ) {
 		logger.debug("insertNotice-POST");
@@ -59,8 +66,10 @@ public class NoticeController {
 		return "redirect:/selectNoticeList";
 	}
 	
-	//추가된 게시글을 리스트로 저장함
+	//추가된 게시글을 리스트로 저장하고 리스트를 보여준다.
 	@RequestMapping(value = "/selectNoticeList", method = RequestMethod.GET)
+	//currentPage : 페이지
+	//pagePerRow : 한 페이지 당 기본 행의 수
 	public String selectNoticeList(Model model
 									, HttpSession session										
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
