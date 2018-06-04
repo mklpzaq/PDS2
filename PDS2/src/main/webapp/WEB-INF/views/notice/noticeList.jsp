@@ -115,6 +115,8 @@
 						</nav>
 					</div>			
 				</div>
+				<p>파일 저장 루트 : ${path}</p>
+				
 				<!-- End Content -->
 			</div>
 		</div>
