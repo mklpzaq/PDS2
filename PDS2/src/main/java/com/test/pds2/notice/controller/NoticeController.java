@@ -41,25 +41,35 @@ public class NoticeController {
 	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 	
 	
-	//새로운 notice를 추가
+	//새로운 notice를 추가하는 폼을 보여준다.
+	//insertNotice.jsp를 포워드방식으로 호출한다.
 	@RequestMapping(value = "/insertNotice", method = RequestMethod.GET)
 	public String insertNotice() {
 		logger.debug("insertNotice-GET");
 		return "/notice/insertNotice";
 	}
 	
+	//insertNotice.jsp에서 반환된 데이터를 커맨드 객체 NoticeRequest에 셋팅한다.
+	/*
+	 * 커맨드 객체란 클라이언트가 보내주는 파라미터가 자동으로 담겨서 반환되는 객체를 말한다.
+	 * 이는 자동 객체 변환이라는 말로도 이해할 수 있는데 MVC에서 가장 큰 핵심 기술 중에 하나라고도 이야기 할 수 있다.
+	 * 
+	 */
 	@RequestMapping(value = "/insertNotice", method = RequestMethod.POST)
 	public String insertNotice(NoticeRequest noticeRequest, HttpSession session ) {
 		logger.debug("insertNotice-POST");
 		logger.debug("NoticeRequest");
-		String path = SystemPath.SYSTEM_PATH;	
+		//String path = SystemPath.SYSTEM_PATH;
+		String path = session.getServletContext().getRealPath("/resources/upload/");
 		logger.debug("path" + path);
-		noticeService.insertNotice(noticeRequest);
+		noticeService.insertNotice(noticeRequest,path);
 		return "redirect:/selectNoticeList";
 	}
 	
-	//추가된 게시글을 리스트로 저장함
+	//추가된 게시글을 리스트로 저장하고 리스트를 보여준다.
 	@RequestMapping(value = "/selectNoticeList", method = RequestMethod.GET)
+	//currentPage : 페이지
+	//pagePerRow : 한 페이지 당 기본 행의 수
 	public String selectNoticeList(Model model
 									, HttpSession session										
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
@@ -73,6 +83,9 @@ public class NoticeController {
 		model.addAttribute("startPage", map.get("startPage"));
 		model.addAttribute("endPage", map.get("endPage"));
 		model.addAttribute("pagePerRow", pagePerRow);
+		
+		/* 경로확인용 */
+		String path = session.getServletContext().getRealPath("/resources/upload/");
 		return "/notice/noticeList";
 	}
 	
@@ -108,14 +121,20 @@ public class NoticeController {
 		return "redirect:/selectNoticeList";
 	}
 
-	//뷰에서 업로드파일 삭제
+	//뷰에서 업로드파일 삭제- 안되고 있음
 	@RequestMapping(value = "/deleteNoticeFile", method= RequestMethod.GET)
-	public String deleteNoticeFile(NoticeFile noticeFile
-									, @RequestParam("noticeFileName") String noticeFileName
-	                            	, @RequestParam("noticeFileExt") String noticeFileExt) {
-		noticeService.deleteNoticeFile(noticeFile, noticeFileName, noticeFileExt);
-		return "redirect:/selectNoticeList";
+	public String deleteNoticeFile(@RequestParam("noticeFileName") String noticeFileName
+        							,@RequestParam("noticeFileExt") String noticeFileExt) {
+
+		logger.debug("deleteNoticeFile - noticeFileName : " + noticeFileName.toString());
+		logger.debug("deleteNoticeFile - noticeFileExt : " + noticeFileExt.toString());
 		
+		noticeService.deleteNoticeFile(noticeFileName, noticeFileExt);
+		
+		/* RedirectAttributes redirectAttributes redirect할때 데이터를 같이 옮기고 싶으면 사용
+		* redirectAttributes.addFlashAttribute("resume", resume);*/
+		
+		return "redirect:/selectNoticeList";
 	}
 
 	//수정하기
@@ -147,11 +166,13 @@ public class NoticeController {
 	 @RequestMapping(value = "/downloadNotice", method= RequestMethod.GET)
 	    public void download(@RequestParam("noticeFileName") String noticeFileName
 	                            ,@RequestParam("noticeFileExt") String noticeFileExt
+	                            ,HttpSession session
 	                            , HttpServletRequest request
 	                            , HttpServletResponse response) throws Exception {	  
 		 
-	        String Path = SystemPath.SYSTEM_PATH + "\\" + noticeFileName + "." + noticeFileExt;	
-	        File file = new File(Path); //새로운 파일 생성? 요청하는 파일과 동일한 파일 객체 생성
+	       // String Path = SystemPath.SYSTEM_PATH + "\\" + noticeFileName + "." + noticeFileExt;	
+		 	String path = session.getServletContext().getRealPath("/resources/upload/");
+		 	File file = new File(path); //새로운 파일 생성? 요청하는 파일과 동일한 파일 객체 생성
 	        response.setContentType("application/download; utf-8");  
 	        //response 객체는 JSP의 실행 결과를 웹브라우저로 전송하고자 할때 사용하며 
 	        //setContentType 메소드는 html의 표준 MIME 타입인 "text/html" 의 변경이나 캐릭터의 인코딩을 재지정하고자 할때 사용합니다.

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.test.pds2.gallery.service.Gallery;
 import com.test.pds2.path.SystemPath;
 
 
@@ -25,10 +24,11 @@ public class NoticeService {
 	private NoticeDao noticeDao;
 	@Autowired
 	private NoticeFileDao noticeFileDao;
+	private NoticeFile noticeFile;
 	
 	private static final Logger logger = LoggerFactory.getLogger(NoticeService.class);
 	@Transactional
-	public void insertNotice(NoticeRequest noticeRequest) {
+	public void insertNotice(NoticeRequest noticeRequest, String path) {
 		
 		//Notice클래스를 생성하고 notice 객체참조변수를 생성
 		Notice notice = new Notice(); 
@@ -129,6 +129,7 @@ public class NoticeService {
 		logger.debug("noticeView - noticeView : " + noticeView.toString());
 		return noticeView;
 	}
+
 	//리스트에서 게시글 삭제
 	public void deleteNoticeList(int[] deleteCheckbox) {	
 		logger.debug("deleteNoticeList");
@@ -156,8 +157,7 @@ public class NoticeService {
 		noticeDao.deleteNotice(notice);
 	}
 	//뷰화면에서 첨부파일 삭제
-	public void deleteNoticeFile(NoticeFile noticeFile, String noticeFileName, String noticeFileExt) {
-		logger.debug("deleteNoticeFile - noticeFile : " + noticeFile.toString());
+	public void deleteNoticeFile(String noticeFileName, String noticeFileExt) {
 		String Path = SystemPath.SYSTEM_PATH+"\\" + noticeFileName + "." + noticeFileExt;
 		//path에 FileNaem과 FileExt를 담는다.
 		logger.debug("deleteNoticeFile - Path : " + Path.toString());
@@ -166,10 +166,11 @@ public class NoticeService {
 		logger.debug("deleteNoticeFile - file : " + file.toString());
 		int noticeFileId = noticeFile.getNoticeFileId();
 		//noticeFile에서 FileId를 get해와서 noticeFileId에 담는다.
-		noticeFileDao.deleteNoticeFile(noticeFileId);
+		noticeFileDao.deleteNoticeFileOne(noticeFile);
 		//noticeFileDao를 찾아가, deleteNoticeFile을 호출한다.
-		file.delete();
+		file.delete();	
 	}
+	
 	
 
 	public int updateNotice(Notice notice) {
